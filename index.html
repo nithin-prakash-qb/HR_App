@@ -1,14 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="CSS/style.css">
-</head>
-<body>
-    
+    <!-- CSS -->
+    <link rel="stylesheet" href="CSS/style.css" />
+    <!-- FontAwesome -->
+    <script
+      src="https://kit.fontawesome.com/2fce70ce42.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <h1>HR Managemnt APP</h1>
+
+    <div id="nav_container">
+      <div id="sort_filter">
+        <label for="sort">Sort : </label>
+            <select id="sort" name="sort">
+            <option value="volvo">Name Sorting</option>
+            <option value="saab">Employee ID Sorting</option>
+            </select>
+            <label for="filter">Filter : </label>
+            <select id="filter" name="filter">
+            <option value="volvo">JS</option>
+            <option value="saab">TS</option>
+            <option value="saab">Python</option>
+            </select>
+      </div>
+
+      <div id="add_employee_div">
+        <h3>Employee</h3>
+        <button>Add New</button>
+      </div>
+    </div>
+
+    <div id="table">
+      <table>
+        <tr>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Skills</th>
+          <th>Actions</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Joey</td>
+          <td>joey@gmail.com</td>
+          <td>Js,TS,Python</td>
+          <td>
+            <div class="icons">
+                <i class="fa-solid fa-eye"></i>
+                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-trash"></i>
+            </div>  
+          </td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Joey</td>
+          <td>joey@gmail.com</td>
+          <td>Js,TS,Python</td>
+          <td>
+            <div class="icons">
+                <i class="fa-solid fa-eye"></i>
+                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-trash"></i>
+            </div>  
+          </td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Joey</td>
+          <td>joey@gmail.com</td>
+          <td>Js,TS,Python</td>
+          <td>
+            <div class="icons">
+                <i class="fa-solid fa-eye"></i>
+                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-trash"></i>
+            </div>  
+          </td>
+        </tr>
+      </table>
+    </div>
     <script src="app.js"></script>
-</body>
+  </body>
 </html>
