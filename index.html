@@ -8,16 +8,11 @@
     <!-- CSS -->
     <link rel="stylesheet" href="CSS/style.css" />
     <!-- FontAwesome -->
-    <script
-      src="https://kit.fontawesome.com/2fce70ce42.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://kit.fontawesome.com/2fce70ce42.js" crossorigin="anonymous"></script>
   </head>
   <body>
-
-
-    <!-- Initial viewing Table -->
-    <h1>HR Managemnt APP</h1>
+    <!-- Heading and Navigation -->
+    <h1>HR Management App</h1>
 
     <div id="nav_container">
       <div id="sort_filter">
@@ -42,171 +37,205 @@
         <button id="add_new">Add New</button>
       </div>
     </div>
-
-    <div >
-      <table id="main_table">
-        <tr>
-          <th>Employee ID</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Skills</th>
-          <th>Actions</th>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Joey</td>
-          <td>joey@gmail.com</td>
-          <td>Js,TS,Python</td>
-          <td>
-            <div class="icons">
-                <i class="fa-solid fa-eye" id="view_icon"></i>
-                <i class="fa-solid fa-pen-to-square"></i>
-                <i class="fa-solid fa-trash" id="delete_icon"></i>
-            </div>  
-          </td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Joey</td>
-          <td>joey@gmail.com</td>
-          <td>Js,TS,Python</td>
-          <td>
-            <div class="icons">
-                <i class="fa-solid fa-eye" ></i>
-                <i class="fa-solid fa-pen-to-square"></i>
-                <i class="fa-solid fa-trash"></i>
-            </div>  
-          </td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Joey</td>
-          <td>joey@gmail.com</td>
-          <td>Js,TS,Python</td>
-          <td>
-            <div class="icons">
-                <i class="fa-solid fa-eye" ></i>
-                <i class="fa-solid fa-pen-to-square "></i>
-                <i class="fa-solid fa-trash id"></i>
-            </div>  
-          </td>
-        </tr>
-      </table>
-    </div>
-    <!-- Modal Box for adding data -->
-<div id="modal_box_add">
-    <table id="modal_table">
-        <tr id="caption">
-            <td colspan="2">ADD DETAILS <i class="fa-solid fa-xmark" id="add_cross"></i></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="employee_id">Employee ID :</label> </td>
-            <td class="col_2"><input type="text" id="employee_id" name="" ></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="name">Name :</label> </td>
-            <td class="col_2"><input type="text" id="name" name="" ></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="DOB">Date Of Birth :</label></td>
-            <td class="col_2"><input type="date" id="DOB" name=""></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="age">Age :</label> </td>
-            <td class="col_2"><input type="text" id="age" name="" ></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="email">Email ID :</label></td>
-            <td class="col_2"><input type="email" id="email" name=""></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="experiance">Experiance :</label></td>
-            <td class="col_2"><input type="text" id="experiance" name=""></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="DOJ">Date of Joining :</label</td>
-            <td class="col_2"><input type="date" id="DOJ" name=""></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="designation">Designation :</label></td>
-            <td class="col_2"><input type="text" id="designation" name=""></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="skills">Skills :</label></td>
-            <td class="col_2"><input type="text" id="skills" name="" ></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="location_detail">Location Detail :</label></td>
-            <td class="col_2"><input type="text" id="location_detail" name=""></td>
-        </tr>
-        
+<!-- Initial viewing of table -->
+    <table id="main_table">
+      <tr>
+        <th>Employee ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Skills</th>
+        <th>Actions</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Joey</td>
+        <td>joey@gmail.com</td>
+        <td>Js,TS,Python</td>
+        <td>
+          <div class="icons">
+              <i class="fa-solid fa-eye" onclick="modal_box_view()"></i>
+              <i class="fa-solid fa-pen-to-square" ></i>
+              <i class="fa-solid fa-trash" onclick="modal_delete()"></i>
+          </div>  
+        </td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Joey</td>
+        <td>joey@gmail.com</td>
+        <td>Js,TS,Python</td>
+        <td>
+          <div class="icons">
+              <i class="fa-solid fa-eye" onclick="modal_box_view()"></i>
+              <i class="fa-solid fa-pen-to-square"></i>
+              <i class="fa-solid fa-trash" onclick="modal_delete()"></i>
+          </div>  
+        </td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Joey</td>
+        <td>joey@gmail.com</td>
+        <td>Js,TS,Python</td>
+        <td>
+          <div class="icons">
+              <i class="fa-solid fa-eye" onclick="modal_box_view()" ></i>
+              <i class="fa-solid fa-pen-to-square "></i>
+              <i class="fa-solid fa-trash id" onclick="modal_delete()"></i>
+          </div>  
+        </td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Joey</td>
+        <td>joey@gmail.com</td>
+        <td>Js,TS,Python</td>
+        <td>
+          <div class="icons">
+              <i class="fa-solid fa-eye" id="view_icon"></i>
+              <i class="fa-solid fa-pen-to-square"></i>
+              <i class="fa-solid fa-trash" onclick="modal_delete()"></i>
+          </div>  
+        </td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Joey</td>
+        <td>joey@gmail.com</td>
+        <td>Js,TS,Python</td>
+        <td>
+          <div class="icons">
+              <i class="fa-solid fa-eye" onclick="modal_box_view()"></i>
+              <i class="fa-solid fa-pen-to-square"></i>
+              <i class="fa-solid fa-trash" onclick="modal_delete()" ></i>
+          </div>  
+        </td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Joey</td>
+        <td>joey@gmail.com</td>
+        <td>Js,TS,Python</td>
+        <td>
+          <div class="icons">
+              <i class="fa-solid fa-eye" onclick="modal_box_view()"></i>
+              <i class="fa-solid fa-pen-to-square"></i>
+              <i class="fa-solid fa-trash" onclick="modal_delete()" ></i>
+          </div>  
+        </td>
+      </tr>
     </table>
-    <div id="submit_btn_div">
-        <button >Submit Details</button>
-    </div>
 
-</div>
+    <!-- Modal Box for adding data -->
+    <div id="modal_box_add">
+      <table id="modal_table">
+          <tr id="caption">
+              <td colspan="2">ADD DETAILS <i class="fa-solid fa-xmark" id="add_cross"></i></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="employee_id">Employee ID :</label> </td>
+              <td class="col_2"><input type="text" id="employee_id" name="" ></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="name">Name :</label> </td>
+              <td class="col_2"><input type="text" id="name" name="" ></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="DOB">Date Of Birth :</label></td>
+              <td class="col_2"><input type="date" id="DOB" name=""></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="age">Age :</label> </td>
+              <td class="col_2"><input type="text" id="age" name="" ></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="email">Email ID :</label></td>
+              <td class="col_2"><input type="email" id="email" name=""></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="experiance">Experiance :</label></td>
+              <td class="col_2"><input type="text" id="experiance" name=""></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="DOJ">Date of Joining :</label</td>
+              <td class="col_2"><input type="date" id="DOJ" name=""></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="designation">Designation :</label></td>
+              <td class="col_2"><input type="text" id="designation" name=""></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="skills">Skills :</label></td>
+              <td class="col_2"><input type="text" id="skills" name="" ></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="location_detail">Location Detail :</label></td>
+              <td class="col_2"><input type="text" id="location_detail" name=""></td>
+          </tr>
+      </table>
+      <div id="submit_btn_div">
+          <button>Submit Details</button>
+      </div>
+    </div>
 <!-- Modal box for viewing data -->
 
-<div id="modal_box_view">
-    <table id="modal_table">
-        <tr id="caption">
-            <td colspan="2">VIEW DETAILS <i class="fa-solid fa-xmark" id="view_cross"></i></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="employee_id">Employee ID :</label> </td>
-            <td class="col_2"><input type="text" id="employee_id" name="" ></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="name">Name :</label> </td>
-            <td class="col_2"><input type="text" id="name" name="" ></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="DOB">Date Of Birth :</label></td>
-            <td class="col_2"><input type="date" id="DOB" name=""></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="age">Age :</label> </td>
-            <td class="col_2"><input type="text" id="age" name="" ></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="email">Email ID :</label></td>
-            <td class="col_2"><input type="email" id="email" name=""></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="experiance">Experiance :</label></td>
-            <td class="col_2"><input type="text" id="experiance" name=""></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="DOJ">Date of Joining :</label</td>
-            <td class="col_2"><input type="date" id="DOJ" name=""></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="designation">Designation :</label></td>
-            <td class="col_2"><input type="text" id="designation" name=""></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="skills">Skills :</label></td>
-            <td class="col_2"><input type="text" id="skills" name="" ></td>
-        </tr>
-        <tr>
-            <td class="col_1"><label for="location_detail">Location Detail :</label></td>
-            <td class="col_2"><input type="text" id="location_detail" name=""></td>
-        </tr>
-        
-    </table>
-    
-</div>
-<!-- Delete Confirmation box -->
-<div id="modal_box_delete">
-    <div id="delete_msg_div">
-        <i class="fa-solid fa-xmark" id="delete_cross"></i>
-        <p>Are you sure you want to delete this information permanently ?</p>
-        <button id="yes">Yes</button>
-        <button id="no">No</button>
-
+    <div id="modal_box_view">
+      <table id="modal_table">
+          <tr id="caption">
+              <td colspan="2">VIEW DETAILS <i class="fa-solid fa-xmark" id="view_cross"></i> </td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="employee_id_!">Employee ID :</label> </td>
+              <td class="col_2"><input type="text" id="employee_id_!" name="" ></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="name_!">Name :</label> </td>
+              <td class="col_2"><input type="text" id="name_!" name="" ></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="DOB_!">Date Of Birth :</label></td>
+              <td class="col_2"><input type="date" id="DOB_!" name=""></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="age_!">Age :</label> </td>
+              <td class="col_2"><input type="text" id="age_!" name="" ></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="email_!">Email ID :</label></td>
+              <td class="col_2"><input type="email" id="email_!" name=""></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="experiance_!">Experiance :</label></td>
+              <td class="col_2"><input type="text" id="experiance_!" name=""></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="DOJ_!">Date of Joining :</label</td>
+              <td class="col_2"><input type="date" id="DOJ_!" name=""></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="designation_!">Designation :</label></td>
+              <td class="col_2"><input type="text" id="designation_!" name=""></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="skills_!">Skills :</label></td>
+              <td class="col_2"><input type="text" id="skills_!" name="" ></td>
+          </tr>
+          <tr>
+              <td class="col_1"><label for="location_detail_!">Location Detail :</label></td>
+              <td class="col_2"><input type="text" id="location_detail_!" name=""></td>
+          </tr>
+      </table>
     </div>
-</div>
+
+<!-- Modal box for delete Confirmation -->
+    <div id="modal_box_delete">
+      <div id="delete_msg_div">
+          <i class="fa-solid fa-xmark" id="delete_cross"></i>
+          <p>Are you sure you want to delete this information permanently ?</p>
+          <button id="yes">Yes</button>
+          <button id="no">No</button>
+      </div>      
+    </div>
     <script src="app.js"></script>
   </body>
 </html>
