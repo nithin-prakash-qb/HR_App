@@ -52,7 +52,7 @@ p{
     font-size: 1.2em;
     color:whitesmoke ;
     font-size: 1.2em;
-    margin: 14px 0px 4px 0px;
+    margin: 5px 0px 4px 0px
 }
 
 
@@ -61,7 +61,8 @@ p{
     background-color: #e3bf20;
     width: 100%;
     letter-spacing: 1px;
-    padding: 7px 5px 7px 5px;
+    padding: 9px 5px 9px 5px;
+    font-size: 18px;
 }
 /* Style for initail table view */
 #main_table{
@@ -82,12 +83,18 @@ td{
     padding:10px;
     box-sizing: border-box;
 }
+.skill_td button{
+    border-radius: 4px;
+    padding: 2px 6px;
+}
 .icons{
     display: flex;
     justify-content: space-between;
     font-size: 1.3em;
 }
-
+.inline_prop{
+    display: inline;
+}
 /* Styles common for all the modal boxes */
 #modal_box_add,#modal_box_view,#modal_box_delete{
     display: none;

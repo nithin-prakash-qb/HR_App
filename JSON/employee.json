@@ -9,7 +9,7 @@
             "email_id":"joey@abc.com",
             "experiance":"10+ years ",
             "designation":"Product Owner",
-            "skils":[],
+            "skills":["Firebase","JacaScript","AWS"],
             "contact_details":["3960 Portola Dr","Santa Cruz","California","Pin : 692357"]
         },
         {
@@ -21,7 +21,7 @@
             "email_id":"rachel@abc.com",
             "experiance":"9+ years ",
             "designation":"Senior Architect",
-            "skils":[],
+            "skills":["JacaScript","AWS"],
             "contact_details":["3960 Portola Dr","Santa Cruz","California","Pin : 692357"]
         },
         {
@@ -33,7 +33,7 @@
             "email_id":"chandler@abc.com",
             "experiance":"8+ years ",
             "designation":"Project Manager",
-            "skils":[],
+            "skills":["Linux","Firebase"],
             "contact_details":["3960 Portola Dr","Santa Cruz","California","Pin : 692357"]
         },
         {
@@ -45,7 +45,7 @@
             "email_id":"ross@abc.com",
             "experiance":"7+ years ",
             "designation":"Associate Architect",
-            "skils":[],
+            "skills":["GraphQL","Linux"],
             "contact_details":["3960 Portola Dr","Santa Cruz","California","Pin : 692357"]
         },
         {
@@ -57,7 +57,7 @@
             "email_id":"monica@abc.com",
             "experiance":"6+ years ",
             "designation":"DevOps Lead",
-            "skils":[],
+            "skills":["Node JS","GraphQL"],
             "contact_details":["3960 Portola Dr","Santa Cruz","California","Pin : 692357"]
         }
     ],
