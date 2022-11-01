@@ -86,6 +86,7 @@ td{
 .skill_td button{
     border-radius: 4px;
     padding: 2px 6px;
+    margin-right: 3px;
 }
 .icons{
     display: flex;

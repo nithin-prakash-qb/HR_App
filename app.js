@@ -94,17 +94,15 @@ function addInitialData(){
                 table_row.appendChild(table_data)
             }else if(i===4){
                 let table_data=document.createElement("td")
+                table_data.setAttribute("class","skill_td")
                 let count_skills=element["skills"].length
                 element["skills"].forEach((element,index) => {
                     let table_data_new=document.createElement("p")
                     table_data_new.setAttribute("class","inline_prop")
                     // return(count_skills-1===index?table_data_new.innerHTML=` ${element}`:table_data_new.innerHTML=` ${element} , `)
-            
-                    if(count_skills-1===index){
-                        table_data_new.innerHTML=` ${element}`
-                    }else{
-                        table_data_new.innerHTML=` ${element} , `
-                    }
+                    let skillButton=document.createElement("button")
+                    skillButton.innerHTML=`${element}`
+                    table_data_new.appendChild(skillButton)
                     table_data.appendChild(table_data_new)
                 });
                 table_row.appendChild(table_data)
@@ -115,8 +113,9 @@ function addInitialData(){
                 icons.setAttribute("class","icons")
                 let sub_icon_1=document.createElement("i")
                 sub_icon_1.setAttribute("class","fa-solid fa-eye")
-                sub_icon_1 .setAttribute("onclick",modal_box_view);
-                sub_icon_1 .onclick= ()=> modal_box_view();
+                sub_icon_1.setAttribute("data-e_id",element.employee_id)
+                sub_icon_1.setAttribute("id",sub_icon_1.dataset.e_id)
+                sub_icon_1.onclick= ()=> modal_box_view();
                 let sub_icon_2=document.createElement("i")
                 sub_icon_2.setAttribute("class","fa-solid fa-pen-to-square")
                 let sub_icon_3=document.createElement("i")
@@ -134,7 +133,6 @@ function addInitialData(){
     });
      
 }
-
 
 
 
@@ -162,7 +160,7 @@ t_r_1.appendChild(t_h_3)
 t_r_1.appendChild(t_h_4)
 t_r_1.appendChild(t_h_5)
 addInitialData()
-
+// addNewData()
 
 
 // Clicking add new employee button
@@ -181,8 +179,19 @@ function modal_box_close(){
 }
 // Viewing details of the employee
 function modal_box_view(){
+    const location = JSON.parse(localStorage.getItem("empoyeeData"));
     let modal_box_view = document.getElementById("modal_box_view")
     modal_box_view.style.display="block"
+    // event.target.id
+    location["details"].forEach(element => {
+        if(+event.target.id===element.employee_id){
+            
+        } else{
+            
+        }
+ 
+    })
+
 }
 // Closing after viewing details of the employee
 let view_cross=document.getElementById("view_cross")
