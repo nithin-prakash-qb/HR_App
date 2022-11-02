@@ -49,7 +49,7 @@ option_a_2.innerHTML="Employee ID Sorting"
 
 let label_2=document.createElement("label")
 label_2.setAttribute("for","filter")
-label_1.innerHTML="Filter : "
+label_2.innerHTML="Filter : "
 let filter=document.createElement("select")
 filter.setAttribute("id","filter")
 
@@ -133,10 +133,6 @@ function addInitialData(){
     });
      
 }
-
-
-
-
 parent.appendChild(nav_container)
 nav_container.appendChild(sort_filter)
 nav_container.appendChild(add_employee_div)
@@ -160,7 +156,6 @@ t_r_1.appendChild(t_h_3)
 t_r_1.appendChild(t_h_4)
 t_r_1.appendChild(t_h_5)
 addInitialData()
-// addNewData()
 
 
 // Clicking add new employee button
@@ -177,21 +172,114 @@ function modal_box_close(){
     let modal_box_add=document.getElementById("modal_box_add")
     modal_box_add.style.display="none"
 }
-// Viewing details of the employee
+let submit_btn=document.getElementById("submit_btn")
+submit_btn.addEventListener("click", modal_box_close);
+// Viewing details of the employee 
 function modal_box_view(){
     const location = JSON.parse(localStorage.getItem("empoyeeData"));
     let modal_box_view = document.getElementById("modal_box_view")
     modal_box_view.style.display="block"
-    // event.target.id
     location["details"].forEach(element => {
         if(+event.target.id===element.employee_id){
-            
-        } else{
-            
-        }
- 
+            document.getElementById("employee_id_!").value=element.employee_id
+            document.getElementById("name_!").value=element.name
+            document.getElementById("DOB_!").value=element["DOB"]
+            document.getElementById("age_!").value=element.Age
+            document.getElementById("email_!").value=element.email_id
+            document.getElementById("experiance_!").value=element.experiance
+            document.getElementById("DOJ_!").value=element["DOJ"]
+            document.getElementById("designation_!").value=element.designation
+            document.getElementById("skills_!").value=element.skills
+            document.getElementById("location_detail_!").value=element.contact_details
+        } 
     })
+}
 
+//Adding details of the employee using submit button
+submit_btn.addEventListener("click",addingData)
+function addingData(){
+    let employee_id=document.getElementById("employee_id")
+    let name=document.getElementById("name")
+    let DOB=document.getElementById("DOB")
+    let age=document.getElementById("age")
+    let email=document.getElementById("email")
+    let experiance=document.getElementById("experiance")
+    let DOJ=document.getElementById("DOJ")
+    let designation=document.getElementById("designation")
+    let skills=document.getElementById("skills")
+    let split_skill_array=skills.value.split(',')
+    let location_detail=document.getElementById("location_detail")
+    let table_row=document.createElement("tr")
+    localStorage.setItem("data_new_row", JSON.stringify(table_row));
+    // adding data to table
+    for(let i=1;i<=5;i++){
+        let isLastColumn=false
+        if(i===1){
+            if(employee_id.value!==""){
+                isLastColumn=true
+                let table_data=document.createElement("td")
+                table_data.innerHTML=employee_id.value
+                table_row.appendChild(table_data)
+            }
+        } else if(i===2){
+            if(name.value!==""){
+                isLastColumn=true
+                let table_data=document.createElement("td")
+                table_data.innerHTML=name.value
+                table_row.appendChild(table_data)
+            }
+            
+        }else if(i===3){
+            if(email.value!==""){
+                isLastColumn=true
+                let table_data=document.createElement("td")
+                table_data.innerHTML=email.value
+                table_row.appendChild(table_data)    
+            }
+        }else if(i===4){
+            if(skills.value!==""){
+                isLastColumn=true
+                let table_data=document.createElement("td")
+                table_data.setAttribute("class","skill_td")
+                let count_skills=split_skill_array.length
+                split_skill_array.forEach((element,index) => {
+                    let table_data_new=document.createElement("p")
+                    table_data_new.setAttribute("class","inline_prop")
+                    console.log("insid loop")
+                    let skillButton=document.createElement("button")
+                    skillButton.innerHTML=`${element}`
+                    table_data_new.appendChild(skillButton)
+                    table_data.appendChild(table_data_new)
+                });
+                table_row.appendChild(table_data)  
+            }
+                
+        }
+        else{
+            if(isLastColumn===true){
+                let table_data=document.createElement("td")
+                let icons=document.createElement("div")
+                icons.setAttribute("class","icons")
+                let sub_icon_1=document.createElement("i")
+                sub_icon_1.setAttribute("class","fa-solid fa-eye")
+                sub_icon_1.setAttribute("data-e_id",employee_id.value)
+                sub_icon_1.setAttribute("id",sub_icon_1.dataset.e_id)
+                sub_icon_1.onclick= ()=> modal_box_view();
+                let sub_icon_2=document.createElement("i")
+                sub_icon_2.setAttribute("class","fa-solid fa-pen-to-square")
+                let sub_icon_3=document.createElement("i")
+                sub_icon_3.setAttribute("class","fa-solid fa-trash")
+                sub_icon_3 .setAttribute("onclick",modal_delete);
+                sub_icon_3 .onclick= ()=> modal_delete();
+                icons.appendChild(sub_icon_1)
+                icons.appendChild(sub_icon_2)
+                icons.appendChild(sub_icon_3)
+                table_data.appendChild(icons)
+                table_row.appendChild(table_data)
+            }
+        }
+    }
+    main_table.appendChild(table_row)   
 }
 // Closing after viewing details of the employee
 let view_cross=document.getElementById("view_cross")
