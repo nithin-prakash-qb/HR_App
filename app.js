@@ -4,63 +4,14 @@ const getDataLocation = () => {
         return res.json();
       })
       .then((data) => {
-        // console.log(data)
         localStorage.setItem("empoyeeData", JSON.stringify(data));
       });
   };
   getDataLocation();
-// Creating Navigation Container
+
+// Creating table and adding the initial data
+
 let parent=document.getElementById("parent")
-let H1=document.createElement("h1")
-H1.innerHTML=`HR management App`
-parent.appendChild(H1)
-
-let nav_container = document.createElement("div")
-nav_container.setAttribute("id","nav_container")
-
-let sort_filter=document.createElement("div")
-sort_filter.setAttribute("id","sort_filter")
-
-let add_employee_div=document.createElement("div")
-add_employee_div.setAttribute("id","add_employee_div")
-
-let s_f_div1=document.createElement("div")
-s_f_div1.setAttribute("id","s_f_div1")
-
-let s_f_div2=document.createElement("div")
-s_f_div2.setAttribute("id","s_f_div2")
-
-let add_new=document.createElement("button")
-add_new.innerHTML="Add New"
-add_new.setAttribute("id","add_new")
-
-let label_1=document.createElement("label")
-label_1.setAttribute("for","sort")
-label_1.innerHTML="Sort : "
-let sort=document.createElement("select")
-sort.setAttribute("id","sort")
-
-let option_a_1=document.createElement("option")
-let option_a_2=document.createElement("option")
-option_a_1.innerHTML="Name Sorting"
-option_a_2.innerHTML="Employee ID Sorting"
-
-
-
-let label_2=document.createElement("label")
-label_2.setAttribute("for","filter")
-label_2.innerHTML="Filter : "
-let filter=document.createElement("select")
-filter.setAttribute("id","filter")
-
-let option_b_1=document.createElement("option")
-let option_b_2=document.createElement("option")
-let option_b_3=document.createElement("option")
-
-option_b_1.innerHTML="JS"
-option_b_2.innerHTML="TS"
-option_b_3.innerHTML="Python"
-
 let main_table=document.createElement("table")
 main_table.setAttribute("id","main_table")
 
@@ -76,7 +27,16 @@ t_h_4.innerHTML="Skills"
 let t_h_5=document.createElement("th")
 t_h_5.innerHTML="Actions"
 
-// Adding initial data
+parent.appendChild(main_table)
+main_table.appendChild(t_r_1)
+t_r_1.appendChild(t_h_1)
+t_r_1.appendChild(t_h_2)
+t_r_1.appendChild(t_h_3)
+t_r_1.appendChild(t_h_4)
+t_r_1.appendChild(t_h_5)
+
+// Function to add initial data
+
 function addInitialData(){
     const location = JSON.parse(localStorage.getItem("empoyeeData"));
     location["details"].forEach(element => {
@@ -113,8 +73,8 @@ function addInitialData(){
                 icons.setAttribute("class","icons")
                 let sub_icon_1=document.createElement("i")
                 sub_icon_1.setAttribute("class","fa-solid fa-eye")
-                // sub_icon_1.setAttribute("data-e_id",element.employee_id)
                 sub_icon_1.setAttribute("id",element.employee_id)
+                sub_icon_1.setAttribute("onclick",modal_box_view);
                 sub_icon_1.onclick= ()=> modal_box_view();
                 let sub_icon_2=document.createElement("i")
                 sub_icon_2.setAttribute("class","fa-solid fa-pen-to-square")
@@ -132,59 +92,34 @@ function addInitialData(){
         }
         main_table.appendChild(table_row)   
     });
-     
 }
-parent.appendChild(nav_container)
-nav_container.appendChild(sort_filter)
-nav_container.appendChild(add_employee_div)
-sort_filter.appendChild(s_f_div1)
-sort_filter.appendChild(s_f_div2)
-add_employee_div.appendChild(add_new)
-s_f_div1.appendChild(label_1)
-s_f_div1.appendChild(sort)
-s_f_div2.appendChild(label_2)
-s_f_div2.appendChild(filter)
-sort.appendChild(option_a_1)
-sort.appendChild(option_a_2)
-filter.appendChild(option_b_1)
-filter.appendChild(option_b_2)
-filter.appendChild(option_b_3)
-parent.appendChild(main_table)
-main_table.appendChild(t_r_1)
-t_r_1.appendChild(t_h_1)
-t_r_1.appendChild(t_h_2)
-t_r_1.appendChild(t_h_3)
-t_r_1.appendChild(t_h_4)
-t_r_1.appendChild(t_h_5)
 addInitialData()
 
 
-// Clicking add new employee button
+// Clicking add new employee button to show modal box
 let add_new_btn=document.getElementById("add_new")
 add_new_btn.addEventListener("click", modal_box_add);
 function modal_box_add(){
     let modal_box_add=document.getElementById("modal_box_add")
     modal_box_add.style.display="block"
 }
+
 //closng after adding new employee
 let add_cross=document.getElementById("add_cross")
 add_cross.addEventListener("click", modal_box_close);
+
+let submit_btn=document.getElementById("submit_btn")
+submit_btn.addEventListener("click", modal_box_close);
+
 function modal_box_close(){
     let modal_box_add=document.getElementById("modal_box_add")
     modal_box_add.style.display="none"
 }
-let submit_btn=document.getElementById("submit_btn")
-submit_btn.addEventListener("click", modal_box_close);
-
 
 //Adding details of the employee using submit button
-let new_data_arr=[]
-// localStorage.setItem("new_data_arr_1", JSON.stringify(new_data_arr));
 submit_btn.addEventListener("click",addingData)
 function addingData(){
     let new_data_obj={}
-    // const location = JSON.parse(localStorage.getItem("empoyeeData"));
-    
     let employee_id=document.getElementById("employee_id")
     let name=document.getElementById("name")
     let DOB=document.getElementById("DOB")
@@ -198,7 +133,7 @@ function addingData(){
     let location_detail=document.getElementById("location_detail")
     let table_row=document.createElement("tr")
     
-    // adding data to table
+    // adding data to table when user fills data
     let isLastColumn=false
     for(let i=1;i<=11;i++){
         
@@ -209,7 +144,6 @@ function addingData(){
                 table_data.innerHTML=employee_id.value
                 table_row.appendChild(table_data)
                 new_data_obj["employee_id"]=employee_id.value
-
             }
         } else if(i===2){
             if(name.value!==""){
@@ -253,14 +187,14 @@ function addingData(){
                 icons.setAttribute("class","icons")
                 let sub_icon_1=document.createElement("i")
                 sub_icon_1.setAttribute("class","fa-solid fa-eye")
-                // sub_icon_1.setAttribute("data-e_id",employee_id.value)
                 sub_icon_1.setAttribute("id",employee_id.value)
+                sub_icon_1.setAttribute("onclick",modal_box_view)
                 sub_icon_1.onclick= ()=> modal_box_view();
                 let sub_icon_2=document.createElement("i")
                 sub_icon_2.setAttribute("class","fa-solid fa-pen-to-square")
                 let sub_icon_3=document.createElement("i")
                 sub_icon_3.setAttribute("class","fa-solid fa-trash")
-                // sub_icon_3.setAttribute("id",element.employee_id)
+                sub_icon_3.setAttribute("id",employee_id.value)
                 sub_icon_3 .setAttribute("onclick",modal_delete);
                 sub_icon_3 .onclick= ()=> modal_delete();
                 icons.appendChild(sub_icon_1)
@@ -284,41 +218,45 @@ function addingData(){
             new_data_obj["DOJ"]=DOJ.value
         }
     }
-    const location = JSON.parse(localStorage.getItem("empoyeeData"));
-    location.details.push(new_data_obj)
-    localStorage.setItem("empoyeeData",JSON.stringify(location));
-    // console.log(new_data_arr)
-    // localStorage.setItem("data_new_row", JSON.stringify(new_data_obj));
+    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+    full_data.details.push(new_data_obj)
+    localStorage.setItem("empoyeeData",JSON.stringify(full_data));
     main_table.appendChild(table_row)
-    // const NewData = JSON.parse(localStorage.getItem("new_data_arr_1")); 
-    // NewData.push(new_data_obj)  
 }
 
 
 // Viewing details of the employee 
 function modal_box_view(){
-    const location = JSON.parse(localStorage.getItem("empoyeeData"));
     let modal_box_view = document.getElementById("modal_box_view")
     modal_box_view.style.display="block"
-
-        const x = JSON.parse(localStorage.getItem("empoyeeData"));
-        // console.log(x["details"])
-        x["details"].forEach(element => {
-            console.log(element.employee_id)
-            if(+event.target.id===+element.employee_id){
-                document.getElementById("employee_id_!").value=element.employee_id
-                document.getElementById("name_!").value=element.name
-                document.getElementById("DOB_!").value=element["DOB"]
-                document.getElementById("age_!").value=element.Age
-                document.getElementById("email_!").value=element.email_id
-                document.getElementById("experiance_!").value=element.experiance
-                document.getElementById("DOJ_!").value=element["DOJ"]
-                document.getElementById("designation_!").value=element.designation
-                document.getElementById("skills_!").value=element.skills
-                document.getElementById("location_detail_!").value=element.contact_details
-            } 
-        });
+    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+    full_data["details"].forEach(element => {
+        if(+event.target.id===+element.employee_id){
+            document.getElementById("employee_id_!").readOnly = true;
+            document.getElementById("employee_id_!").value=element.employee_id
+            document.getElementById("name_!").readOnly = true;
+            document.getElementById("name_!").value=element.name
+            document.getElementById("DOB_!").readOnly = true;
+            document.getElementById("DOB_!").value=element["DOB"]
+            document.getElementById("age_!").readOnly = true;
+            document.getElementById("age_!").value=element.Age
+            document.getElementById("email_!").readOnly = true;
+            document.getElementById("email_!").value=element.email_id
+            document.getElementById("experiance_!").readOnly = true;
+            document.getElementById("experiance_!").value=element.experiance
+            document.getElementById("DOJ_!").readOnly = true;
+            document.getElementById("DOJ_!").value=element["DOJ"]
+            document.getElementById("designation_!").readOnly = true;
+            document.getElementById("designation_!").value=element.designation
+            document.getElementById("skills_!").readOnly = true;
+            document.getElementById("skills_!").value=element.skills
+            document.getElementById("location_detail_!").readOnly = true;
+            document.getElementById("location_detail_!").value=element.contact_details
+        } 
+    });
 }
+
+
 // Closing after viewing details of the employee
 let view_cross=document.getElementById("view_cross")
 view_cross.addEventListener("click", modal_view_close);
@@ -333,38 +271,31 @@ function modal_delete(){
     modal_box_delete.style.display="block"
     let id = event.target.id;
     deleteEmployee(id);
-    // modal_box_delete.style.transition="transform 5s"
 }
 
 // for hiding delete confirmatio box 
 let delete_cross=document.getElementById("delete_cross")
 delete_cross.addEventListener("click", modal_confirmation_close);
-let deleteBtn = document.getElementById("no");
-deleteBtn.addEventListener("click",modal_confirmation_close)
+let no_btn = document.getElementById("no");
+no_btn.addEventListener("click",modal_confirmation_close)
 function modal_confirmation_close(){
     let modal_box_delete = document.getElementById("modal_box_delete")
     modal_box_delete.style.display="none"
 }
 
+//for deleting the detalils when yes is clicked in the confirmation box
 function deleteEmployee(id) {
-    let deleteBtn = document.getElementById("yes");
-    deleteBtn.addEventListener("click",modal_confirmation_close)
-        function modal_confirmation_close(){
-            let modal_box_delete = document.getElementById("modal_box_delete")
-            modal_box_delete.style.display="none"
-        }
-    deleteBtn.addEventListener("click",() => {
-        const location = JSON.parse(localStorage.getItem("empoyeeData"));
-        location["details"].forEach(element => {
+    let yesBtn = document.getElementById("yes");
+    yesBtn.addEventListener("click",modal_confirmation_close)
+    yesBtn.addEventListener("click",() => {
+        const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+        full_data["details"].forEach((element,index) => {
             if(id == element.employee_id){     
-                const index = location.details.indexOf(element);
-                location.details = [...location.details.slice(0, index), ...location.details.slice(index + 1)];
-                localStorage.setItem("empoyeeData", JSON.stringify(location));
-                addInitialData();
+                full_data["details"].splice(index,1)
+                localStorage.setItem("empoyeeData", JSON.stringify(full_data));
+                addInitialData()
             }
         });
-        
-        
     })
 }
 
