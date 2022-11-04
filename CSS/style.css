@@ -156,7 +156,7 @@ input[type="text"],input[type="email"],input[type="date"]{
     padding: 13px 0px 16px 15px;
     font-size: 16px;
 }
-#submit_btn_div{
+#submit_btn_div,#edit_btn_div{
     text-align: center; 
     padding: 11px 11px 16px 11px;
     font-size: 18px;
@@ -167,7 +167,7 @@ input[type="text"],input[type="email"],input[type="date"]{
     margin-bottom: 75px;
     
 }
-#submit_btn_div button{
+#submit_btn_div button,#edit_btn_div button{
     background-color:darkolivegreen;
     color: whitesmoke;
     border: none;
