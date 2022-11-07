@@ -50,26 +50,22 @@ function addInitialData() {
         table_data.innerHTML = `${element.name}`;
         table_row.appendChild(table_data);
       } else if (i === 3) {
-        table_data.innerHTML = `${element.email_id}`;
+        if (ValidateEmail(element.email_id)) {
+          table_data.innerHTML = `${element.email_id}`;
+        }
         table_row.appendChild(table_data);
       } else if (i === 4) {
         let table_data = document.createElement("td");
         table_data.setAttribute("class", "skill_td");
-        // console.log(typeof element["skills"])
+        let count_skills = element["skills"].length;
         // console.log(element["skills"])
-        // console.log(Object.keys(element["skills"]).length)
-        // let count_skills = element["skills"].length;
-        // console.log(count_skills)
-        console.log("*",element.skills)
-        // let count_skills = Object.keys(element["skills"]).length.length;
-        element.skills.forEach((element, index) => {
+        element["skills"].forEach((element, index) => {
           let table_data_new = document.createElement("p");
           table_data_new.setAttribute("class", "inline_prop");
           let skillButton = document.createElement("button");
           skillButton.innerHTML = `${element}`;
           table_data_new.appendChild(skillButton);
           table_data.appendChild(table_data_new);
-        console.log(element)
         });
         table_row.appendChild(table_data);
       } else {
@@ -102,22 +98,51 @@ addInitialData();
 
 // Clicking add new employee button to show modal box
 let add_new_btn = document.getElementById("add_new");
-add_new_btn.addEventListener("click",() => {
-    let modal_box_add = document.getElementById("modal_box_add");
-    modal_box_add.style.display = "block";
-  } );
-
+add_new_btn.addEventListener("click", () => {
+  let modal_box_add = document.getElementById("modal_box_add");
+  modal_box_add.style.display = "block";
+});
 
 //closng after adding new employee using both cross and submit button
+
 let add_cross = document.getElementById("add_cross");
-add_cross.addEventListener("click", modal_box_close);
+add_cross.addEventListener("click", add_modal_close);
 
-let submit_btn = document.getElementById("submit_btn");
-submit_btn.addEventListener("click", modal_box_close);
-
-function modal_box_close() {
+function add_modal_close() {
   let modal_box_add = document.getElementById("modal_box_add");
   modal_box_add.style.display = "none";
+}
+
+let submit_btn = document.getElementById("submit_btn");
+submit_btn.addEventListener("click", add_modal_submit_close);
+
+function add_modal_submit_close() {
+  let modal_box_add = document.getElementById("modal_box_add");
+  let employee_id = document.getElementById("employee_id").value;
+  let name = document.getElementById("name").value;
+  let DOB = document.getElementById("DOB").value;
+  let age = document.getElementById("age").value;
+  let email = document.getElementById("email").value;
+  let experiance = document.getElementById("experiance").value;
+  let DOJ = document.getElementById("DOJ").value;
+  let designation = document.getElementById("designation").value;
+  let skills = document.getElementById("skills").value;
+  let location_detail = document.getElementById("location_detail").value;
+  console.log(typeof employee_id);
+  if (
+    employee_id !== "" &&
+    name !== "" &&
+    DOB !== "" &&
+    age !== "" &&
+    email !== "" &&
+    experiance !== "" &&
+    DOJ !== "" &&
+    designation !== "" &&
+    skills !== "" &&
+    location_detail !== ""
+  ) {
+    modal_box_add.style.display = "none";
+  }
 }
 
 //Adding details of the employee using submit button
@@ -138,80 +163,102 @@ function addingData() {
   let table_row = document.createElement("tr");
 
   // adding data to table when user fills data
-    //employeeid,name,email,skills sould not be empty
-    for(let i=1;i<=5;i++){
-        let table_data = document.createElement("td");
-        if(i===1){
-            let table_data = document.createElement("td");
-            table_data.innerHTML = employee_id.value;
-            table_row.appendChild(table_data);
-            new_data_obj["employee_id"] = +employee_id.value;
-        }else if(i===2){
-            table_data.innerHTML = name.value;
-            table_row.appendChild(table_data);
-            new_data_obj["name"] = name.value;
-        }else if(i===3){
-            table_data.innerHTML = email.value;
-            table_row.appendChild(table_data);
-            new_data_obj["email_id"] = email.value;
-        }else if(i===4){
-            if(skills.value!==""){
-                table_data.setAttribute("class", "skill_td");
-                let count_skills = split_skill_array.length;
-                console.log(count_skills)
-                console.log(split_skill_array)
-                split_skill_array.forEach((element, index) => {
-                  let table_data_new = document.createElement("p");
-                  table_data_new.setAttribute("class", "inline_prop");
-                  let skillButton = document.createElement("button");
-                  skillButton.innerHTML = `${element}`;
-                  table_data_new.appendChild(skillButton);
-                  table_data.appendChild(table_data_new);
-                // new_data_obj["skills"] = skills.value.split(',');
-              })
-            }
-            table_row.appendChild(table_data);
-            
-        }else{
-            let table_data = document.createElement("td");
-            let icons = document.createElement("div");
-            icons.setAttribute("class", "icons");
-            let sub_icon_1 = document.createElement("i");
-            sub_icon_1.setAttribute("class", "fa-solid fa-eye");
-            sub_icon_1.setAttribute("id", employee_id.value);
-            sub_icon_1.setAttribute("onclick", modal_box_view);
-            sub_icon_1.onclick = () => modal_box_view();
-            let sub_icon_2 = document.createElement("i");
-            sub_icon_2.setAttribute("class", "fa-solid fa-pen-to-square");
-            let sub_icon_3 = document.createElement("i");
-            sub_icon_3.setAttribute("class", "fa-solid fa-trash");
-            sub_icon_3.setAttribute("id", employee_id.value);
-            sub_icon_3.setAttribute("onclick", modal_delete);
-            sub_icon_3.onclick = () => modal_delete();
-            icons.appendChild(sub_icon_1);
-            icons.appendChild(sub_icon_2);
-            icons.appendChild(sub_icon_3);
-            table_data.appendChild(icons);
-            table_row.appendChild(table_data);
+  //employeeid,name,email,skills sould not be empty
+  let submit_count = 0;
+  for (let i = 1; i <= 12; i++) {
+    let table_data = document.createElement("td");
+    if (i === 1) {
+      let table_data = document.createElement("td");
+      table_data.innerHTML = employee_id.value;
+      if (table_data.innerHTML !== "") {
+        table_row.appendChild(table_data);
+        submit_count++;
+      }
+
+      new_data_obj["employee_id"] = +employee_id.value;
+    } else if (i === 2) {
+      table_data.innerHTML = name.value;
+      if (table_data.innerHTML !== "") {
+        table_row.appendChild(table_data);
+        submit_count++;
+      }
+      new_data_obj["name"] = name.value;
+    } else if (i === 3) {
+      if (ValidateEmail(email.value) === true) {
+        table_data.innerHTML = email.value;
+        new_data_obj["email_id"] = email.value;
+        if (table_data.innerHTML !== "") {
+          table_row.appendChild(table_data);
+          submit_count++;
         }
-    }
+      }
+    } else if (i === 4) {
+      if (skills.value !== "") {
+        table_data.setAttribute("class", "skill_td");
+        let count_skills = split_skill_array.length;
+        split_skill_array.forEach((element, index) => {
+          let table_data_new = document.createElement("p");
+          table_data_new.setAttribute("class", "inline_prop");
+          let skillButton = document.createElement("button");
+          skillButton.innerHTML = `${element}`;
+          table_data_new.appendChild(skillButton);
+          table_data.appendChild(table_data_new);
+          new_data_obj["skills"] = skills.value.split(",");
+        });
+      }
+      if (table_data.innerHTML !== "") {
+        table_row.appendChild(table_data);
+        submit_count++;
+      }
+    } else if (i === 5) {
+      let table_data = document.createElement("td");
+      let icons = document.createElement("div");
+      icons.setAttribute("class", "icons");
+      let sub_icon_1 = document.createElement("i");
+      sub_icon_1.setAttribute("class", "fa-solid fa-eye");
+      sub_icon_1.setAttribute("id", employee_id.value);
+      sub_icon_1.setAttribute("onclick", modal_box_view);
+      sub_icon_1.onclick = () => modal_box_view();
+      let sub_icon_2 = document.createElement("i");
+      sub_icon_2.setAttribute("class", "fa-solid fa-pen-to-square");
+      let sub_icon_3 = document.createElement("i");
+      sub_icon_3.setAttribute("class", "fa-solid fa-trash");
+      sub_icon_3.setAttribute("id", employee_id.value);
+      sub_icon_3.setAttribute("onclick", modal_delete);
+      sub_icon_3.onclick = () => modal_delete();
+      icons.appendChild(sub_icon_1);
+      icons.appendChild(sub_icon_2);
+      icons.appendChild(sub_icon_3);
+      table_data.appendChild(icons);
+      table_row.appendChild(table_data);
+    } else if (i === 6) {
       new_data_obj["DOB"] = DOB.value;
-    
+      submit_count++;
+    } else if (i === 7) {
       new_data_obj["Age"] = age.value;
-    
+      submit_count++;
+    } else if (i === 9) {
       new_data_obj["experiance"] = experiance.value;
-    
+      submit_count++;
+    } else if (i === 10) {
       new_data_obj["designation"] = designation.value;
-    
+      submit_count++;
+    } else if (i === 11) {
       new_data_obj["contact_details"] = location_detail.value;
-  
+      submit_count++;
+    } else if (i === 12) {
       new_data_obj["DOJ"] = DOJ.value;
-    
-  
-  const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
-  full_data["details"].push(new_data_obj);
-  localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-  main_table.appendChild(table_row);
+      submit_count++;
+    }
+  }
+
+  if (submit_count === 10) {
+    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+    full_data["details"].push(new_data_obj);
+    localStorage.setItem("empoyeeData", JSON.stringify(full_data));
+    console.log("submit_count", submit_count);
+    main_table.appendChild(table_row);
+  }
 }
 
 // Viewing details of the employee
@@ -231,18 +278,34 @@ function modal_box_view() {
       document.getElementById("DOJ_!").value = element["DOJ"];
       document.getElementById("designation_!").value = element.designation;
       document.getElementById("skills_!").value = element.skills;
-      document.getElementById("location_detail_!").value =element.contact_details;
+      document.getElementById("location_detail_!").value =
+        element.contact_details;
     }
   });
-let edit_btn = document.getElementById("edit_btn");
+  let edit_btn = document.getElementById("edit_btn");
 
-// under process starts ********************
-function edit_btn_fn(id) {
-    console.log("edit_btn_fn is called")
-    console.log(id)
-}
-edit_btn.setAttribute("onclick",edit_btn_fn)
-edit_btn.onclick=()=>edit_btn_fn(id)
+  // under process starts ********************
+  function edit_btn_fn(id) {
+    console.log("edit_btn_fn is called");
+    console.log(id);
+    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+    full_data["details"].forEach((element) => {
+      if (+id === +element.employee_id) {
+        element.name = document.getElementById("name_!").value;
+        element.email_id = document.getElementById("email_!").value;
+        element.designation = document.getElementById("designation_!").value;
+        element.skills = document.getElementById("skills_!").value;
+        element.skills = element.skills.split(",");
+        element.contact_details =
+          document.getElementById("location_detail_!").value;
+        localStorage.setItem("empoyeeData", JSON.stringify(full_data));
+        addInitialData();
+        window.location.reload();
+      }
+    });
+  }
+  edit_btn.setAttribute("onclick", edit_btn_fn);
+  edit_btn.onclick = () => edit_btn_fn(id);
 }
 
 // under process ends ********************
@@ -283,47 +346,18 @@ function deleteEmployee(id) {
       if (id == element.employee_id) {
         full_data["details"].splice(index, 1);
         localStorage.setItem("empoyeeData", JSON.stringify(full_data));
+        addInitialData();
         window.location.reload();
       }
     });
   });
 }
 
-// function for editing the emloyee details
-// function edit_btn_fn(id) {
-//     console.log("edit_btn_fn is called")
-//     console.log(id)
-
-//   const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
-//   full_data["details"].forEach((element) => {
-//     if (+id === +element["employee_id"]) {
-//       document.getElementById("employee_id_!").value = element.employee_id;
-//       document.getElementById("name_!").readOnly = false;
-//       document.getElementById("name_!").value = element.name;
-//       document.getElementById("DOB_!").value = element["DOB"];
-//       document.getElementById("age_!").value = element.Age;
-//       document.getElementById("email_!").readOnly = false;
-//       document.getElementById("email_!").value = element.email_id;
-//       document.getElementById("experiance_!").value = element.experiance;
-//       document.getElementById("DOJ_!").value = element["DOJ"];
-//       document.getElementById("designation_!").readOnly = false;
-//       document.getElementById("designation_!").value = element.designation;
-//       document.getElementById("skills_!").readOnly = false;
-//       document.getElementById("skills_!").value = element.skills;
-//       document.getElementById("location_detail_!").readOnly = false;
-//       document.getElementById("location_detail_!").value =
-//       element.contact_details;
-//     }
-//   });
-//   full_data["details"].forEach(element => {
-//         if(+id===+element.employee_id){
-//             document.getElementById("name_!").value = element.name;
-//             document.getElementById("email_!").value = element.email_id;
-//             document.getElementById("designation_!").value = element.designation;
-//             document.getElementById("skills_!").value = element.skills;
-//             document.getElementById("location_detail_!").value =element.contact_details;
-//             localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-//         }
-
-//   });
-// }
+// Validating Email
+function ValidateEmail(mail) {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+    return true;
+  }
+  alert("You have entered an invalid email address!");
+  return false;
+}
