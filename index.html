@@ -16,19 +16,23 @@
     <div id="nav_container">
       <div id="sort_filter">
         <div  id="s_f_div1">
-            <label for="sort">Sort : </label>
-            <select id="sort" name="sort">
-              <option value="volvo">Name Sorting</option>
-              <option value="saab">Employee ID Sorting</option>
-            </select>
+          <label for="sort_label">Sort :</label>
+          <input list="sort"  id="sort_label">
+          <datalist id="sort">
+            <option value="Employee ID ">
+            <option value="Name">
+          </datalist>
         </div>
         <div id="s_f_div2">
-            <label for="filter">Filter : </label>
-            <select id="filter" name="filter">
-              <option value="volvo">JS</option>
-              <option value="saab">TS</option>
-              <option value="saab">Python</option>
-            </select>
+          <label for="filter_label">Filter :</label>
+          <input list="filter" id="filter_label">
+          <datalist id="filter">
+            <option value="AWS">
+            <option value="Python">
+            <option value="React">
+            <option value="Node JS">
+            <option value="Linux">
+          </datalist>
         </div>
       </div>
       <div id="add_employee_div">
@@ -162,9 +166,20 @@
               <td class="col_1"><label for="designation">Designation :</label></td>
               <td class="col_2"><input type="text" id="designation" name=""></td>
           </tr>
-          <tr>
+          <!-- <tr>
               <td class="col_1"><label for="skills">Skills :</label></td>
               <td class="col_2"><input type="text" id="skills" name="" required></td>
+          </tr> -->
+          <tr>
+            <td class="col_1"><label for="skills">Skills :</label></td>
+            <td class="col_2"><input type="text" id="skills" list="skill_list" required></td>
+            <datalist id="skill_list">
+              <option value="AWS">
+              <option value="Python">
+              <option value="React">
+              <option value="Node JS">
+              <option value="Linux">
+            </datalist>
           </tr>
           <tr>
               <td class="col_1"><label for="location_detail">Location Detail :</label></td>

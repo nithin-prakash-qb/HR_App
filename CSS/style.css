@@ -31,7 +31,7 @@ p{
     background-color: #3A606E;
     display: flex;
     justify-content: space-between;
-    width: 35%;
+    width: 46%;
     padding: 18px 18px ;
     border-radius: 8px;
     font-size: 1.2em;
@@ -40,8 +40,12 @@ p{
 #s_f_div1 label,#s_f_div2 label{
     padding-right: 10px;
 }
-#s_f_div1 select,#s_f_div2 select{
+/* #s_f_div1 select,#s_f_div2 select{
     font-size: .9em;
+} */
+#sort_label,#filter_label{
+    border-radius: 4px;
+    height: 17px;
 }
 #add_employee_div{
     /* background-color: #3A606E; */
@@ -92,6 +96,8 @@ td{
     display: flex;
     justify-content: space-between;
     font-size: 1.3em;
+    padding-left: 18px;
+    padding-right: 18px;
 }
 .inline_prop{
     display: inline;

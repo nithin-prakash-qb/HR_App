@@ -11,6 +11,20 @@ const getDataLocation = () => {
 
 localStorage.getItem("empoyeeData") === null && getDataLocation();
 
+//Common Selections
+let employee_id = document.getElementById("employee_id");
+let name = document.getElementById("name");
+let DOB = document.getElementById("DOB");
+let age = document.getElementById("age");
+let email = document.getElementById("email");
+let experiance = document.getElementById("experiance");
+let DOJ = document.getElementById("DOJ");
+let designation = document.getElementById("designation");
+let skills = document.getElementById("skills");
+let location_detail = document.getElementById("location_detail");
+let modal_box_add = document.getElementById("modal_box_add");
+let modal_box_view = document.getElementById("modal_box_view")
+
 // Creating table and adding the initial data
 let parent = document.getElementById("parent");
 let main_table = document.createElement("table");
@@ -50,15 +64,12 @@ function addInitialData() {
         table_data.innerHTML = `${element.name}`;
         table_row.appendChild(table_data);
       } else if (i === 3) {
-        if (ValidateEmail(element.email_id)) {
           table_data.innerHTML = `${element.email_id}`;
-        }
         table_row.appendChild(table_data);
       } else if (i === 4) {
         let table_data = document.createElement("td");
         table_data.setAttribute("class", "skill_td");
         let count_skills = element["skills"].length;
-        // console.log(element["skills"])
         element["skills"].forEach((element, index) => {
           let table_data_new = document.createElement("p");
           table_data_new.setAttribute("class", "inline_prop");
@@ -74,17 +85,14 @@ function addInitialData() {
         let sub_icon_1 = document.createElement("i");
         sub_icon_1.setAttribute("class", "fa-solid fa-eye");
         sub_icon_1.setAttribute("id", element.employee_id);
-        sub_icon_1.setAttribute("onclick", modal_box_view);
-        sub_icon_1.onclick = () => modal_box_view();
-        let sub_icon_2 = document.createElement("i");
-        sub_icon_2.setAttribute("class", "fa-solid fa-pen-to-square");
+        sub_icon_1.setAttribute("onclick", modal_box_view_fn);
+        sub_icon_1.onclick = () => modal_box_view_fn();
         let sub_icon_3 = document.createElement("i");
         sub_icon_3.setAttribute("class", "fa-solid fa-trash");
         sub_icon_3.setAttribute("id", element.employee_id);
         sub_icon_3.setAttribute("onclick", modal_delete);
         sub_icon_3.onclick = () => modal_delete();
         icons.appendChild(sub_icon_1);
-        icons.appendChild(sub_icon_2);
         icons.appendChild(sub_icon_3);
         table_data.appendChild(icons);
         table_row.appendChild(table_data);
@@ -99,17 +107,14 @@ addInitialData();
 // Clicking add new employee button to show modal box
 let add_new_btn = document.getElementById("add_new");
 add_new_btn.addEventListener("click", () => {
-  let modal_box_add = document.getElementById("modal_box_add");
   modal_box_add.style.display = "block";
 });
 
 //closng after adding new employee using both cross and submit button
-
 let add_cross = document.getElementById("add_cross");
 add_cross.addEventListener("click", add_modal_close);
 
 function add_modal_close() {
-  let modal_box_add = document.getElementById("modal_box_add");
   modal_box_add.style.display = "none";
 }
 
@@ -117,53 +122,42 @@ let submit_btn = document.getElementById("submit_btn");
 submit_btn.addEventListener("click", add_modal_submit_close);
 
 function add_modal_submit_close() {
-  let modal_box_add = document.getElementById("modal_box_add");
-  let employee_id = document.getElementById("employee_id").value;
-  let name = document.getElementById("name").value;
-  let DOB = document.getElementById("DOB").value;
-  let age = document.getElementById("age").value;
-  let email = document.getElementById("email").value;
-  let experiance = document.getElementById("experiance").value;
-  let DOJ = document.getElementById("DOJ").value;
-  let designation = document.getElementById("designation").value;
-  let skills = document.getElementById("skills").value;
-  let location_detail = document.getElementById("location_detail").value;
-  console.log(typeof employee_id);
-  if (
-    employee_id !== "" &&
-    name !== "" &&
-    DOB !== "" &&
-    age !== "" &&
-    email !== "" &&
-    experiance !== "" &&
-    DOJ !== "" &&
-    designation !== "" &&
-    skills !== "" &&
-    location_detail !== ""
-  ) {
-    modal_box_add.style.display = "none";
-  }
+    let employeeValue=employee_id.value ;
+    let nameValue=name.value ;
+    let dobValue=DOB.value ;
+    let ageValue=age.value ;
+    let emailValue=email.value;
+    let experianceValue=experiance.value;
+    let dojValue=DOJ.value
+    let designationValue=designation.value
+    let skillsValue=skills.value ;
+    let location_detailValue=location_detail.value;
+
+    if (
+        employeeValue!== "" &&
+        nameValue!== "" &&
+        dobValue!== "" &&
+        ageValue !== "" &&
+        emailValue!== "" &&
+        experianceValue !== "" &&
+        dojValue!== "" &&
+        designationValue!== "" &&
+        skillsValue !== "" &&
+        location_detailValue!== ""
+    ) {
+        modal_box_add.style.display = "none";
+    }
 }
 
 //Adding details of the employee using submit button
 submit_btn.addEventListener("click", addingData);
 function addingData() {
   let new_data_obj = {};
-  let employee_id = document.getElementById("employee_id");
-  let name = document.getElementById("name");
-  let DOB = document.getElementById("DOB");
-  let age = document.getElementById("age");
-  let email = document.getElementById("email");
-  let experiance = document.getElementById("experiance");
-  let DOJ = document.getElementById("DOJ");
-  let designation = document.getElementById("designation");
-  let skills = document.getElementById("skills");
   let split_skill_array = skills.value.split(",");
-  let location_detail = document.getElementById("location_detail");
   let table_row = document.createElement("tr");
 
   // adding data to table when user fills data
-  //employeeid,name,email,skills sould not be empty
+
   let submit_count = 0;
   for (let i = 1; i <= 12; i++) {
     let table_data = document.createElement("td");
@@ -191,6 +185,8 @@ function addingData() {
           table_row.appendChild(table_data);
           submit_count++;
         }
+      }else{
+        modal_box_add.style.display = "block";
       }
     } else if (i === 4) {
       if (skills.value !== "") {
@@ -217,17 +213,14 @@ function addingData() {
       let sub_icon_1 = document.createElement("i");
       sub_icon_1.setAttribute("class", "fa-solid fa-eye");
       sub_icon_1.setAttribute("id", employee_id.value);
-      sub_icon_1.setAttribute("onclick", modal_box_view);
-      sub_icon_1.onclick = () => modal_box_view();
-      let sub_icon_2 = document.createElement("i");
-      sub_icon_2.setAttribute("class", "fa-solid fa-pen-to-square");
+      sub_icon_1.setAttribute("onclick", modal_box_view_fn);
+      sub_icon_1.onclick = () => modal_box_view_fn();
       let sub_icon_3 = document.createElement("i");
       sub_icon_3.setAttribute("class", "fa-solid fa-trash");
       sub_icon_3.setAttribute("id", employee_id.value);
       sub_icon_3.setAttribute("onclick", modal_delete);
       sub_icon_3.onclick = () => modal_delete();
       icons.appendChild(sub_icon_1);
-      icons.appendChild(sub_icon_2);
       icons.appendChild(sub_icon_3);
       table_data.appendChild(icons);
       table_row.appendChild(table_data);
@@ -262,9 +255,9 @@ function addingData() {
 }
 
 // Viewing details of the employee
-function modal_box_view() {
+function modal_box_view_fn() {
   let id = event.target.id;
-  let modal_box_view = document.getElementById("modal_box_view");
+ 
   modal_box_view.style.display = "block";
   const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
   full_data["details"].forEach((element) => {
@@ -282,22 +275,29 @@ function modal_box_view() {
         element.contact_details;
     }
   });
+// Editing details
   let edit_btn = document.getElementById("edit_btn");
-
-  // under process starts ********************
   function edit_btn_fn(id) {
     console.log("edit_btn_fn is called");
     console.log(id);
     const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
     full_data["details"].forEach((element) => {
       if (+id === +element.employee_id) {
-        element.name = document.getElementById("name_!").value;
-        element.email_id = document.getElementById("email_!").value;
-        element.designation = document.getElementById("designation_!").value;
-        element.skills = document.getElementById("skills_!").value;
-        element.skills = element.skills.split(",");
-        element.contact_details =
-          document.getElementById("location_detail_!").value;
+        document.getElementById("name_!").value!=="" ? element.name = document.getElementById("name_!").value: modal_box_view.style.display=block;
+        if((document.getElementById("email_!").value!=="") && (ValidateEmail(document.getElementById("email_!").value)===true)){
+            element.email_id = document.getElementById("email_!").value;
+        }else{
+            modal_box_view.style.display="block"
+        }
+        document.getElementById("designation_!").value!==""? element.designation = document.getElementById("designation_!").value:modal_box_view.style.display=block
+        if(document.getElementById("skills_!").value!==""){
+            element.skills = document.getElementById("skills_!").value;
+            element.skills = element.skills.split(",");
+        }else{
+            modal_box_view.style.display=block
+        }
+        document.getElementById("location_detail_!").value!==""? element.contact_details =document.getElementById("location_detail_!").value:modal_box_view.style.display=block
+         
         localStorage.setItem("empoyeeData", JSON.stringify(full_data));
         addInitialData();
         window.location.reload();
@@ -308,13 +308,12 @@ function modal_box_view() {
   edit_btn.onclick = () => edit_btn_fn(id);
 }
 
-// under process ends ********************
+
 
 // for closing the modal for view
 let view_cross = document.getElementById("view_cross");
 view_cross.addEventListener("click", modal_view_close);
 function modal_view_close() {
-  let modal_box_view = document.getElementById("modal_box_view");
   modal_box_view.style.display = "none";
 }
 
@@ -361,3 +360,5 @@ function ValidateEmail(mail) {
   alert("You have entered an invalid email address!");
   return false;
 }
+
+//Sorting based on employee id
