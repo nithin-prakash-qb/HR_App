@@ -53,6 +53,7 @@ t_r_1.appendChild(t_h_5);
 // Function to add initial data
 function addInitialData() {
   const location = JSON.parse(localStorage.getItem("empoyeeData"));
+  console.log(location.details)
   location["details"].forEach((element) => {
     let table_row = document.createElement("tr");
     for (let i = 1; i <= 5; i++) {
@@ -340,7 +341,6 @@ function deleteEmployee(id) {
   let yesBtn = document.getElementById("yes");
   yesBtn.addEventListener("click", modal_confirmation_close);
   yesBtn.addEventListener("click", () => {
-    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
     full_data["details"].forEach((element, index) => {
       if (id == element.employee_id) {
         full_data["details"].splice(index, 1);
@@ -362,3 +362,28 @@ function ValidateEmail(mail) {
 }
 
 //Sorting based on employee id
+
+const sortName = (array) => { 
+    return array.sort(function(a, b) {
+    var firstTest = a.name.toUpperCase();
+    var secondText = b.name.toUpperCase();
+    return (firstTest < secondText) ? -1 : (firstTest > secondText) ? 1 : 0;
+});
+}
+
+// console.log(document.getElementById("sort_label").value)
+let sort_label=document.getElementById("sort_label")
+sort_label.addEventListener("input",function(){
+    if("Name"===this.value){
+        console.log("Inside this")
+        const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+        sortName(full_data.details)
+        console.log(sortName(full_data.details))
+        localStorage.setItem("empoyeeData", JSON.stringify(full_data));
+        window.location.reload();
+        addInitialData()
+       
+    }
+})
+
+
