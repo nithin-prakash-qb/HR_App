@@ -1,7 +1,7 @@
 {
     "details":[
         {
-            "employee_id":101,
+            "employee_id":105,
             "name":"Joey",
             "DOB":"01/06/1988",
             "Age":32,
@@ -9,7 +9,7 @@
             "email_id":"joey@abc.com",
             "experiance":"10+ years ",
             "designation":"Product Owner",
-            "skills":["Firebase","JacaScript","AWS"],
+            "skills":["Azure","JacaScript","AWS"],
             "contact_details":["3960 Portola Dr","Santa Cruz","California","Pin : 692357"]
         },
         {
@@ -49,7 +49,7 @@
             "contact_details":["3960 Portola Dr","Santa Cruz","California","Pin : 692357"]
         },
         {
-            "employee_id":105,
+            "employee_id":101,
             "name":"Monica",
             "DOB":"15/10/1996",
             "Age":38,
@@ -76,7 +76,7 @@
         },
         {       
         "skill_id":4,
-        "skill":"React"
+        "skill":"React JS"
         },
         {       
         "skill_id":5,

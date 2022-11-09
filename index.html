@@ -17,20 +17,24 @@
       <div id="sort_filter">
         <div  id="s_f_div1">
           <label for="sort_label">Sort :</label>
-          <input list="sort"  id="sort_label">
-          <datalist id="sort">
-            <option value="Employee ID ">
-            <option value="Name" id="Name" onclick="name_sorting()">
-          </datalist>
+          <select list="sort"  id="sort_label">
+            <option value="Employee ID">Employee ID</option>
+            <option value="Name" id="Name">Name</option>
+        </select>
         </div>
         <div id="s_f_div2">
           <label for="filter_label">Filter :</label>
           <input list="filter" id="filter_label">
           <datalist id="filter">
-            <option value="AWS">
-            <option value="Python">
-            <option value="React">
+            <option value="Go">
+            <option value="GraphQL">
+            <option value="JacaScript">
+            <option value="React JS">
             <option value="Node JS">
+            <option value="AWS">
+            <option value="TypeScript">
+            <option value="Azure">
+            <option value="Firebase">
             <option value="Linux">
           </datalist>
         </div>
@@ -41,91 +45,97 @@
     </div> 
 <!-- Initial viewing of table -->
     <!-- <table id="main_table">
-      <tr>
-        <th>Employee ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Skills</th>
-        <th>Actions</th>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Joey</td>
-        <td>joey@gmail.com</td>
-        <td class="skill_td"><button>JavaScript</button>&nbsp<button>TypeScript</button>&nbsp<button>Python</button></td>
-        <td>
-          <div class="icons">
-              <i class="fa-solid fa-eye" onclick="modal_box_view() id="101"></i>
-              <i class="fa-solid fa-pen-to-square" ></i>
-              <i class="fa-solid fa-trash" onclick="modal_delete()"></i>
-          </div>  
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Joey</td>
-        <td>joey@gmail.com</td>
-        <td class="skill_td"><button>JavaScript</button>&nbsp<button>TypeScript</button>&nbsp<button>Python</button></td>
-        <td>
-          <div class="icons">
-              <i class="fa-solid fa-eye" onclick="modal_box_view()"></i>
-              <i class="fa-solid fa-pen-to-square"></i>
-              <i class="fa-solid fa-trash" onclick="modal_delete()"></i>
-          </div>  
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Joey</td>
-        <td>joey@gmail.com</td>
-        <td class="skill_td"><button>JavaScript</button>&nbsp<button>TypeScript</button>&nbsp<button>Python</button></td>
-        <td>
-          <div class="icons">
-              <i class="fa-solid fa-eye" onclick="modal_box_view()" ></i>
-              <i class="fa-solid fa-pen-to-square "></i>
-              <i class="fa-solid fa-trash id" onclick="modal_delete()"></i>
-          </div>  
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Joey</td>
-        <td>joey@gmail.com</td>
-        <td class="skill_td"><button>JavaScript</button>&nbsp<button>TypeScript</button>&nbsp<button>Python</button></td>
-        <td>
-          <div class="icons">
-              <i class="fa-solid fa-eye" id="view_icon"></i>
-              <i class="fa-solid fa-pen-to-square"></i>
-              <i class="fa-solid fa-trash" onclick="modal_delete()"></i>
-          </div>  
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Joey</td>
-        <td>joey@gmail.com</td>
-        <td class="skill_td"><button>JavaScript</button>&nbsp<button>TypeScript</button>&nbsp<button>Python</button></td>
-        <td>
-          <div class="icons">
-              <i class="fa-solid fa-eye" onclick="modal_box_view()"></i>
-              <i class="fa-solid fa-pen-to-square"></i>
-              <i class="fa-solid fa-trash" onclick="modal_delete()" ></i>
-          </div>  
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Joey</td>
-        <td>joey@gmail.com</td>
-        <td class="skill_td"><button>JavaScript</button>&nbsp<button>TypeScript</button>&nbsp<button>Python</button></td>
-        <td>
-          <div class="icons">
-              <i class="fa-solid fa-eye" onclick="modal_box_view()"></i>
-              <i class="fa-solid fa-pen-to-square"></i>
-              <i class="fa-solid fa-trash" onclick="modal_delete()" ></i>
-          </div>  
-        </td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Skills</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Joey</td>
+          <td>joey@gmail.com</td>
+          <td class="skill_td"><button>JavaScript</button>&nbsp<button>TypeScript</button>&nbsp<button>Python</button></td>
+          <td>
+            <div class="icons">
+                <i class="fa-solid fa-eye" onclick="modal_box_view() id="101"></i>
+                <i class="fa-solid fa-pen-to-square" ></i>
+                <i class="fa-solid fa-trash" onclick="modal_delete()"></i>
+            </div>  
+          </td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Joey</td>
+          <td>joey@gmail.com</td>
+          <td class="skill_td"><button>JavaScript</button>&nbsp<button>TypeScript</button>&nbsp<button>Python</button></td>
+          <td>
+            <div class="icons">
+                <i class="fa-solid fa-eye" onclick="modal_box_view()"></i>
+                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-trash" onclick="modal_delete()"></i>
+            </div>  
+          </td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Joey</td>
+          <td>joey@gmail.com</td>
+          <td class="skill_td"><button>JavaScript</button>&nbsp<button>TypeScript</button>&nbsp<button>Python</button></td>
+          <td>
+            <div class="icons">
+                <i class="fa-solid fa-eye" onclick="modal_box_view()" ></i>
+                <i class="fa-solid fa-pen-to-square "></i>
+                <i class="fa-solid fa-trash id" onclick="modal_delete()"></i>
+            </div>  
+          </td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Joey</td>
+          <td>joey@gmail.com</td>
+          <td class="skill_td"><button>JavaScript</button>&nbsp<button>TypeScript</button>&nbsp<button>Python</button></td>
+          <td>
+            <div class="icons">
+                <i class="fa-solid fa-eye" id="view_icon"></i>
+                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-trash" onclick="modal_delete()"></i>
+            </div>  
+          </td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Joey</td>
+          <td>joey@gmail.com</td>
+          <td class="skill_td"><button>JavaScript</button>&nbsp<button>TypeScript</button>&nbsp<button>Python</button></td>
+          <td>
+            <div class="icons">
+                <i class="fa-solid fa-eye" onclick="modal_box_view()"></i>
+                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-trash" onclick="modal_delete()" ></i>
+            </div>  
+          </td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Joey</td>
+          <td>joey@gmail.com</td>
+          <td class="skill_td"><button>JavaScript</button>&nbsp<button>TypeScript</button>&nbsp<button>Python</button></td>
+          <td>
+            <div class="icons">
+                <i class="fa-solid fa-eye" onclick="modal_box_view()"></i>
+                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-solid fa-trash" onclick="modal_delete()" ></i>
+            </div>  
+          </td>
+        </tr>
+      </tbody>
+      
+        
     </table> -->
 
 <!-- Modal Box for adding data -->

@@ -23,37 +23,46 @@ let designation = document.getElementById("designation");
 let skills = document.getElementById("skills");
 let location_detail = document.getElementById("location_detail");
 let modal_box_add = document.getElementById("modal_box_add");
-let modal_box_view = document.getElementById("modal_box_view")
+let modal_box_view = document.getElementById("modal_box_view");
 
 // Creating table and adding the initial data
 let parent = document.getElementById("parent");
-let main_table = document.createElement("table");
-main_table.setAttribute("id", "main_table");
+let outer_table=document.createElement("div")
+outer_table.setAttribute("id", "outer_table");
+parent.appendChild(outer_table)
 
-let t_r_1 = document.createElement("tr");
-let t_h_1 = document.createElement("th");
-t_h_1.innerHTML = "Employee ID";
-let t_h_2 = document.createElement("th");
-t_h_2.innerHTML = "Name";
-let t_h_3 = document.createElement("th");
-t_h_3.innerHTML = "Email";
-let t_h_4 = document.createElement("th");
-t_h_4.innerHTML = "Skills";
-let t_h_5 = document.createElement("th");
-t_h_5.innerHTML = "Actions";
 
-parent.appendChild(main_table);
-main_table.appendChild(t_r_1);
-t_r_1.appendChild(t_h_1);
-t_r_1.appendChild(t_h_2);
-t_r_1.appendChild(t_h_3);
-t_r_1.appendChild(t_h_4);
-t_r_1.appendChild(t_h_5);
+
+// let thead=document.createElement("thead")
+let tbody = document.createElement("tbody");
 
 // Function to add initial data
 function addInitialData() {
+  let main_table = document.createElement("table");
+  main_table.setAttribute("id", "main_table");        
+  let t_r_1 = document.createElement("tr");
+  let t_h_1 = document.createElement("th");
+  t_h_1.innerHTML = "Employee ID";
+  let t_h_2 = document.createElement("th");
+  t_h_2.innerHTML = "Name";
+  let t_h_3 = document.createElement("th");
+  t_h_3.innerHTML = "Email";
+  let t_h_4 = document.createElement("th");
+  t_h_4.innerHTML = "Skills";
+  let t_h_5 = document.createElement("th");
+  t_h_5.innerHTML = "Actions";
+
+  
+  tbody.appendChild(t_r_1);
+
+  t_r_1.appendChild(t_h_1);
+  t_r_1.appendChild(t_h_2);
+  t_r_1.appendChild(t_h_3);
+  t_r_1.appendChild(t_h_4);
+  t_r_1.appendChild(t_h_5);
+
   const location = JSON.parse(localStorage.getItem("empoyeeData"));
-  console.log(location.details)
+  console.log(location.details);
   location["details"].forEach((element) => {
     let table_row = document.createElement("tr");
     for (let i = 1; i <= 5; i++) {
@@ -65,7 +74,7 @@ function addInitialData() {
         table_data.innerHTML = `${element.name}`;
         table_row.appendChild(table_data);
       } else if (i === 3) {
-          table_data.innerHTML = `${element.email_id}`;
+        table_data.innerHTML = `${element.email_id}`;
         table_row.appendChild(table_data);
       } else if (i === 4) {
         let table_data = document.createElement("td");
@@ -99,8 +108,10 @@ function addInitialData() {
         table_row.appendChild(table_data);
       }
     }
-    main_table.appendChild(table_row);
+    tbody.appendChild(table_row);
   });
+main_table.replaceChildren(tbody);
+outer_table.replaceChildren(main_table);
 }
 
 addInitialData();
@@ -123,31 +134,31 @@ let submit_btn = document.getElementById("submit_btn");
 submit_btn.addEventListener("click", add_modal_submit_close);
 
 function add_modal_submit_close() {
-    let employeeValue=employee_id.value ;
-    let nameValue=name.value ;
-    let dobValue=DOB.value ;
-    let ageValue=age.value ;
-    let emailValue=email.value;
-    let experianceValue=experiance.value;
-    let dojValue=DOJ.value
-    let designationValue=designation.value
-    let skillsValue=skills.value ;
-    let location_detailValue=location_detail.value;
+  let employeeValue = employee_id.value;
+  let nameValue = name.value;
+  let dobValue = DOB.value;
+  let ageValue = age.value;
+  let emailValue = email.value;
+  let experianceValue = experiance.value;
+  let dojValue = DOJ.value;
+  let designationValue = designation.value;
+  let skillsValue = skills.value;
+  let location_detailValue = location_detail.value;
 
-    if (
-        employeeValue!== "" &&
-        nameValue!== "" &&
-        dobValue!== "" &&
-        ageValue !== "" &&
-        emailValue!== "" &&
-        experianceValue !== "" &&
-        dojValue!== "" &&
-        designationValue!== "" &&
-        skillsValue !== "" &&
-        location_detailValue!== ""
-    ) {
-        modal_box_add.style.display = "none";
-    }
+  if (
+    employeeValue !== "" &&
+    nameValue !== "" &&
+    dobValue !== "" &&
+    ageValue !== "" &&
+    emailValue !== "" &&
+    experianceValue !== "" &&
+    dojValue !== "" &&
+    designationValue !== "" &&
+    skillsValue !== "" &&
+    location_detailValue !== ""
+  ) {
+    modal_box_add.style.display = "none";
+  }
 }
 
 //Adding details of the employee using submit button
@@ -186,7 +197,7 @@ function addingData() {
           table_row.appendChild(table_data);
           submit_count++;
         }
-      }else{
+      } else {
         modal_box_add.style.display = "block";
       }
     } else if (i === 4) {
@@ -258,7 +269,7 @@ function addingData() {
 // Viewing details of the employee
 function modal_box_view_fn() {
   let id = event.target.id;
- 
+
   modal_box_view.style.display = "block";
   const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
   full_data["details"].forEach((element) => {
@@ -276,7 +287,7 @@ function modal_box_view_fn() {
         element.contact_details;
     }
   });
-// Editing details
+  // Editing details
   let edit_btn = document.getElementById("edit_btn");
   function edit_btn_fn(id) {
     console.log("edit_btn_fn is called");
@@ -284,21 +295,32 @@ function modal_box_view_fn() {
     const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
     full_data["details"].forEach((element) => {
       if (+id === +element.employee_id) {
-        document.getElementById("name_!").value!=="" ? element.name = document.getElementById("name_!").value: modal_box_view.style.display=block;
-        if((document.getElementById("email_!").value!=="") && (ValidateEmail(document.getElementById("email_!").value)===true)){
-            element.email_id = document.getElementById("email_!").value;
-        }else{
-            modal_box_view.style.display="block"
+        document.getElementById("name_!").value !== ""
+          ? (element.name = document.getElementById("name_!").value)
+          : (modal_box_view.style.display = block);
+        if (
+          document.getElementById("email_!").value !== "" &&
+          ValidateEmail(document.getElementById("email_!").value) === true
+        ) {
+          element.email_id = document.getElementById("email_!").value;
+        } else {
+          modal_box_view.style.display = "block";
         }
-        document.getElementById("designation_!").value!==""? element.designation = document.getElementById("designation_!").value:modal_box_view.style.display=block
-        if(document.getElementById("skills_!").value!==""){
-            element.skills = document.getElementById("skills_!").value;
-            element.skills = element.skills.split(",");
-        }else{
-            modal_box_view.style.display=block
+        document.getElementById("designation_!").value !== ""
+          ? (element.designation =
+              document.getElementById("designation_!").value)
+          : (modal_box_view.style.display = block);
+        if (document.getElementById("skills_!").value !== "") {
+          element.skills = document.getElementById("skills_!").value;
+          element.skills = element.skills.split(",");
+        } else {
+          modal_box_view.style.display = block;
         }
-        document.getElementById("location_detail_!").value!==""? element.contact_details =document.getElementById("location_detail_!").value:modal_box_view.style.display=block
-         
+        document.getElementById("location_detail_!").value !== ""
+          ? (element.contact_details =
+              document.getElementById("location_detail_!").value)
+          : (modal_box_view.style.display = block);
+
         localStorage.setItem("empoyeeData", JSON.stringify(full_data));
         addInitialData();
         window.location.reload();
@@ -308,8 +330,6 @@ function modal_box_view_fn() {
   edit_btn.setAttribute("onclick", edit_btn_fn);
   edit_btn.onclick = () => edit_btn_fn(id);
 }
-
-
 
 // for closing the modal for view
 let view_cross = document.getElementById("view_cross");
@@ -361,29 +381,61 @@ function ValidateEmail(mail) {
   return false;
 }
 
-//Sorting based on employee id
+const sortName = (array) => {
+  return array.sort(function (a, b) {
+    let firstTest = a.name.toUpperCase();
+    let secondText = b.name.toUpperCase();
+    return firstTest < secondText ? -1 : firstTest > secondText ? 1 : 0;
+  });
+};
 
-const sortName = (array) => { 
-    return array.sort(function(a, b) {
-    var firstTest = a.name.toUpperCase();
-    var secondText = b.name.toUpperCase();
-    return (firstTest < secondText) ? -1 : (firstTest > secondText) ? 1 : 0;
+const sort_employee_id = (array) => {
+  return array.sort(function (a, b) {
+    let x = a.employee_id;
+    let y = b.employee_id;
+    return x < y ? -1 : x > y ? 1 : 0;
+  });
+};
+//Sorting based on name and employee id
+
+let sort_label = document.getElementById("sort_label");
+sort_label.addEventListener("input", function () {
+  if ("Name" === this.value) {
+    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+    sortName(full_data.details);
+    localStorage.setItem("empoyeeData", JSON.stringify(full_data));
+    // window.location.reload();
+    addInitialData();
+  } else if ("Employee ID" === this.value) {
+    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+    sort_employee_id(full_data.details);
+    console.log(sort_employee_id(full_data.details));
+    localStorage.setItem("empoyeeData", JSON.stringify(full_data));
+    // window.location.reload();
+    addInitialData();
+  }
 });
-}
 
-// console.log(document.getElementById("sort_label").value)
-let sort_label=document.getElementById("sort_label")
-sort_label.addEventListener("input",function(){
-    if("Name"===this.value){
-        console.log("Inside this")
-        const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
-        sortName(full_data.details)
-        console.log(sortName(full_data.details))
-        localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-        window.location.reload();
-        addInitialData()
-       
-    }
+// Filtering
+// let filter_fn=()=>{
+//     const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+//     let skillArr=[]
+//     full_data.skill_info.forEach(element=>{
+//         skillArr.push(element.skill)
+//     })
+//     skillArr.forEach((element)=>{
+//         let y = full_data.details.filter(e => e.skills.includes(element))
+//         localStorage.setItem("personWithSkill", JSON.stringify(y));
+//     }) 
+
+// }
+
+
+// let filter_label = document.getElementById("filter_label");
+// filter_label.addEventListener("input",filter_fn(){
+// })
+
+let as=document.getElementById('sort_label')
+as.addEventListener("keyup",function(){
+    console.log(as.value)
 })
-
-

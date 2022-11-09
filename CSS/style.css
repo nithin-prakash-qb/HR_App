@@ -69,9 +69,17 @@ p{
     font-size: 18px;
 }
 /* Style for initail table view */
+#outer_table{
+    width: 100%;
+    margin: 0 auto;
+}
 #main_table{
     width: 90%;
     margin: 0 auto;
+}
+
+#table_head{
+    width: 80%;
 }
 th{
     background-color:#357266;
