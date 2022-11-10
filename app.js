@@ -33,9 +33,8 @@ let main_table = document.createElement("table");
   parent.appendChild(main_table)
 
 // Function to add initial data
-function addInitialData() {
-    let tbody = document.createElement("tbody");
-         
+function addInitialData(X) {
+  let tbody = document.createElement("tbody");      
   let t_r_1 = document.createElement("tr");
   let t_h_1 = document.createElement("th");
   t_h_1.innerHTML = "Employee ID";
@@ -54,10 +53,10 @@ function addInitialData() {
   t_r_1.appendChild(t_h_4);
   t_r_1.appendChild(t_h_5);
 
-  const location = JSON.parse(localStorage.getItem("empoyeeData"));
-//   console.log(location.details);
-  location["details"].forEach((element) => {
+  const full_data = JSON.parse(localStorage.getItem(X));
+  full_data["details"].forEach((element) => {
     let table_row = document.createElement("tr");
+    table_row.setAttribute("class","tableRow")
     for (let i = 1; i <= 5; i++) {
       let table_data = document.createElement("td");
       if (i === 1) {
@@ -107,7 +106,7 @@ main_table.replaceChildren(tbody);
 // outer_table.replaceChildren(main_table);
 }
 
-addInitialData();
+addInitialData("empoyeeData");
 
 // Clicking add new employee button to show modal box
 let add_new_btn = document.getElementById("add_new");
@@ -252,6 +251,10 @@ function addingData() {
 
   if (submit_count === 10) {
     const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+
+    // const full_data_copy=full_data
+    // localStorage.setItem("empoyeeDataCopy", JSON.stringify(full_data_copy));
+
     full_data["details"].push(new_data_obj);
     localStorage.setItem("empoyeeData", JSON.stringify(full_data));
     console.log("submit_count", submit_count);
@@ -286,6 +289,10 @@ function modal_box_view_fn() {
     console.log("edit_btn_fn is called");
     console.log(id);
     const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+
+    // const full_data_copy=full_data
+    // localStorage.setItem("empoyeeDataCopy", JSON.stringify(full_data_copy));
+
     full_data["details"].forEach((element) => {
       if (+id === +element.employee_id) {
         document.getElementById("name_!").value !== ""
@@ -314,8 +321,12 @@ function modal_box_view_fn() {
               document.getElementById("location_detail_!").value)
           : (modal_box_view.style.display = block);
 
+        // const full_data_copy = JSON.parse(localStorage.getItem("empoyeeDataCopy"));
+        // full_data_copy=full_data
+        // localStorage.setItem("empoyeeDataCopy", JSON.stringify(full_data_copy));
+
         localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-        addInitialData();
+        addInitialData("empoyeeData");
         modal_box_view.style.display = "none"
         // window.location.reload();
       }
@@ -353,14 +364,23 @@ function modal_confirmation_close() {
 //for deleting the detalils when yes is clicked in the confirmation box
 function deleteEmployee(id) {
   const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+
+//   const full_data_copy=full_data
+//   localStorage.setItem("empoyeeDataCopy", JSON.stringify(full_data_copy));
+
   let yesBtn = document.getElementById("yes");
   yesBtn.addEventListener("click", modal_confirmation_close);
   yesBtn.addEventListener("click", () => {
     full_data["details"].forEach((element, index) => {
       if (id == element.employee_id) {
         full_data["details"].splice(index, 1);
+
+        // const full_data_copy = JSON.parse(localStorage.getItem("empoyeeDataCopy"));
+        // full_data_copy=full_data
+        // localStorage.setItem("empoyeeDataCopy", JSON.stringify(full_data_copy));
+
         localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-        addInitialData();
+        addInitialData("empoyeeData");
         // window.location.reload();
       }
     });
@@ -399,13 +419,15 @@ let getSortValue=()=>{
         const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
         sort_employee_id(full_data.details);
         localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-        addInitialData();
+        addInitialData("empoyeeData");
         
     }else if(sort_label.options[sort_label.selectedIndex].innerHTML==="Name"){
         const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
         sortName(full_data.details);
         localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-        addInitialData();
+        addInitialData("empoyeeData");
+    }else{
+        addInitialData("empoyeeDataCopy")
     }
 }
 
@@ -428,27 +450,48 @@ let getSortValue=()=>{
 
 
 // Filtering
-let filter_fn=(mySkill)=>{
-    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
-    let skillArr=[]
-    full_data.skill_info.forEach(element=>{
-        skillArr.push(element.skill)
+// let filter_fn=(mySkill)=>{
+//     const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+//     let skillArr=[]
+//     full_data.skill_info.forEach(element=>{
+//         skillArr.push(element.skill)
+//     })
+//     skillArr.forEach((element)=>{
+//         if(mySkill===element){
+//             let y = full_data.details.filter(e => e.skills.includes(element))
+//             localStorage.setItem("personWithSkill", JSON.stringify(y));
+//             // addInitialData() 
+//         }
+//     }) 
+// }
+
+
+// let getFilterValue=()=>{
+//     if(filter_label.options[filter_label.selectedIndex].innerHTML==="GraphQL"){
+//         filter_fn("GraphQL")
+//     }
+// }
+
+//Filtering
+
+let filter_search = document.getElementById("filter_search")
+let tableRow = document.querySelectorAll(".tableRow")
+filter_search.addEventListener("keyup",function(event){
+    console.log(typeof event.target.value,event.target.value)
+    let word=event.target.value.toLowerCase()
+    tableRow.forEach((element)=>{
+        let skillArray=element.querySelectorAll(".skill_td p button ")
+        let isAvailable = false
+        skillArray.forEach((x)=>{
+            (x.innerHTML.toLowerCase().startsWith(word)) && (isAvailable = true);
+            isAvailable?(element.style.display=''):(element.style.display="none")
+        })  
     })
-    skillArr.forEach((element)=>{
-        if(mySkill===element){
-            let y = full_data.details.filter(e => e.skills.includes(element))
-            localStorage.setItem("personWithSkill", JSON.stringify(y));
-            // addInitialData() 
-        }
-    }) 
-}
-
-
-let getFilterValue=()=>{
-    if(filter_label.options[filter_label.selectedIndex].innerHTML==="GraphQL"){
-        filter_fn("GraphQL")
+    if(word===""){
+        addInitialData("empoyeeData")
     }
-}
+    
+})
 
 
 

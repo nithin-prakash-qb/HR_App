@@ -31,7 +31,7 @@ p{
     background-color: #3A606E;
     display: flex;
     justify-content: space-between;
-    width: 35%;
+    width: 39%;
     padding: 18px 18px ;
     border-radius: 8px;
     font-size: 1.2em;
@@ -40,13 +40,21 @@ p{
 #s_f_div1 label,#s_f_div2 label{
     padding-right: 10px;
 }
+#s_f_div2 {
+    margin-top: 2.5px;
+}
 /* #s_f_div1 select,#s_f_div2 select{
     font-size: .9em;
 } */
-#sort_label,#filter_label{
+#sort_label,#filter_search{
     border-radius: 4px;
     height: 24px;
     width: 137px;
+}
+#filter_search{
+    height: 0px;
+    padding: 11px 5px;
+    font-size: 13px;
 }
 #add_employee_div{
     /* background-color: #3A606E; */
@@ -70,10 +78,7 @@ p{
     font-size: 18px;
 }
 /* Style for initail table view */
-#outer_table{
-    width: 100%;
-    margin: 0 auto;
-}
+
 #main_table{
     width: 90%;
     margin: 0 auto;
