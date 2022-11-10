@@ -31,7 +31,7 @@ p{
     background-color: #3A606E;
     display: flex;
     justify-content: space-between;
-    width: 46%;
+    width: 35%;
     padding: 18px 18px ;
     border-radius: 8px;
     font-size: 1.2em;
@@ -45,7 +45,8 @@ p{
 } */
 #sort_label,#filter_label{
     border-radius: 4px;
-    height: 17px;
+    height: 24px;
+    width: 137px;
 }
 #add_employee_div{
     /* background-color: #3A606E; */

@@ -17,26 +17,27 @@
       <div id="sort_filter">
         <div  id="s_f_div1">
           <label for="sort_label">Sort :</label>
-          <select list="sort"  id="sort_label">
-            <option value="Employee ID">Employee ID</option>
-            <option value="Name" id="Name">Name</option>
+          <select name="sort_label" id="sort_label" onclick="getSortValue()">
+            <!-- <option value="none">None</option> -->
+            <option value="Employee ID" >Employee ID</option>
+            <option value="Name">Name</option>
         </select>
         </div>
         <div id="s_f_div2">
           <label for="filter_label">Filter :</label>
-          <input list="filter" id="filter_label">
-          <datalist id="filter">
-            <option value="Go">
-            <option value="GraphQL">
-            <option value="JacaScript">
-            <option value="React JS">
-            <option value="Node JS">
-            <option value="AWS">
-            <option value="TypeScript">
-            <option value="Azure">
-            <option value="Firebase">
-            <option value="Linux">
-          </datalist>
+          <select name="filter_label" id="filter_label" onclick="getFilterValue()">
+              <option value="none">None</option>
+              <option value="Go">Go</option>
+              <option value="GraphQL">GraphQL</option>
+              <option value="JacaScript">JacaScript</option>
+              <option value="React JS">React JS</option>
+              <option value="Node JS">Node JS</option>
+              <option value="AWS">AWS</option>
+              <option value="TypeScript">TypeScript</option>
+              <option value="Azure">Azure</option>
+              <option value="Firebase">Firebase</option>
+              <option value="Linux">Linux</option>
+          </select>
         </div>
       </div>
       <div id="add_employee_div">
