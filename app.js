@@ -29,12 +29,12 @@ let modal_box_view = document.getElementById("modal_box_view");
 let parent = document.getElementById("parent");
 
 let main_table = document.createElement("table");
-  main_table.setAttribute("id", "main_table"); 
-  parent.appendChild(main_table)
+main_table.setAttribute("id", "main_table");
+parent.appendChild(main_table);
 
 // Function to add initial data
 function addInitialData(X) {
-  let tbody = document.createElement("tbody");      
+  let tbody = document.createElement("tbody");
   let t_r_1 = document.createElement("tr");
   let t_h_1 = document.createElement("th");
   t_h_1.innerHTML = "Employee ID";
@@ -56,7 +56,7 @@ function addInitialData(X) {
   const full_data = JSON.parse(localStorage.getItem(X));
   full_data["details"].forEach((element) => {
     let table_row = document.createElement("tr");
-    table_row.setAttribute("class","tableRow")
+    table_row.setAttribute("class", "tableRow");
     for (let i = 1; i <= 5; i++) {
       let table_data = document.createElement("td");
       if (i === 1) {
@@ -102,8 +102,7 @@ function addInitialData(X) {
     }
     tbody.appendChild(table_row);
   });
-main_table.replaceChildren(tbody);
-// outer_table.replaceChildren(main_table);
+  main_table.replaceChildren(tbody);
 }
 
 addInitialData("empoyeeData");
@@ -159,9 +158,7 @@ function addingData() {
   let new_data_obj = {};
   let split_skill_array = skills.value.split(",");
   let table_row = document.createElement("tr");
-
   // adding data to table when user fills data
-
   let submit_count = 0;
   for (let i = 1; i <= 12; i++) {
     let table_data = document.createElement("td");
@@ -251,10 +248,6 @@ function addingData() {
 
   if (submit_count === 10) {
     const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
-
-    // const full_data_copy=full_data
-    // localStorage.setItem("empoyeeDataCopy", JSON.stringify(full_data_copy));
-
     full_data["details"].push(new_data_obj);
     localStorage.setItem("empoyeeData", JSON.stringify(full_data));
     console.log("submit_count", submit_count);
@@ -265,7 +258,6 @@ function addingData() {
 // Viewing details of the employee
 function modal_box_view_fn() {
   let id = event.target.id;
-
   modal_box_view.style.display = "block";
   const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
   full_data["details"].forEach((element) => {
@@ -289,10 +281,6 @@ function modal_box_view_fn() {
     console.log("edit_btn_fn is called");
     console.log(id);
     const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
-
-    // const full_data_copy=full_data
-    // localStorage.setItem("empoyeeDataCopy", JSON.stringify(full_data_copy));
-
     full_data["details"].forEach((element) => {
       if (+id === +element.employee_id) {
         document.getElementById("name_!").value !== ""
@@ -320,15 +308,9 @@ function modal_box_view_fn() {
           ? (element.contact_details =
               document.getElementById("location_detail_!").value)
           : (modal_box_view.style.display = block);
-
-        // const full_data_copy = JSON.parse(localStorage.getItem("empoyeeDataCopy"));
-        // full_data_copy=full_data
-        // localStorage.setItem("empoyeeDataCopy", JSON.stringify(full_data_copy));
-
         localStorage.setItem("empoyeeData", JSON.stringify(full_data));
         addInitialData("empoyeeData");
-        modal_box_view.style.display = "none"
-        // window.location.reload();
+        modal_box_view.style.display = "none";
       }
     });
   }
@@ -364,24 +346,14 @@ function modal_confirmation_close() {
 //for deleting the detalils when yes is clicked in the confirmation box
 function deleteEmployee(id) {
   const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
-
-//   const full_data_copy=full_data
-//   localStorage.setItem("empoyeeDataCopy", JSON.stringify(full_data_copy));
-
   let yesBtn = document.getElementById("yes");
   yesBtn.addEventListener("click", modal_confirmation_close);
   yesBtn.addEventListener("click", () => {
     full_data["details"].forEach((element, index) => {
       if (id == element.employee_id) {
         full_data["details"].splice(index, 1);
-
-        // const full_data_copy = JSON.parse(localStorage.getItem("empoyeeDataCopy"));
-        // full_data_copy=full_data
-        // localStorage.setItem("empoyeeDataCopy", JSON.stringify(full_data_copy));
-
         localStorage.setItem("empoyeeData", JSON.stringify(full_data));
         addInitialData("empoyeeData");
-        // window.location.reload();
       }
     });
   });
@@ -412,88 +384,44 @@ const sort_employee_id = (array) => {
   });
 };
 
-let getSortValue=()=>{
-    // let selectedValue=document.getElementById("sort_label").value
-    // console.log(selectedValue)
-    if(sort_label.options[sort_label.selectedIndex].innerHTML==="Employee ID"){
-        const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
-        sort_employee_id(full_data.details);
-        localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-        addInitialData("empoyeeData");
-        
-    }else if(sort_label.options[sort_label.selectedIndex].innerHTML==="Name"){
-        const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
-        sortName(full_data.details);
-        localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-        addInitialData("empoyeeData");
-    }else{
-        addInitialData("empoyeeDataCopy")
-    }
-}
-
-
-//Sorting based on name and employee id
-//   if ("Name" === sort_label.value) {
-//     const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
-//     sortName(full_data.details);
-//     localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-//     // window.location.reload();
-//     addInitialData();
-//   } else if ("Employee ID" === sort_label.value) {
-//     const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
-//     sort_employee_id(full_data.details);
-//     console.log(sort_employee_id(full_data.details));
-//     localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-//     // window.location.reload();
-//     addInitialData();
-//   }
-
-
-// Filtering
-// let filter_fn=(mySkill)=>{
-//     const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
-//     let skillArr=[]
-//     full_data.skill_info.forEach(element=>{
-//         skillArr.push(element.skill)
-//     })
-//     skillArr.forEach((element)=>{
-//         if(mySkill===element){
-//             let y = full_data.details.filter(e => e.skills.includes(element))
-//             localStorage.setItem("personWithSkill", JSON.stringify(y));
-//             // addInitialData() 
-//         }
-//     }) 
-// }
-
-
-// let getFilterValue=()=>{
-//     if(filter_label.options[filter_label.selectedIndex].innerHTML==="GraphQL"){
-//         filter_fn("GraphQL")
-//     }
-// }
+let getSortValue = () => {
+  if (
+    sort_label.options[sort_label.selectedIndex].innerHTML === "Employee ID"
+  ) {
+    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+    sort_employee_id(full_data.details);
+    localStorage.setItem("empoyeeData", JSON.stringify(full_data));
+    addInitialData("empoyeeData");
+  } else if (
+    sort_label.options[sort_label.selectedIndex].innerHTML === "Name"
+  ) {
+    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+    sortName(full_data.details);
+    localStorage.setItem("empoyeeData", JSON.stringify(full_data));
+    addInitialData("empoyeeData");
+  }
+};
+getSortValue();
 
 //Filtering
 
-let filter_search = document.getElementById("filter_search")
-let tableRow = document.querySelectorAll(".tableRow")
-filter_search.addEventListener("keyup",function(event){
-    console.log(typeof event.target.value,event.target.value)
-    let word=event.target.value.toLowerCase()
-    tableRow.forEach((element)=>{
-        let skillArray=element.querySelectorAll(".skill_td p button ")
-        let isAvailable = false
-        skillArray.forEach((x)=>{
-            (x.innerHTML.toLowerCase().startsWith(word)) && (isAvailable = true);
-            isAvailable?(element.style.display=''):(element.style.display="none")
-        })  
-    })
-    if(word===""){
-        addInitialData("empoyeeData")
-    }
-    
-})
-
-
-
-
-
+let filter_search = document.getElementById("filter_search");
+let tableRow = document.querySelectorAll(".tableRow");
+filter_search.addEventListener("keyup", function (event) {
+  console.log(typeof event.target.value, event.target.value);
+  let word = event.target.value.toLowerCase();
+  tableRow.forEach((element) => {
+    let skillArray = element.querySelectorAll(".skill_td p button ");
+    let isAvailable = false;
+    skillArray.forEach((x) => {
+      x.innerHTML.toLowerCase().startsWith(word) && (isAvailable = true);
+      isAvailable
+        ? (element.style.display = "")
+        : (element.style.display = "none");
+    });
+  });
+  if (word === "") {
+    addInitialData("empoyeeData");
+    // window.location.reload()
+  }
+});
