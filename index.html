@@ -184,14 +184,18 @@
           </tr> -->
           <tr>
             <td class="col_1"><label for="skills">Skills :</label></td>
-            <td class="col_2"><input type="text" id="skills" list="skill_list" required></td>
-            <datalist id="skill_list">
+            <td id="outer_skill_div" class="col_2">
+              <div id="inner_skill_div" >
+                <input type="text" id="skills" list="skill_list" required>
+              </div>
+            </td>
+            <!-- <datalist id="skill_list">
               <option value="AWS">
               <option value="Python">
               <option value="React">
               <option value="Node JS">
               <option value="Linux">
-            </datalist>
+            </datalist> -->
           </tr>
           <tr>
               <td class="col_1"><label for="location_detail">Location Detail :</label></td>

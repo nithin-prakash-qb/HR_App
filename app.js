@@ -24,6 +24,7 @@ let skills = document.getElementById("skills");
 let location_detail = document.getElementById("location_detail");
 let modal_box_add = document.getElementById("modal_box_add");
 let modal_box_view = document.getElementById("modal_box_view");
+// let skillArrayFull = [];
 
 // Creating table and adding the initial data
 let parent = document.getElementById("parent");
@@ -101,6 +102,7 @@ function addInitialData(X) {
       }
     }
     tbody.appendChild(table_row);
+
   });
   main_table.replaceChildren(tbody);
 }
@@ -154,11 +156,113 @@ function add_modal_submit_close() {
 
 //Adding details of the employee using submit button
 submit_btn.addEventListener("click", addingData);
+// function addingData() {
+//   let new_data_obj = {};
+//   let split_skill_array = skills.value.split(",");
+//   let table_row = document.createElement("tr");
+//   // adding data to table when user fills data
+//   let submit_count = 0;
+//   for (let i = 1; i <= 12; i++) {
+//     let table_data_new = document.createElement("td");
+//     if (i === 1) {
+//       let table_data_new = document.createElement("td");
+//       table_data_new.innerHTML = employee_id.value;
+//       if (table_data_new .innerHTML !== "") {
+//         table_row.appendChild(table_data_new );
+//         submit_count++;
+//       }
+//       new_data_obj["employee_id"] = +employee_id.value;
+//     } else if (i === 2) {
+//         table_data_new.innerHTML = name.value;
+//       if (table_data_new.innerHTML !== "") {
+//         table_row.appendChild(table_data_new);
+//         submit_count++;
+//       }
+//       new_data_obj["name"] = name.value;
+//     } else if (i === 3) {
+//       if (ValidateEmail(email.value) === true) {
+//         table_data_new.innerHTML = email.value;
+//         new_data_obj["email_id"] = email.value;
+//         if (table_data_new .innerHTML !== "") {
+//             table_row.appendChild(table_data_new);
+//           submit_count++;
+//         }
+//       } else {
+//         modal_box_add.style.display = "block";
+//       }
+//     } else if (i === 4) {
+//         if (skills.value !== "") {
+//             table_data_new.setAttribute("class", "skill_td");
+//             let count_skills = split_skill_array.length;
+//             split_skill_array.forEach((element, index) => {
+//               let table_data_new = document.createElement("p");
+//               table_data_new.setAttribute("class", "inline_prop");
+//               let skillButton = document.createElement("button");
+//               skillButton.innerHTML = `${element}`;
+//               table_data_new.appendChild(skillButton);
+//               table_data.appendChild(table_data_new);
+//               new_data_obj["skills"] = skills.value.split(",");
+//             });
+//           }
+//           if (table_data.innerHTML !== "") {
+//             table_row.appendChild(table_data);
+//             submit_count++;
+//           }
+//     } else if (i === 5) {
+//       let table_data_new  = document.createElement("td");
+//       let icons = document.createElement("div");
+//       icons.setAttribute("class", "icons");
+//       let sub_icon_1 = document.createElement("i");
+//       sub_icon_1.setAttribute("class", "fa-solid fa-eye");
+//       sub_icon_1.setAttribute("id", employee_id.value);
+//       sub_icon_1.setAttribute("onclick", modal_box_view_fn);
+//       sub_icon_1.onclick = () => modal_box_view_fn();
+//       let sub_icon_3 = document.createElement("i");
+//       sub_icon_3.setAttribute("class", "fa-solid fa-trash");
+//       sub_icon_3.setAttribute("id", employee_id.value);
+//       sub_icon_3.setAttribute("onclick", modal_delete);
+//       sub_icon_3.onclick = () => modal_delete();
+//       icons.appendChild(sub_icon_1);
+//       icons.appendChild(sub_icon_3);
+//       table_data_new.appendChild(icons);
+//       table_row.appendChild(table_data_new);
+//     } else if (i === 6) {
+//       new_data_obj["DOB"] = DOB.value;
+//       submit_count++;
+//     } else if (i === 7) {
+//       new_data_obj["Age"] = age.value;
+//       submit_count++;
+//     } else if (i === 9) {
+//       new_data_obj["experiance"] = experiance.value;
+//       submit_count++;
+//     } else if (i === 10) {
+//       new_data_obj["designation"] = designation.value;
+//       submit_count++;
+//     } else if (i === 11) {
+//       new_data_obj["contact_details"] = location_detail.value;
+//       submit_count++;
+//     } else if (i === 12) {
+//       new_data_obj["DOJ"] = DOJ.value;
+//       submit_count++;
+//     }
+//   }
+
+//   if (submit_count === 10) {
+//     const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+//     full_data["details"].push(new_data_obj);
+//     localStorage.setItem("empoyeeData", JSON.stringify(full_data));
+//     console.log("submit_count", submit_count);
+//     main_table.appendChild(table_row);
+//   }
+// }
+
 function addingData() {
   let new_data_obj = {};
   let split_skill_array = skills.value.split(",");
   let table_row = document.createElement("tr");
+
   // adding data to table when user fills data
+
   let submit_count = 0;
   for (let i = 1; i <= 12; i++) {
     let table_data = document.createElement("td");
@@ -254,6 +358,18 @@ function addingData() {
     main_table.appendChild(table_row);
   }
 }
+let skillArrayFull = [];
+skills.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
+    console.log("inside")
+    let span_data = document.createElement("span");
+    span_data.innerHTML = skills.value;
+    skillArrayFull.push(skills.value)
+    console.log(skillArrayFull)
+    document.getElementById("inner_skill_div").prepend(span_data)
+    skills.value = "";
+  }
+});
 
 // Viewing details of the employee
 function modal_box_view_fn() {
@@ -275,6 +391,7 @@ function modal_box_view_fn() {
         element.contact_details;
     }
   });
+
   // Editing details
   let edit_btn = document.getElementById("edit_btn");
   function edit_btn_fn(id) {

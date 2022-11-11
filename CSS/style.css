@@ -116,6 +116,9 @@ td{
 .inline_prop{
     display: inline;
 }
+#skills{
+    padding: 5px 0px 5px 15px;
+}
 /* Styles common for all the modal boxes */
 #modal_box_add,#modal_box_view,#modal_box_delete{
     display: none;
