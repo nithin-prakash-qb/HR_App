@@ -101,10 +101,15 @@ td{
     padding:10px;
     box-sizing: border-box;
 }
-.skill_td button{
+.allSkillBtnStyle{
     border-radius: 4px;
     padding: 2px 6px;
     margin-right: 3px;
+}
+.skill_button{
+    margin-top: 11px;
+    margin-bottom: 9px;
+    margin-left: 4px;
 }
 .icons{
     display: flex;
@@ -118,6 +123,7 @@ td{
 }
 #skills{
     padding: 5px 0px 5px 15px;
+    outline: none;
 }
 /* Styles common for all the modal boxes */
 #modal_box_add,#modal_box_view,#modal_box_delete{
@@ -178,6 +184,12 @@ input[type="text"],input[type="email"],input[type="date"]{
     border: none;
     padding: 13px 0px 16px 15px;
     font-size: 16px;
+}
+#skill_row{
+    height: 80px;
+}
+#outer_skill_div{
+    background-color: white;
 }
 #submit_btn_div,#edit_btn_div{
     text-align: center; 
