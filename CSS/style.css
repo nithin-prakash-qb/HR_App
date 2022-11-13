@@ -121,9 +121,12 @@ td{
 .inline_prop{
     display: inline;
 }
-#skills{
+#skills,#skills_new{
     padding: 5px 0px 5px 15px;
     outline: none;
+}
+#skills_new{
+    display: block;
 }
 /* Styles common for all the modal boxes */
 #modal_box_add,#modal_box_view,#modal_box_delete{
@@ -188,7 +191,7 @@ input[type="text"],input[type="email"],input[type="date"]{
 #skill_row{
     height: 80px;
 }
-#outer_skill_div{
+#outer_skill_div,#outer_skill_div_new{
     background-color: white;
 }
 #submit_btn_div,#edit_btn_div{

@@ -241,9 +241,20 @@
               <td class="col_1"><label for="designation_!">Designation :</label></td>
               <td class="col_2"><input type="text" id="designation_!" name="" ></td>
           </tr>
-          <tr>
-              <td class="col_1"><label for="skills_!">Skills :</label></td>
-              <td class="col_2"><input type="text" id="skills_!" name="" ></td>
+          <tr id="skill_row">
+            <td class="col_1"><label for="skills_new">Skills :</label></td>
+            <td id="outer_skill_div_new" class="col_2">
+              <div id="inner_skill_div_new" >
+                <input type="text" id="skills_new" list="skill_list" required placeholder="add skill">
+              </div>
+            </td>
+            <!-- <datalist id="skill_list">
+              <option value="AWS">
+              <option value="Python">
+              <option value="React">
+              <option value="Node JS">
+              <option value="Linux">
+            </datalist> -->
           </tr>
           <tr>
               <td class="col_1"><label for="location_detail_!">Location Detail :</label></td>
