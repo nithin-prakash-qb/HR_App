@@ -194,10 +194,11 @@ function addingData() {
         table_data.appendChild(table_data_new);
 
       })
-      new_data_obj["skills"]=employee_skill_array
+
       
     if (appendDataToRow(table_row,table_data)){
       submit_count++
+      new_data_obj["skills"]=employee_skill_array
     }
     
       
@@ -268,16 +269,6 @@ skills.addEventListener("keyup", (e) => {
   }
 });
 
-// document.getElementById("skills_!").addEventListener("keyup", (e) => {
-//   if (e.key === "Enter") {
-//     let button_data = document.createElement("button");
-//     button_data.setAttribute("class","skill_button allSkillBtnStyle")
-//     button_data.innerHTML = skills.value;
-//     // skillArrayFull.push(skills.value)
-//     document.getElementById("inner_skill_div_new").prepend(button_data)
-//     skills.value = "";
-//   }
-// });
 
 
 
@@ -298,55 +289,42 @@ function modal_box_view_fn() {
       document.getElementById("designation_!").value = element.designation;
       // document.getElementById("skills_new").value = element.skills;
       let parentInner=document.getElementById("inner_skill_div_new")
-      // removeAllChildNodes(parentInner)
-      if(parentInner.children.length===1){
-        console.log(parentInner.children.length)
-      }else{
-        for(let i=0;i<=parentInner.children.length-1;i++){
-          parentInner.removeChild(parentInner.firstChild);
-        }
-      }
+      removeAllChildNodes(parentInner)
       element.skills.forEach((element)=>{
         let button_data = document.createElement("button");
-        button_data.setAttribute("class","skill_button allSkillBtnStyle")
+        button_data.setAttribute("class","skill_button allSkillBtnStyle countBtn")
         button_data.innerHTML = element;
         
         document.getElementById("inner_skill_div_new").prepend(button_data)
-        // document.getElementById("skills_!").value = "";
       })
-      // let inp = document.createElement("input")
-      // inp.setAttribute("id","skills_new")
-      // parent.append(inp)
+      
       document.getElementById("location_detail_!").value =
         element.contact_details;
     }
   });
 
-  // function removeAllChildNodes(parent) {
-  //   while (parent.firstChild) {
-  //       parent.removeChild(parent.firstChild);
-  //   }
-  // }
 
-  // function removeAllChildNodes(parent) {
-  //   while (parent.childNodes.length > 1) {
-  //     parent.removeChild(parent.lastChild);
-  // }
-  // }
 
-  // function removeAllChildNodes(parentInner){
-  // console.log(parentInner.children)
-    // for(let i=0;i<=parentInner.children.length-2;i++){
-    //   // console.log("*",parentInner.children.length)
-    //   parentInner.removeChild(parentInner.firstChild);
-    // }
-  // }
+  function removeAllChildNodes(parentInner){ 
+    while (parentInner.firstChild) {
+        parentInner.removeChild(parentInner.firstChild);
+    }
+  }
  
-  // function removeAllChildNodes(parent) {
-    // while (parent.children.item(parent.children.length -2) {
-    //   parent.removeChild(parent.firstChild);
-    // }
-  // }
+  skills_new.addEventListener("keydown", (e) => {
+    if ((e.key === "Enter") && (skills_new.value!=="")){
+      let button_data = document.createElement("button");
+      button_data.setAttribute("class","skill_button allSkillBtnStyle")
+      button_data.innerHTML = skills_new.value;
+      
+    //   if(get_all_skill().includes(button_data.innerHTML.toLowerCase())){
+        document.getElementById("inner_skill_div_new").prepend(button_data)
+    //   }
+      
+      skills_new.value = "";
+      return;
+    }
+  });
 
   // Editing details
   let edit_btn = document.getElementById("edit_btn");
@@ -371,12 +349,16 @@ function modal_box_view_fn() {
           ? (element.designation =
               document.getElementById("designation_!").value)
           : (modal_box_view.style.display = block);
-        if (document.getElementById("skills_!").value !== "") {
-          element.skills = document.getElementById("skills_!").value;
-          element.skills = element.skills.split(",");
-        } else {
-          modal_box_view.style.display = block;
-        }
+        
+       
+        
+            employee_skill_array=[]
+            Object.values(document.querySelector("#inner_skill_div_new").children).forEach(element=>{
+                employee_skill_array.push(element.innerHTML)
+            })
+    
+            element.skills=employee_skill_array
+
         document.getElementById("location_detail_!").value !== ""
           ? (element.contact_details =
               document.getElementById("location_detail_!").value)
@@ -499,4 +481,14 @@ filter_search.addEventListener("keyup", function (event) {
   }
 });
 
+function get_all_skill(){
+    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+    allSkillArray=[]
+    full_data.skill_info.forEach(element => {
+        skill= element.skill.toLowerCase().replace(/\s/g, '')
+        allSkillArray.push(skill)
+    });
+    return allSkillArray
+}
+console.log(get_all_skill())
 

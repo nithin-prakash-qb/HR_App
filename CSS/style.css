@@ -143,6 +143,7 @@ td{
 }
 #modal_box_view{
     padding-bottom: 50px;
+    overflow: scroll;
 }
 #modal_table{
     width: 80%;
