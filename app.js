@@ -297,8 +297,15 @@ function modal_box_view_fn() {
       document.getElementById("DOJ_!").value = element["DOJ"];
       document.getElementById("designation_!").value = element.designation;
       // document.getElementById("skills_new").value = element.skills;
-      let parent=document.getElementById("inner_skill_div_new")
-      removeAllChildNodes(parent)
+      let parentInner=document.getElementById("inner_skill_div_new")
+      // removeAllChildNodes(parentInner)
+      if(parentInner.children.length===1){
+        console.log(parentInner.children.length)
+      }else{
+        for(let i=0;i<=parentInner.children.length-1;i++){
+          parentInner.removeChild(parentInner.firstChild);
+        }
+      }
       element.skills.forEach((element)=>{
         let button_data = document.createElement("button");
         button_data.setAttribute("class","skill_button allSkillBtnStyle")
@@ -307,9 +314,9 @@ function modal_box_view_fn() {
         document.getElementById("inner_skill_div_new").prepend(button_data)
         // document.getElementById("skills_!").value = "";
       })
-      let inp = document.createElement("input")
-      inp.setAttribute("id","skills_new")
-      parent.append(inp)
+      // let inp = document.createElement("input")
+      // inp.setAttribute("id","skills_new")
+      // parent.append(inp)
       document.getElementById("location_detail_!").value =
         element.contact_details;
     }
@@ -321,14 +328,25 @@ function modal_box_view_fn() {
   //   }
   // }
 
-  function removeAllChildNodes(parent) {
-    while (parent.childNodes.length > 1) {
-      parent.removeChild(parent.lastChild);
-  }
-  }
+  // function removeAllChildNodes(parent) {
+  //   while (parent.childNodes.length > 1) {
+  //     parent.removeChild(parent.lastChild);
+  // }
+  // }
 
-
-
+  // function removeAllChildNodes(parentInner){
+  // console.log(parentInner.children)
+    // for(let i=0;i<=parentInner.children.length-2;i++){
+    //   // console.log("*",parentInner.children.length)
+    //   parentInner.removeChild(parentInner.firstChild);
+    // }
+  // }
+ 
+  // function removeAllChildNodes(parent) {
+    // while (parent.children.item(parent.children.length -2) {
+    //   parent.removeChild(parent.firstChild);
+    // }
+  // }
 
   // Editing details
   let edit_btn = document.getElementById("edit_btn");
