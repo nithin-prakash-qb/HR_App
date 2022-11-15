@@ -150,7 +150,6 @@ submit_btn.addEventListener("click", addingData);
 
 function addingData() {
   let new_data_obj = {};
-//   let split_skill_array = skills.value.split(",");
   let table_row = document.createElement("tr");
 
   // adding data to table when user fills data
@@ -260,11 +259,15 @@ function appendDataToRow(table_row,table_data){
 }
 
 skills.addEventListener("keyup", (e) => {
-  if (e.key === "Enter") {
+  console.log("inside adding skills")
+  if ((e.key === "Enter") && (skills.value!=="")){
     let button_data = document.createElement("button");
     button_data.setAttribute("class","skill_button allSkillBtnStyle")
-    button_data.innerHTML = skills.value;
-    document.getElementById("inner_skill_div").prepend(button_data)
+    if(get_all_skill(true).includes(skills.value.toLowerCase())){
+      let index = get_all_skill(true).indexOf(skills.value.toLowerCase())
+      button_data.innerHTML = get_all_skill(false)[index]
+      document.getElementById("inner_skill_div").prepend(button_data)
+    }
     skills.value = "";
   }
 });
@@ -315,14 +318,13 @@ function modal_box_view_fn() {
     if ((e.key === "Enter") && (skills_new.value!=="")){
       let button_data = document.createElement("button");
       button_data.setAttribute("class","skill_button allSkillBtnStyle")
-      button_data.innerHTML = skills_new.value;
-      
-    //   if(get_all_skill().includes(button_data.innerHTML.toLowerCase())){
+      console.log(button_data.innerHTML)
+      if(get_all_skill(true).includes(skills_new.value.toLowerCase())){
+        let index = get_all_skill(true).indexOf(skills_new.value.toLowerCase())
+        button_data.innerHTML = get_all_skill(false)[index]
         document.getElementById("inner_skill_div_new").prepend(button_data)
-    //   }
-      
+      }
       skills_new.value = "";
-      return;
     }
   });
 
@@ -475,20 +477,23 @@ filter_search.addEventListener("keyup", function (event) {
         : (element.style.display = "none");
     });
   });
-  if (word === "") {
-    addInitialData("empoyeeData");
-    // window.location.reload()
-  }
 });
 
-function get_all_skill(){
+function get_all_skill(boolCondition){
     const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
     allSkillArray=[]
-    full_data.skill_info.forEach(element => {
-        skill= element.skill.toLowerCase().replace(/\s/g, '')
-        allSkillArray.push(skill)
-    });
-    return allSkillArray
+    if(boolCondition===true){
+        full_data.skill_info.forEach(element => {
+            skill= element.skill.toLowerCase().replace(/\s/g, '')
+            allSkillArray.push(skill)
+        });
+        return allSkillArray
+    }else{
+        full_data.skill_info.forEach(element => {
+            allSkillArray.push(element.skill)
+        });
+        return allSkillArray
+    } 
 }
-console.log(get_all_skill())
+console.log(get_all_skill(false))
 
