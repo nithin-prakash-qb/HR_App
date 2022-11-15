@@ -180,10 +180,11 @@ function addingData() {
         modal_box_add.style.display = "block";
       }
     } else if (i === 4) {
+
+
       employee_skill_array=[]
       document.querySelectorAll(".skill_button").forEach((element)=>{
         employee_skill_array.push(element.innerHTML)
-
         let table_data_new = document.createElement("p");
         table_data_new.setAttribute("class", "inline_prop");
         let skillButton = document.createElement("button");
@@ -191,7 +192,6 @@ function addingData() {
         skillButton.innerHTML = element.innerHTML;
         table_data_new.appendChild(skillButton);
         table_data.appendChild(table_data_new);
-
       })
 
       
@@ -240,12 +240,10 @@ function addingData() {
       submit_count++;
     }
   }
-  console.log(submit_count)
   if (submit_count === 10) {
     const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
     full_data["details"].push(new_data_obj);
     localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-    console.log(submit_count)
     console.log("submit_count", submit_count);
     main_table.appendChild(table_row);
   }
@@ -257,6 +255,8 @@ function appendDataToRow(table_row,table_data){
     return true
   }
 }
+
+
 
 skills.addEventListener("keyup", (e) => {
   console.log("inside adding skills")
@@ -271,8 +271,6 @@ skills.addEventListener("keyup", (e) => {
     skills.value = "";
   }
 });
-
-
 
 
 // Viewing details of the employee
@@ -313,15 +311,23 @@ function modal_box_view_fn() {
         parentInner.removeChild(parentInner.firstChild);
     }
   }
- 
+
+  initialSkillArray=[]
+  Object.values(document.getElementById("inner_skill_div_new").children).forEach(element=>{
+    initialSkillArray.push(element.innerHTML.toLowerCase().replace(/\s/g, ''))
+  })
+  console.log("outer",initialSkillArray)
+
+
   skills_new.addEventListener("keydown", (e) => {
     if ((e.key === "Enter") && (skills_new.value!=="")){
       let button_data = document.createElement("button");
       button_data.setAttribute("class","skill_button allSkillBtnStyle")
       console.log(button_data.innerHTML)
-      if(get_all_skill(true).includes(skills_new.value.toLowerCase())){
+      if((get_all_skill(true).includes(skills_new.value.toLowerCase())) && (!initialSkillArray.includes(skills_new.value.toLowerCase()))){
         let index = get_all_skill(true).indexOf(skills_new.value.toLowerCase())
         button_data.innerHTML = get_all_skill(false)[index]
+        document.getElementById("inner_skill_div_new").children
         document.getElementById("inner_skill_div_new").prepend(button_data)
       }
       skills_new.value = "";
@@ -495,5 +501,5 @@ function get_all_skill(boolCondition){
         return allSkillArray
     } 
 }
-console.log(get_all_skill(false))
+
 

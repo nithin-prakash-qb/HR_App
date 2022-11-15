@@ -57,7 +57,7 @@
             "email_id":"monica@abc.com",
             "experiance":"6+ years ",
             "designation":"DevOps Lead",
-            "skills":["Node JS","GraphQL"],
+            "skills":["Node","GraphQL"],
             "contact_details":["3960 Portola Dr","Santa Cruz","California","Pin : 692357"]
         }
     ],
