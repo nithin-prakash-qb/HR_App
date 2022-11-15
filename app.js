@@ -5,11 +5,11 @@ const getDataLocation = () => {
       return res.json();
     })
     .then((data) => {
-      localStorage.setItem("empoyeeData", JSON.stringify(data));
+      localStorage.setItem("employeeData", JSON.stringify(data));
     });
 };
 
-localStorage.getItem("empoyeeData") === null && getDataLocation();
+localStorage.getItem("employeeData") === null && getDataLocation();
 
 //Common Selections
 let employee_id = document.getElementById("employee_id");
@@ -109,7 +109,7 @@ function addInitialData(X) {
   main_table.replaceChildren(tbody);
 }
 
-addInitialData("empoyeeData");
+addInitialData("employeeData");
 
 // Clicking add new employee button to show modal box
 let add_new_btn = document.getElementById("add_new");
@@ -197,6 +197,7 @@ function addingData() {
       
     if (appendDataToRow(table_row,table_data)){
       submit_count++
+      
       new_data_obj["skills"]=employee_skill_array
     }
     
@@ -241,12 +242,13 @@ function addingData() {
     }
   }
   if (submit_count === 10) {
-    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+    const full_data = JSON.parse(localStorage.getItem("employeeData"));
     full_data["details"].push(new_data_obj);
-    localStorage.setItem("empoyeeData", JSON.stringify(full_data));
+    localStorage.setItem("employeeData", JSON.stringify(full_data));
     console.log("submit_count", submit_count);
     main_table.appendChild(table_row);
   }
+
 }
 
 function appendDataToRow(table_row,table_data){
@@ -259,17 +261,24 @@ function appendDataToRow(table_row,table_data){
 
 
 skills.addEventListener("keyup", (e) => {
-  console.log("inside adding skills")
   if ((e.key === "Enter") && (skills.value!=="")){
-    let button_data = document.createElement("button");
-    button_data.setAttribute("class","skill_button allSkillBtnStyle")
-    if(get_all_skill(true).includes(skills.value.toLowerCase())){
+    let span_data = document.createElement("span");
+    span_data.setAttribute("class","skill_button allSkillBtnStyle span_data")
+    if((get_all_skill(true).includes(skills.value.toLowerCase())) &&(!initialSkillArray.includes(skills.value.toLowerCase()))){
       let index = get_all_skill(true).indexOf(skills.value.toLowerCase())
-      button_data.innerHTML = get_all_skill(false)[index]
-      document.getElementById("inner_skill_div").prepend(button_data)
+      span_data.innerHTML = get_all_skill(false)[index]
+      document.getElementById("inner_skill_div").prepend(span_data)
     }
     skills.value = "";
   }
+
+  initialSkillArray=[]
+  Object.values(document.getElementById("inner_skill_div").children).forEach(element=>{
+    initialSkillArray.push(element.innerHTML.toLowerCase().replace(/\s/g, ''))
+  })
+
+//   console.log("outer",initialSkillArray)
+  
 });
 
 
@@ -277,7 +286,7 @@ skills.addEventListener("keyup", (e) => {
 function modal_box_view_fn() {
   let id = event.target.id;
   modal_box_view.style.display = "block";
-  const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+  const full_data = JSON.parse(localStorage.getItem("employeeData"));
   full_data["details"].forEach((element) => {
     if (+event.target.id === +element.employee_id) {
       document.getElementById("employee_id_!").value = element.employee_id;
@@ -292,19 +301,17 @@ function modal_box_view_fn() {
       let parentInner=document.getElementById("inner_skill_div_new")
       removeAllChildNodes(parentInner)
       element.skills.forEach((element)=>{
-        let button_data = document.createElement("button");
-        button_data.setAttribute("class","skill_button allSkillBtnStyle countBtn")
-        button_data.innerHTML = element;
+        let span_data = document.createElement("span");
+        span_data.setAttribute("class","skill_button allSkillBtnStyle countBtn span_data")
+        span_data.innerHTML = `${element}<i class="fa-solid fa-xmark" id="${element}"></i>`;
         
-        document.getElementById("inner_skill_div_new").prepend(button_data)
+        document.getElementById("inner_skill_div_new").prepend(span_data)
       })
       
       document.getElementById("location_detail_!").value =
         element.contact_details;
     }
   });
-
-
 
   function removeAllChildNodes(parentInner){ 
     while (parentInner.firstChild) {
@@ -314,32 +321,42 @@ function modal_box_view_fn() {
 
   initialSkillArray=[]
   Object.values(document.getElementById("inner_skill_div_new").children).forEach(element=>{
-    initialSkillArray.push(element.innerHTML.toLowerCase().replace(/\s/g, ''))
+    initialSkillArray.push(element.textContent.toLowerCase().replace(/\s/g, ''))
+
   })
   console.log("outer",initialSkillArray)
 
 
   skills_new.addEventListener("keydown", (e) => {
     if ((e.key === "Enter") && (skills_new.value!=="")){
-      let button_data = document.createElement("button");
-      button_data.setAttribute("class","skill_button allSkillBtnStyle")
-      console.log(button_data.innerHTML)
+      let span_data = document.createElement("span");
+      span_data.setAttribute("class","skill_button allSkillBtnStyle span_data")
       if((get_all_skill(true).includes(skills_new.value.toLowerCase())) && (!initialSkillArray.includes(skills_new.value.toLowerCase()))){
         let index = get_all_skill(true).indexOf(skills_new.value.toLowerCase())
-        button_data.innerHTML = get_all_skill(false)[index]
-        document.getElementById("inner_skill_div_new").children
-        document.getElementById("inner_skill_div_new").prepend(button_data)
+        span_data.innerHTML = get_all_skill(false)[index] 
+        let i_tag=document.createElement("i")
+        i_tag.setAttribute("class","fa-solid fa-xmark")
+        i_tag.setAttribute("id",`${get_all_skill(false)[index]}`)
+        i_tag.setAttribute("onclick",closeSkill)
+        i_tag.onclick=()=>closeSkill()
+        span_data.appendChild(i_tag)
+        document.getElementById("inner_skill_div_new").prepend(span_data)
       }
       skills_new.value = "";
     }
+
   });
+
+  function closeSkill(){
+    console.log(employee_skill_array)
+  }
 
   // Editing details
   let edit_btn = document.getElementById("edit_btn");
   function edit_btn_fn(id) {
     console.log("edit_btn_fn is called");
     console.log(id);
-    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+    const full_data = JSON.parse(localStorage.getItem("employeeData"));
     full_data["details"].forEach((element) => {
       if (+id === +element.employee_id) {
         document.getElementById("name_!").value !== ""
@@ -359,11 +376,11 @@ function modal_box_view_fn() {
           : (modal_box_view.style.display = block);
         
        
-        
             employee_skill_array=[]
             Object.values(document.querySelector("#inner_skill_div_new").children).forEach(element=>{
-                employee_skill_array.push(element.innerHTML)
+                employee_skill_array.push(element.textContent)
             })
+            console.log(employee_skill_array)
     
             element.skills=employee_skill_array
 
@@ -371,8 +388,8 @@ function modal_box_view_fn() {
           ? (element.contact_details =
               document.getElementById("location_detail_!").value)
           : (modal_box_view.style.display = block);
-        localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-        addInitialData("empoyeeData");
+        localStorage.setItem("employeeData", JSON.stringify(full_data));
+        addInitialData("employeeData");
         modal_box_view.style.display = "none";
       }
     });
@@ -408,15 +425,15 @@ function modal_confirmation_close() {
 
 //for deleting the detalils when yes is clicked in the confirmation box
 function deleteEmployee(id) {
-  const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+  const full_data = JSON.parse(localStorage.getItem("employeeData"));
   let yesBtn = document.getElementById("yes");
   yesBtn.addEventListener("click", modal_confirmation_close);
   yesBtn.addEventListener("click", () => {
     full_data["details"].forEach((element, index) => {
       if (id == element.employee_id) {
         full_data["details"].splice(index, 1);
-        localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-        addInitialData("empoyeeData");
+        localStorage.setItem("employeeData", JSON.stringify(full_data));
+        addInitialData("employeeData");
       }
     });
   });
@@ -451,27 +468,26 @@ let getSortValue = () => {
   if (
     sort_label.options[sort_label.selectedIndex].innerHTML === "Employee ID"
   ) {
-    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+    const full_data = JSON.parse(localStorage.getItem("employeeData"));
     sort_employee_id(full_data.details);
-    localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-    addInitialData("empoyeeData");
+    localStorage.setItem("employeeData", JSON.stringify(full_data));
+    addInitialData("employeeData");
   } else if (
     sort_label.options[sort_label.selectedIndex].innerHTML === "Name"
   ) {
-    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+    const full_data = JSON.parse(localStorage.getItem("employeeData"));
     sortName(full_data.details);
-    localStorage.setItem("empoyeeData", JSON.stringify(full_data));
-    addInitialData("empoyeeData");
+    localStorage.setItem("employeeData", JSON.stringify(full_data));
+    addInitialData("employeeData");
   }
 };
 getSortValue();
 
-//Filtering
 
+//Filtering
 let filter_search = document.getElementById("filter_search");
-let tableRow = document.querySelectorAll(".tableRow");
 filter_search.addEventListener("keyup", function (event) {
-  console.log(typeof event.target.value, event.target.value);
+  let tableRow = document.querySelectorAll(".tableRow");
   let word = event.target.value.toLowerCase();
   tableRow.forEach((element) => {
     let skillArray = element.querySelectorAll(".skill_td p button ");
@@ -485,8 +501,9 @@ filter_search.addEventListener("keyup", function (event) {
   });
 });
 
+
 function get_all_skill(boolCondition){
-    const full_data = JSON.parse(localStorage.getItem("empoyeeData"));
+    const full_data = JSON.parse(localStorage.getItem("employeeData"));
     allSkillArray=[]
     if(boolCondition===true){
         full_data.skill_info.forEach(element => {
