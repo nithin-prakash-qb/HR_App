@@ -84,7 +84,6 @@ function addInitialData(X) {
         });
         table_row.appendChild(table_data);
       } else {
-
         let icons = document.createElement("div");
         icons.setAttribute("class", "icons");
         let sub_icon_1 = document.createElement("i");
@@ -180,8 +179,6 @@ function addingData() {
         modal_box_add.style.display = "block";
       }
     } else if (i === 4) {
-
-
       employee_skill_array=[]
       document.querySelectorAll(".skill_button").forEach((element)=>{
         employee_skill_array.push(element.innerHTML)
@@ -197,13 +194,10 @@ function addingData() {
       
     if (appendDataToRow(table_row,table_data)){
       submit_count++
-      
       new_data_obj["skills"]=employee_skill_array
     }
     
-      
     } else if (i === 5) {
-      
       let table_data = document.createElement("td");
       let icons = document.createElement("div");
       icons.setAttribute("class", "icons");
@@ -303,8 +297,12 @@ function modal_box_view_fn() {
       element.skills.forEach((element)=>{
         let span_data = document.createElement("span");
         span_data.setAttribute("class","skill_button allSkillBtnStyle countBtn span_data")
-        span_data.innerHTML = `${element}<i class="fa-solid fa-xmark" id="${element}"></i>`;
-        
+        span_data.innerHTML = element;
+        let i_tag=document.createElement("i")
+        i_tag.setAttribute("class","fa-solid fa-xmark")
+        i_tag.setAttribute("id",element)
+        i_tag.setAttribute("onclick",closeSkill)
+        span_data.appendChild(i_tag)
         document.getElementById("inner_skill_div_new").prepend(span_data)
       })
       
@@ -319,19 +317,18 @@ function modal_box_view_fn() {
     }
   }
 
+
   initialSkillArray=[]
   Object.values(document.getElementById("inner_skill_div_new").children).forEach(element=>{
     initialSkillArray.push(element.textContent.toLowerCase().replace(/\s/g, ''))
-
   })
   console.log("outer",initialSkillArray)
-
-
+//   let checkDuplicateSkill=[]
   skills_new.addEventListener("keydown", (e) => {
     if ((e.key === "Enter") && (skills_new.value!=="")){
       let span_data = document.createElement("span");
       span_data.setAttribute("class","skill_button allSkillBtnStyle span_data")
-      if((get_all_skill(true).includes(skills_new.value.toLowerCase())) && (!initialSkillArray.includes(skills_new.value.toLowerCase()))){
+      if((get_all_skill(true).includes(skills_new.value.toLowerCase())) && (!initialSkillArray.includes(skills_new.value.toLowerCase())) &&(!initialSkillArray_new.includes(skills_new.value.toLowerCase()))){
         let index = get_all_skill(true).indexOf(skills_new.value.toLowerCase())
         span_data.innerHTML = get_all_skill(false)[index] 
         let i_tag=document.createElement("i")
@@ -345,17 +342,20 @@ function modal_box_view_fn() {
       skills_new.value = "";
     }
 
+    initialSkillArray_new=[]
+    Object.values(document.getElementById("inner_skill_div_new").children).forEach(element=>{
+        initialSkillArray_new.push(element.textContent.toLowerCase().replace(/\s/g, ''))
+    })
+
   });
 
   function closeSkill(){
-    console.log(employee_skill_array)
+    console.log("hi")
   }
 
   // Editing details
   let edit_btn = document.getElementById("edit_btn");
   function edit_btn_fn(id) {
-    console.log("edit_btn_fn is called");
-    console.log(id);
     const full_data = JSON.parse(localStorage.getItem("employeeData"));
     full_data["details"].forEach((element) => {
       if (+id === +element.employee_id) {
@@ -374,12 +374,11 @@ function modal_box_view_fn() {
           ? (element.designation =
               document.getElementById("designation_!").value)
           : (modal_box_view.style.display = block);
-        
-       
             employee_skill_array=[]
             Object.values(document.querySelector("#inner_skill_div_new").children).forEach(element=>{
                 employee_skill_array.push(element.textContent)
             })
+
             console.log(employee_skill_array)
     
             element.skills=employee_skill_array
@@ -464,6 +463,7 @@ const sort_employee_id = (array) => {
   });
 };
 
+// Sorting value
 let getSortValue = () => {
   if (
     sort_label.options[sort_label.selectedIndex].innerHTML === "Employee ID"
@@ -501,7 +501,7 @@ filter_search.addEventListener("keyup", function (event) {
   });
 });
 
-
+//getting of an array of all skills rom JSON
 function get_all_skill(boolCondition){
     const full_data = JSON.parse(localStorage.getItem("employeeData"));
     allSkillArray=[]
