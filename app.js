@@ -242,6 +242,8 @@ function addingData() {
     console.log("submit_count", submit_count);
     main_table.appendChild(table_row);
   }
+  window.location.reload()
+ 
 
 }
 
@@ -302,7 +304,7 @@ function modal_box_view_fn() {
         i_tag.setAttribute("class","fa-solid fa-xmark")
         i_tag.setAttribute("id",element)
         i_tag.setAttribute("onclick",closeSkill)
-        span_data.appendChild(i_tag)
+        // span_data.appendChild(i_tag)
         document.getElementById("inner_skill_div_new").prepend(span_data)
       })
       
@@ -323,7 +325,6 @@ function modal_box_view_fn() {
     initialSkillArray.push(element.textContent.toLowerCase().replace(/\s/g, ''))
   })
   console.log("outer",initialSkillArray)
-//   let checkDuplicateSkill=[]
   skills_new.addEventListener("keydown", (e) => {
     if ((e.key === "Enter") && (skills_new.value!=="")){
       let span_data = document.createElement("span");
@@ -336,7 +337,7 @@ function modal_box_view_fn() {
         i_tag.setAttribute("id",`${get_all_skill(false)[index]}`)
         i_tag.setAttribute("onclick",closeSkill)
         i_tag.onclick=()=>closeSkill()
-        span_data.appendChild(i_tag)
+        // span_data.appendChild(i_tag)
         document.getElementById("inner_skill_div_new").prepend(span_data)
       }
       skills_new.value = "";
@@ -519,4 +520,17 @@ function get_all_skill(boolCondition){
     } 
 }
 
+// Function to clear input after adding employee details
 
+function clearInput(){
+    employee_id = ''
+    name = ''
+    DOB = ''
+    age = ''
+    email = ''
+    experiance = ''
+    DOJ = ''
+    designation = ''
+    skills = ''
+    location_detail = ''
+}
