@@ -179,24 +179,15 @@ function addingData() {
         modal_box_add.style.display = "block";
       }
     } else if (i === 4) {
-      employee_skill_array=[]
-      document.querySelectorAll(".skill_button").forEach((element)=>{
-        employee_skill_array.push(element.innerHTML)
-        let table_data_new = document.createElement("p");
-        table_data_new.setAttribute("class", "inline_prop");
-        let skillButton = document.createElement("button");
-        skillButton.setAttribute("class","allSkillBtnStyle")
-        skillButton.innerHTML = element.innerHTML;
-        table_data_new.appendChild(skillButton);
-        table_data.appendChild(table_data_new);
-      })
-
-      
-    if (appendDataToRow(table_row,table_data)){
-      submit_count++
-      new_data_obj["skills"]=employee_skill_array
+    employee_skill_array=[]
+    Object.values(document.getElementById("inner_skill_div").children).forEach((element)=>{
+        employee_skill_array.push(element.textContent)
+    })
+    if (Object.values(document.getElementById("inner_skill_div").children).length>=1){
+        submit_count++
+        new_data_obj["skills"]=employee_skill_array
+        console.log("inner",employee_skill_array);
     }
-    
     } else if (i === 5) {
       let table_data = document.createElement("td");
       let icons = document.createElement("div");
@@ -243,8 +234,6 @@ function addingData() {
     main_table.appendChild(table_row);
   }
   window.location.reload()
- 
-
 }
 
 function appendDataToRow(table_row,table_data){
@@ -263,6 +252,12 @@ skills.addEventListener("keyup", (e) => {
     if((get_all_skill(true).includes(skills.value.toLowerCase())) &&(!initialSkillArray.includes(skills.value.toLowerCase()))){
       let index = get_all_skill(true).indexOf(skills.value.toLowerCase())
       span_data.innerHTML = get_all_skill(false)[index]
+      let i_tag=document.createElement("i")
+        i_tag.setAttribute("class","fa-solid fa-xmark")
+        i_tag.setAttribute("id",`${get_all_skill(false)[index]}`)
+        i_tag.setAttribute("onclick",closeSkill)
+        i_tag.onclick=()=>closeSkill()
+        span_data.appendChild(i_tag)
       document.getElementById("inner_skill_div").prepend(span_data)
     }
     skills.value = "";
@@ -270,14 +265,29 @@ skills.addEventListener("keyup", (e) => {
 
   initialSkillArray=[]
   Object.values(document.getElementById("inner_skill_div").children).forEach(element=>{
-    initialSkillArray.push(element.innerHTML.toLowerCase().replace(/\s/g, ''))
-  })
-
-//   console.log("outer",initialSkillArray)
-  
+    initialSkillArray.push(element.textContent.toLowerCase().replace(/\s/g, ''))
+  })  
 });
 
+// deleting skills
+function closeSkill(){
+    Object.values(document.getElementById("inner_skill_div").children).forEach(element=>{
+        if(element.textContent===event.target.id){
+            element.remove()
+        }
+    })
+}
 
+function closeSkillNew(){
+    Object.values(document.getElementById("inner_skill_div_new").children).forEach(element=>{
+        if(element.textContent===event.target.id){
+            element.remove()
+        }
+    })
+}
+function closeSkillNews(){
+    console.log("hi")
+}
 // Viewing details of the employee
 function modal_box_view_fn() {
   let id = event.target.id;
@@ -303,8 +313,9 @@ function modal_box_view_fn() {
         let i_tag=document.createElement("i")
         i_tag.setAttribute("class","fa-solid fa-xmark")
         i_tag.setAttribute("id",element)
-        i_tag.setAttribute("onclick",closeSkill)
-        // span_data.appendChild(i_tag)
+        i_tag.setAttribute("onclick",closeSkillNews)
+        i_tag.onclick=()=>closeSkillNew()
+        span_data.appendChild(i_tag)
         document.getElementById("inner_skill_div_new").prepend(span_data)
       })
       
@@ -325,6 +336,8 @@ function modal_box_view_fn() {
     initialSkillArray.push(element.textContent.toLowerCase().replace(/\s/g, ''))
   })
   console.log("outer",initialSkillArray)
+
+
   skills_new.addEventListener("keydown", (e) => {
     if ((e.key === "Enter") && (skills_new.value!=="")){
       let span_data = document.createElement("span");
@@ -336,8 +349,8 @@ function modal_box_view_fn() {
         i_tag.setAttribute("class","fa-solid fa-xmark")
         i_tag.setAttribute("id",`${get_all_skill(false)[index]}`)
         i_tag.setAttribute("onclick",closeSkill)
-        i_tag.onclick=()=>closeSkill()
-        // span_data.appendChild(i_tag)
+        i_tag.onclick=()=>closeSkillNew()
+        span_data.appendChild(i_tag)
         document.getElementById("inner_skill_div_new").prepend(span_data)
       }
       skills_new.value = "";
@@ -350,10 +363,12 @@ function modal_box_view_fn() {
 
   });
 
-  function closeSkill(){
-    console.log("hi")
-  }
-
+//   function closeSkill(){
+//     console.log("hi")
+//   }
+//   function closeSkillNew(){
+//     console.log(event.target.id)
+//   }
   // Editing details
   let edit_btn = document.getElementById("edit_btn");
   function edit_btn_fn(id) {

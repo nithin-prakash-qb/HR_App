@@ -230,12 +230,13 @@ input[type="text"],input[type="email"],input[type="date"]{
     /* transform: translateY(10%); */
 }
 #delete_msg_div{
-    background-color:#e3bf20;  
+    background-color:rgb(151,189,98);  
     width: 38%;
     margin: 0 auto;
     padding: 10px 10px 40px 20px;
     position: relative;
     border-radius: 5px;  
+    color: black;
 }
 #delete_cross{
     font-size: 1.5em;
