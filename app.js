@@ -127,22 +127,6 @@ function add_modal_close() {
 let submit_btn = document.getElementById("submit_btn");
 submit_btn.addEventListener("click", add_modal_submit_close);
 
-function add_modal_submit_close() {
-  if (
-    employee_id.value !== "" &&
-    name.value !== "" &&
-    DOB.value !== "" &&
-    age.value !== "" &&
-    email.value !== "" &&
-    experiance.value !== "" &&
-    DOJ.value !== "" &&
-    designation.value !== "" &&
-    location_detail.value !== ""
-  ) {
-  
-    modal_box_add.style.display = "none";
-  }
-}
 
 //Adding details of the employee using submit button
 submit_btn.addEventListener("click", addingData);
@@ -247,10 +231,42 @@ function addingData() {
     main_table.appendChild(table_row);
     clearInput()
   }
-  
-  // window.location.reload()
-  
 }
+
+
+function add_modal_submit_close() {
+  if(employee_id.value === "" &&
+  name.value === "" ||
+  DOB.value === "" ||
+  age.value === "" ||
+  email.value === "" ||
+  experiance.value === "" ||
+  DOJ.value === "" ||
+  designation.value === "" ||
+  location_detail.value === ""){
+    modal_box_add.style.display = "block";
+    alert("You have to fill all the fields")
+  }
+  else if(ValidateEmail(email.value)===false){
+    modal_box_add.style.display = "block";
+    alert("Email is invalid")
+  }
+  else if (
+    employee_id.value !== "" &&
+    name.value !== "" &&
+    DOB.value !== "" &&
+    age.value !== "" &&
+    email.value !== "" &&
+    experiance.value !== "" &&
+    DOJ.value !== "" &&
+    designation.value !== "" &&
+    location_detail.value !== ""
+  ) {
+    modal_box_add.style.display = "none";
+  }
+
+}
+
 
 function appendDataToRow(table_row,table_data){
   if (table_data.innerHTML !== "") {
@@ -301,9 +317,7 @@ function closeSkillNew(){
         }
     })
 }
-function closeSkillNews(){
-    console.log("hi")
-}
+
 // Viewing details of the employee
 function modal_box_view_fn() {
   let id = event.target.id;
@@ -319,7 +333,6 @@ function modal_box_view_fn() {
       document.getElementById("experiance_!").value = element.experiance;
       document.getElementById("DOJ_!").value = element["DOJ"];
       document.getElementById("designation_!").value = element.designation;
-      // document.getElementById("skills_new").value = element.skills;
       let parentInner=document.getElementById("inner_skill_div_new")
       removeAllChildNodes(parentInner)
       element.skills.forEach((element)=>{
@@ -329,7 +342,7 @@ function modal_box_view_fn() {
         let i_tag=document.createElement("i")
         i_tag.setAttribute("class","fa-solid fa-xmark")
         i_tag.setAttribute("id",element)
-        i_tag.setAttribute("onclick",closeSkillNews)
+        i_tag.setAttribute("onclick",closeSkillNew)
         i_tag.onclick=()=>closeSkillNew()
         span_data.appendChild(i_tag)
         document.getElementById("inner_skill_div_new").prepend(span_data)
@@ -390,12 +403,12 @@ function modal_box_view_fn() {
           ? (element.name = document.getElementById("name_!").value)
           : (modal_box_view.style.display = block);
         if (
-          document.getElementById("email_!").value !== "" &&
-          ValidateEmail(document.getElementById("email_!").value) === true
+          (document.getElementById("email_!").value !== "") &&
+          (ValidateEmail(document.getElementById("email_!").value) === true)
         ) {
           element.email_id = document.getElementById("email_!").value;
-        } else {
-          modal_box_view.style.display = "block";
+        } else if(ValidateEmail(document.getElementById("email_!").value) === false) {
+          modal_box_view.style.display = block;
         }
         document.getElementById("designation_!").value !== ""
           ? (element.designation =
@@ -405,9 +418,7 @@ function modal_box_view_fn() {
             Object.values(document.querySelector("#inner_skill_div_new").children).forEach(element=>{
                 employee_skill_array.push(element.textContent)
             })
-
             console.log(employee_skill_array)
-    
             element.skills=employee_skill_array
 
         document.getElementById("location_detail_!").value !== ""
@@ -470,8 +481,10 @@ function ValidateEmail(mail) {
   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
     return true;
   }
-  alert("You have entered an invalid email address!");
-  return false;
+  else{
+    return false;
+  }
+  
 }
 
 const sortName = (array) => {
@@ -559,4 +572,7 @@ function clearInput(){
     designation.value = ''
     skills.value = ''
     location_detail.value = ''
+    let children = document.getElementById("inner_skill_div")
+    children.innerHTML=''
+    
 }
