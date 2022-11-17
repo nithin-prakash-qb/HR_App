@@ -139,6 +139,7 @@ function add_modal_submit_close() {
     designation.value !== "" &&
     location_detail.value !== ""
   ) {
+  
     modal_box_add.style.display = "none";
   }
 }
@@ -187,6 +188,18 @@ function addingData() {
         submit_count++
         new_data_obj["skills"]=employee_skill_array
         console.log("inner",employee_skill_array);
+        table_data.setAttribute("class", "skill_td");
+        employee_skill_array.forEach((element, index) => {
+          let table_data_new = document.createElement("p");
+          table_data_new.setAttribute("class", "inline_prop");
+          let skillButton = document.createElement("button");
+          skillButton.setAttribute("class","allSkillBtnStyle")
+          skillButton.innerHTML = element;
+          table_data_new.appendChild(skillButton);
+          table_data.appendChild(table_data_new);
+        });
+        table_row.appendChild(table_data);
+
     }
     } else if (i === 5) {
       let table_data = document.createElement("td");
@@ -232,8 +245,11 @@ function addingData() {
     localStorage.setItem("employeeData", JSON.stringify(full_data));
     console.log("submit_count", submit_count);
     main_table.appendChild(table_row);
+    clearInput()
   }
-  window.location.reload()
+  
+  // window.location.reload()
+  
 }
 
 function appendDataToRow(table_row,table_data){
@@ -363,12 +379,7 @@ function modal_box_view_fn() {
 
   });
 
-//   function closeSkill(){
-//     console.log("hi")
-//   }
-//   function closeSkillNew(){
-//     console.log(event.target.id)
-//   }
+
   // Editing details
   let edit_btn = document.getElementById("edit_btn");
   function edit_btn_fn(id) {
@@ -538,14 +549,14 @@ function get_all_skill(boolCondition){
 // Function to clear input after adding employee details
 
 function clearInput(){
-    employee_id = ''
-    name = ''
-    DOB = ''
-    age = ''
-    email = ''
-    experiance = ''
-    DOJ = ''
-    designation = ''
-    skills = ''
-    location_detail = ''
+    employee_id.value = ''
+    name.value= ''
+    DOB.value= ''
+    age.value = ''
+    email.value = ''
+    experiance.value = ''
+    DOJ.value = ''
+    designation.value = ''
+    skills.value = ''
+    location_detail.value = ''
 }
