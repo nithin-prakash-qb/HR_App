@@ -70,19 +70,8 @@ function addInitialData(X) {
         table_data.innerHTML = `${element.email_id}`;
         table_row.appendChild(table_data);
       } else if (i === 4) {
-        let table_data = document.createElement("td");
-        table_data.setAttribute("class", "skill_td");
-        let count_skills = element["skills"].length;
-        element["skills"].forEach((element, index) => {
-          let table_data_new = document.createElement("p");
-          table_data_new.setAttribute("class", "inline_prop");
-          let skillButton = document.createElement("button");
-          skillButton.setAttribute("class","allSkillBtnStyle")
-          skillButton.innerHTML = `${element}`;
-          table_data_new.appendChild(skillButton);
-          table_data.appendChild(table_data_new);
-        });
-        table_row.appendChild(table_data);
+
+        table_row.appendChild(addSkillInTableData(element["skills"]));
       } else {
         let icons = document.createElement("div");
         icons.setAttribute("class", "icons");
@@ -120,6 +109,7 @@ add_new_btn.addEventListener("click", () => {
 let add_cross = document.getElementById("add_cross");
 add_cross.addEventListener("click", add_modal_close);
 
+
 function add_modal_close() {
   modal_box_add.style.display = "none";
 }
@@ -130,7 +120,6 @@ submit_btn.addEventListener("click", add_modal_submit_close);
 
 //Adding details of the employee using submit button
 submit_btn.addEventListener("click", addingData);
-
 
 function addingData() {
   let new_data_obj = {};
@@ -171,18 +160,7 @@ function addingData() {
     if (Object.values(document.getElementById("inner_skill_div").children).length>=1){
         submit_count++
         new_data_obj["skills"]=employee_skill_array
-        console.log("inner",employee_skill_array);
-        table_data.setAttribute("class", "skill_td");
-        employee_skill_array.forEach((element, index) => {
-          let table_data_new = document.createElement("p");
-          table_data_new.setAttribute("class", "inline_prop");
-          let skillButton = document.createElement("button");
-          skillButton.setAttribute("class","allSkillBtnStyle")
-          skillButton.innerHTML = element;
-          table_data_new.appendChild(skillButton);
-          table_data.appendChild(table_data_new);
-        });
-        table_row.appendChild(table_data);
+        table_row.appendChild( addSkillInTableData(employee_skill_array));
 
     }
     } else if (i === 5) {
@@ -275,48 +253,8 @@ function appendDataToRow(table_row,table_data){
   }
 }
 
+addingSkillChips(skills,"inner_skill_div")
 
-
-skills.addEventListener("keyup", (e) => {
-  if ((e.key === "Enter") && (skills.value!=="")){
-    let span_data = document.createElement("span");
-    span_data.setAttribute("class","skill_button allSkillBtnStyle span_data")
-    if((get_all_skill(true).includes(skills.value.toLowerCase())) &&(!initialSkillArray.includes(skills.value.toLowerCase()))){
-      let index = get_all_skill(true).indexOf(skills.value.toLowerCase())
-      span_data.innerHTML = get_all_skill(false)[index]
-      let i_tag=document.createElement("i")
-        i_tag.setAttribute("class","fa-solid fa-xmark")
-        i_tag.setAttribute("id",`${get_all_skill(false)[index]}`)
-        i_tag.setAttribute("onclick",closeSkill)
-        i_tag.onclick=()=>closeSkill()
-        span_data.appendChild(i_tag)
-      document.getElementById("inner_skill_div").prepend(span_data)
-    }
-    skills.value = "";
-  }
-
-  initialSkillArray=[]
-  Object.values(document.getElementById("inner_skill_div").children).forEach(element=>{
-    initialSkillArray.push(element.textContent.toLowerCase().replace(/\s/g, ''))
-  })  
-});
-
-// deleting skills
-function closeSkill(){
-    Object.values(document.getElementById("inner_skill_div").children).forEach(element=>{
-        if(element.textContent===event.target.id){
-            element.remove()
-        }
-    })
-}
-
-function closeSkillNew(){
-    Object.values(document.getElementById("inner_skill_div_new").children).forEach(element=>{
-        if(element.textContent===event.target.id){
-            element.remove()
-        }
-    })
-}
 
 // Viewing details of the employee
 function modal_box_view_fn() {
@@ -342,8 +280,8 @@ function modal_box_view_fn() {
         let i_tag=document.createElement("i")
         i_tag.setAttribute("class","fa-solid fa-xmark")
         i_tag.setAttribute("id",element)
-        i_tag.setAttribute("onclick",closeSkillNew)
-        i_tag.onclick=()=>closeSkillNew()
+        i_tag.setAttribute("onclick",closeSkill)
+        i_tag.onclick=()=>closeSkill("inner_skill_div_new")
         span_data.appendChild(i_tag)
         document.getElementById("inner_skill_div_new").prepend(span_data)
       })
@@ -353,45 +291,7 @@ function modal_box_view_fn() {
     }
   });
 
-  function removeAllChildNodes(parentInner){ 
-    while (parentInner.firstChild) {
-        parentInner.removeChild(parentInner.firstChild);
-    }
-  }
-
-
-  initialSkillArray=[]
-  Object.values(document.getElementById("inner_skill_div_new").children).forEach(element=>{
-    initialSkillArray.push(element.textContent.toLowerCase().replace(/\s/g, ''))
-  })
-  console.log("outer",initialSkillArray)
-
-
-  skills_new.addEventListener("keydown", (e) => {
-    if ((e.key === "Enter") && (skills_new.value!=="")){
-      let span_data = document.createElement("span");
-      span_data.setAttribute("class","skill_button allSkillBtnStyle span_data")
-      if((get_all_skill(true).includes(skills_new.value.toLowerCase())) && (!initialSkillArray.includes(skills_new.value.toLowerCase())) &&(!initialSkillArray_new.includes(skills_new.value.toLowerCase()))){
-        let index = get_all_skill(true).indexOf(skills_new.value.toLowerCase())
-        span_data.innerHTML = get_all_skill(false)[index] 
-        let i_tag=document.createElement("i")
-        i_tag.setAttribute("class","fa-solid fa-xmark")
-        i_tag.setAttribute("id",`${get_all_skill(false)[index]}`)
-        i_tag.setAttribute("onclick",closeSkill)
-        i_tag.onclick=()=>closeSkillNew()
-        span_data.appendChild(i_tag)
-        document.getElementById("inner_skill_div_new").prepend(span_data)
-      }
-      skills_new.value = "";
-    }
-
-    initialSkillArray_new=[]
-    Object.values(document.getElementById("inner_skill_div_new").children).forEach(element=>{
-        initialSkillArray_new.push(element.textContent.toLowerCase().replace(/\s/g, ''))
-    })
-
-  });
-
+  addingSkillChips(skills_new,"inner_skill_div_new")
 
   // Editing details
   let edit_btn = document.getElementById("edit_btn");
@@ -399,32 +299,24 @@ function modal_box_view_fn() {
     const full_data = JSON.parse(localStorage.getItem("employeeData"));
     full_data["details"].forEach((element) => {
       if (+id === +element.employee_id) {
-        document.getElementById("name_!").value !== ""
-          ? (element.name = document.getElementById("name_!").value)
-          : (modal_box_view.style.display = block);
-        if (
-          (document.getElementById("email_!").value !== "") &&
-          (ValidateEmail(document.getElementById("email_!").value) === true)
-        ) {
+        document.getElementById("name_!").value !== "" ? (element.name = document.getElementById("name_!").value):(modal_box_view.style.display = block);
+
+        if ((document.getElementById("email_!").value !== "") &&(ValidateEmail(document.getElementById("email_!").value) === true)) {
           element.email_id = document.getElementById("email_!").value;
-        } else if(ValidateEmail(document.getElementById("email_!").value) === false) {
+        }else if(ValidateEmail(document.getElementById("email_!").value) === false) {
           modal_box_view.style.display = block;
         }
-        document.getElementById("designation_!").value !== ""
-          ? (element.designation =
-              document.getElementById("designation_!").value)
-          : (modal_box_view.style.display = block);
-            employee_skill_array=[]
-            Object.values(document.querySelector("#inner_skill_div_new").children).forEach(element=>{
-                employee_skill_array.push(element.textContent)
-            })
-            console.log(employee_skill_array)
-            element.skills=employee_skill_array
 
-        document.getElementById("location_detail_!").value !== ""
-          ? (element.contact_details =
-              document.getElementById("location_detail_!").value)
-          : (modal_box_view.style.display = block);
+        document.getElementById("designation_!").value !== "" ? (element.designation = document.getElementById("designation_!").value):(modal_box_view.style.display = block);
+        employee_skill_array=[]
+        Object.values(document.querySelector("#inner_skill_div_new").children).forEach(element=>{
+            employee_skill_array.push(element.textContent)
+        })
+        console.log(employee_skill_array)
+        element.skills=employee_skill_array
+
+        document.getElementById("location_detail_!").value !== ""? (element.contact_details = document.getElementById("location_detail_!").value) :(modal_box_view.style.display = block);
+
         localStorage.setItem("employeeData", JSON.stringify(full_data));
         addInitialData("employeeData");
         modal_box_view.style.display = "none";
@@ -541,7 +433,7 @@ filter_search.addEventListener("keyup", function (event) {
   });
 });
 
-//getting of an array of all skills rom JSON
+//getting of an array of all the skills rom JSON
 function get_all_skill(boolCondition){
     const full_data = JSON.parse(localStorage.getItem("employeeData"));
     allSkillArray=[]
@@ -560,7 +452,6 @@ function get_all_skill(boolCondition){
 }
 
 // Function to clear input after adding employee details
-
 function clearInput(){
     employee_id.value = ''
     name.value= ''
@@ -575,4 +466,67 @@ function clearInput(){
     let children = document.getElementById("inner_skill_div")
     children.innerHTML=''
     
+}
+
+// Adding skills from an array to the table
+function addSkillInTableData(skillArray){
+  let table_data = document.createElement("td");
+  table_data.setAttribute("class", "skill_td");
+  skillArray.forEach((element, index) => {
+    let table_data_new = document.createElement("p");
+    table_data_new.setAttribute("class", "inline_prop");
+    let skillButton = document.createElement("button");
+    skillButton.setAttribute("class","allSkillBtnStyle")
+    skillButton.innerHTML = `${element}`;
+    table_data_new.appendChild(skillButton);
+    table_data.appendChild(table_data_new);
+  })
+  return table_data
+}
+
+// Adding skills as chips 
+function addingSkillChips(inputSkills,divForSkill){
+  inputSkills.addEventListener("keyup", (e) => {
+    if ((e.key === "Enter") && (inputSkills.value!=="")){
+      let span_data = document.createElement("span");
+      span_data.setAttribute("class","skill_button allSkillBtnStyle span_data")
+      if((get_all_skill(true).includes(inputSkills.value.toLowerCase())) &&(!initialSkillArray.includes(inputSkills.value.toLowerCase()))){
+        let index = get_all_skill(true).indexOf(inputSkills.value.toLowerCase())
+        span_data.innerHTML = get_all_skill(false)[index]
+        let i_tag=document.createElement("i")
+          i_tag.setAttribute("class","fa-solid fa-xmark")
+          i_tag.setAttribute("id",`${get_all_skill(false)[index]}`)
+          i_tag.setAttribute("onclick",closeSkill)
+          i_tag.onclick=()=>closeSkill(divForSkill)
+          span_data.appendChild(i_tag)
+        document.getElementById(divForSkill).prepend(span_data)
+      }
+      inputSkills.value = "";
+    }
+  
+    initialSkillArray=[]
+    Object.values(document.getElementById(divForSkill).children).forEach(element=>{
+      initialSkillArray.push(element.textContent.toLowerCase().replace(/\s/g, ''))
+    })  
+  });
+}
+
+// Removing all the children fron a div
+function removeAllChildNodes(parentInner){ 
+  while (parentInner.firstChild) {
+      parentInner.removeChild(parentInner.firstChild);
+  }
+}
+
+// deleting skills as chips
+function closeSkill(divForSkill){
+  Object.values(document.getElementById(divForSkill).children).forEach(element=>{
+      if(element.textContent===event.target.id){
+          element.remove()
+      }
+  })
+}
+
+function add_view_delete_cross(modalBox){
+  modalBox.style.display = "none";
 }
