@@ -6,6 +6,7 @@ const getDataLocation = () => {
     })
     .then((data) => {
       localStorage.setItem("employeeData", JSON.stringify(data));
+      addInitialData("employeeData")
     });
 };
 
