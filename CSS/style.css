@@ -97,9 +97,12 @@ th{
     background-color:#357266;
     color: white;
     border: 1px solid whitesmoke;
-    padding:18px;
+    padding:16px;
     box-sizing: border-box;
     font-size: 1.2rem;
+}
+#empIDhead{
+    padding: 0px;
 }
 td{
     background-color:rgb(151,189,98);
@@ -107,9 +110,11 @@ td{
     padding:10px;
     box-sizing: border-box;
 }
-/* tr+td{
+
+.right-align{
     text-align: right;
-} */
+    padding-right: 40px;
+}
 .allSkillBtnStyle{
     border-radius: 4px;
     padding: 2px 6px;

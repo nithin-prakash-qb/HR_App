@@ -39,6 +39,7 @@ function addInitialData(X) {
   let tbody = document.createElement("tbody");
   let t_r_1 = document.createElement("tr");
   let t_h_1 = document.createElement("th");
+  t_h_1.setAttribute("id","empIDhead")
   t_h_1.innerHTML = "Employee ID";
   let t_h_2 = document.createElement("th");
   t_h_2.innerHTML = "Name";
@@ -62,6 +63,7 @@ function addInitialData(X) {
     for (let i = 1; i <= 5; i++) {
       let table_data = document.createElement("td");
       if (i === 1) {
+        table_data.setAttribute('class',"right-align")
         table_data.innerHTML = `${element.employee_id}`;
         table_row.appendChild(table_data);
       } else if (i === 2) {
@@ -131,6 +133,7 @@ function addingData() {
   for (let i = 1; i <= 12; i++) {
     let table_data = document.createElement("td");
     if (i === 1) {
+      table_data.setAttribute('class',"right-align")
       table_data.innerHTML = employee_id.value;
       if (appendDataToRow(table_row,table_data)){
         submit_count++
