@@ -188,9 +188,11 @@ function addingData() {
       table_row.appendChild(table_data);
     } else if (i === 6) {
       new_data_obj["DOB"] = DOB.value;
+      console.log(DOB.value)
       submit_count++;
     } else if (i === 7) {
-      new_data_obj["Age"] = age.value;
+      // new_data_obj["Age"] = age.value;
+      new_data_obj["Age"] = getAge(DOB.value)
       submit_count++;
     } else if (i === 9) {
       new_data_obj["experiance"] = experiance.value;
@@ -539,6 +541,4 @@ function closeSkill(divForSkill){
   })
 }
 
-function add_view_delete_cross(modalBox){
-  modalBox.style.display = "none";
-}
+const getAge = birthDate => Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e+10)

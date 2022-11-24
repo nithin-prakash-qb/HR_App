@@ -57,6 +57,10 @@ p{
     padding: 11px 5px;
     font-size: 13px;
 }
+#filter_search::placeholder{
+    color: #000;
+    font-size: 13px;
+}
 #add_employee_div{
     /* background-color: #3A606E; */
     justify-content: space-between;
