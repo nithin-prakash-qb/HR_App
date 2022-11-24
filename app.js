@@ -71,7 +71,6 @@ function addInitialData(X) {
         table_data.innerHTML = `${element.email_id}`;
         table_row.appendChild(table_data);
       } else if (i === 4) {
-
         table_row.appendChild(addSkillInTableData(element["skills"]));
       } else {
         let icons = document.createElement("div");
@@ -158,8 +157,10 @@ function addingData() {
     Object.values(document.getElementById("inner_skill_div").children).forEach((element)=>{
         employee_skill_array.push(element.textContent)
     })
-    if (Object.values(document.getElementById("inner_skill_div").children).length>=1){
+  
+    if (employee_skill_array.length>=1){
         submit_count++
+        console.log(submit_count)
         new_data_obj["skills"]=employee_skill_array
         table_row.appendChild( addSkillInTableData(employee_skill_array));
 
@@ -203,6 +204,7 @@ function addingData() {
     }
   }
   if (submit_count === 10) {
+    console.log(submit_count )
     const full_data = JSON.parse(localStorage.getItem("employeeData"));
     full_data["details"].push(new_data_obj);
     localStorage.setItem("employeeData", JSON.stringify(full_data));
@@ -297,6 +299,7 @@ function modal_box_view_fn() {
   // Editing details
   let edit_btn = document.getElementById("edit_btn");
   function edit_btn_fn(id) {
+    let isEdited=false
     const full_data = JSON.parse(localStorage.getItem("employeeData"));
     full_data["details"].forEach((element) => {
       if (+id === +element.employee_id) {
@@ -314,13 +317,18 @@ function modal_box_view_fn() {
             employee_skill_array.push(element.textContent)
         })
         console.log(employee_skill_array)
-        element.skills=employee_skill_array
-
+        if(employee_skill_array.length>=1){
+          element.skills=employee_skill_array
+          isEdited=true
+        }
         document.getElementById("location_detail_!").value !== ""? (element.contact_details = document.getElementById("location_detail_!").value) :(modal_box_view.style.display = block);
-
-        localStorage.setItem("employeeData", JSON.stringify(full_data));
-        addInitialData("employeeData");
-        modal_box_view.style.display = "none";
+        if(isEdited===true){
+          console.log("Inside")
+          localStorage.setItem("employeeData", JSON.stringify(full_data));
+          addInitialData("employeeData");
+          modal_box_view.style.display = "none";
+        }
+        
       }
     });
   }
