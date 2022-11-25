@@ -35,7 +35,8 @@ let DOJ_v = document.getElementById("DOJ_v");
 let designation_v = document.getElementById("designation_v");
 let skills_v = document.getElementById("skills_v");
 let location_detail_v = document.getElementById("location_detail_v");
-
+let idOfEmployee=106
+localStorage.setItem("idOfEmployee",JSON.stringify(idOfEmployee));
 
 
 // Creating table and adding the initial data
@@ -128,6 +129,11 @@ addInitialData("employeeData");
 let add_new_btn = document.getElementById("add_new");
 add_new_btn.addEventListener("click", () => {
   modal_box_add.style.display = "block";
+  const id_of_employee = JSON.parse(localStorage.getItem("idOfEmployee"));
+  console.log (id_of_employee)
+  employee_id.value= id_of_employee ;
+  clearInput()
+  employee_id.readOnly = true;
 });
 
 //closng after adding new employee using both cross and submit button
@@ -152,7 +158,6 @@ submit_btn.addEventListener("click", addingData);
 function addingData() {
   let new_data_obj = {};
   let table_row = document.createElement("tr");
-
   // adding data to table when user fills data
 
   let submit_count = 0;
@@ -163,12 +168,18 @@ function addingData() {
       table_data.innerHTML = employee_id.value;
       if (appendDataToRow(table_row,table_data)){
         submit_count++
+        console.log("1",submit_count)
       }
+      
       new_data_obj["employee_id"] = +employee_id.value;
+      
+      // new_data_obj["employee_id"] = id_of_employee 
+      
     } else if (i === 2) {
       table_data.innerHTML = name.value;
       if (appendDataToRow(table_row,table_data)){
         submit_count++
+        console.log("2",submit_count)
       }
       new_data_obj["name"] = name.value;
     } else if (i === 3) {
@@ -177,6 +188,7 @@ function addingData() {
         new_data_obj["email_id"] = email.value;
         if (appendDataToRow(table_row,table_data)){
           submit_count++
+          console.log("3",submit_count)
         }
       } else {
         modal_box_add.style.display = "block";
@@ -189,7 +201,7 @@ function addingData() {
   
     if (employee_skill_array.length>=1){
         submit_count++
-        console.log(submit_count)
+        console.log("4",submit_count)
         new_data_obj["skills"]=employee_skill_array
         table_row.appendChild( addSkillInTableData(employee_skill_array));
 
@@ -223,34 +235,43 @@ function addingData() {
       icons.appendChild(sub_icon_3);
       table_data.appendChild(icons);
       table_row.appendChild(table_data);
+
+      employee_id.value++
+      localStorage.setItem("idOfEmployee",JSON.stringify(employee_id.value));
     } else if (i === 6) {
       new_data_obj["DOB"] = DOB.value;
       console.log(DOB.value)
       submit_count++;
+      console.log("6",submit_count)
     } else if (i === 7) {
       if(age.value===""){
         
       }else if(new_data_obj["Age"] = age.value){
         submit_count++;
+        console.log("7",submit_count)
       }
       // new_data_obj["Age"] = getAge(DOB.value)
     } else if (i === 9) {
       new_data_obj["experiance"] = experiance.value;
       submit_count++;
+      console.log("9",submit_count)
     } else if (i === 10) {
       if(designation.value!==''){
         new_data_obj["designation"] = designation.value;
         submit_count++;
+        console.log("10",submit_count)
       } 
     }else if (i === 11) {
       if(location_detail.value!==""){
         new_data_obj["contact_details"] = location_detail.value;
         submit_count++;
+        console.log("11",submit_count)
       }
     } else if (i === 12) {
       if(DOJ.value!==""){
         new_data_obj["DOJ"] = DOJ.value;
         submit_count++;
+        console.log("12",submit_count)
       }
     }
   }
@@ -648,7 +669,6 @@ function get_all_skill(boolCondition){
 
 // Function to clear input after adding employee details
 function clearInput(){
-    employee_id.value = ''
     name.value= ''
     DOB.value= ''
     age.value = ''
