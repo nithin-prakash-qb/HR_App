@@ -231,8 +231,7 @@ function addingData() {
       table_data.appendChild(icons);
       table_row.appendChild(table_data);
 
-      employee_id.value++
-      localStorage.setItem("idOfEmployee",JSON.stringify(employee_id.value));
+      
     } else if (i === 6) {
       new_data_obj["DOB"] = DOB.value;
       submit_count++;
@@ -269,6 +268,8 @@ function addingData() {
     localStorage.setItem("employeeData", JSON.stringify(full_data));
     main_table.appendChild(table_row);
     clearInput()
+    employee_id.value++
+    localStorage.setItem("idOfEmployee",JSON.stringify(employee_id.value));
     modal_box_add.style.display = "none";
   }
   
