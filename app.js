@@ -130,7 +130,6 @@ let add_new_btn = document.getElementById("add_new");
 add_new_btn.addEventListener("click", () => {
   modal_box_add.style.display = "block";
   const id_of_employee = JSON.parse(localStorage.getItem("idOfEmployee"));
-  console.log (id_of_employee)
   employee_id.value= id_of_employee ;
   clearInput()
   employee_id.readOnly = true;
@@ -168,7 +167,6 @@ function addingData() {
       table_data.innerHTML = employee_id.value;
       if (appendDataToRow(table_row,table_data)){
         submit_count++
-        console.log("1",submit_count)
       }
       
       new_data_obj["employee_id"] = +employee_id.value;
@@ -179,7 +177,6 @@ function addingData() {
       table_data.innerHTML = name.value;
       if (appendDataToRow(table_row,table_data)){
         submit_count++
-        console.log("2",submit_count)
       }
       new_data_obj["name"] = name.value;
     } else if (i === 3) {
@@ -188,7 +185,6 @@ function addingData() {
         new_data_obj["email_id"] = email.value;
         if (appendDataToRow(table_row,table_data)){
           submit_count++
-          console.log("3",submit_count)
         }
       } else {
         modal_box_add.style.display = "block";
@@ -201,7 +197,6 @@ function addingData() {
   
     if (employee_skill_array.length>=1){
         submit_count++
-        console.log("4",submit_count)
         new_data_obj["skills"]=employee_skill_array
         table_row.appendChild( addSkillInTableData(employee_skill_array));
 
@@ -240,47 +235,38 @@ function addingData() {
       localStorage.setItem("idOfEmployee",JSON.stringify(employee_id.value));
     } else if (i === 6) {
       new_data_obj["DOB"] = DOB.value;
-      console.log(DOB.value)
       submit_count++;
-      console.log("6",submit_count)
     } else if (i === 7) {
       if(age.value===""){
         
       }else if(new_data_obj["Age"] = age.value){
         submit_count++;
-        console.log("7",submit_count)
       }
       // new_data_obj["Age"] = getAge(DOB.value)
     } else if (i === 9) {
       new_data_obj["experiance"] = experiance.value;
       submit_count++;
-      console.log("9",submit_count)
     } else if (i === 10) {
       if(designation.value!==''){
         new_data_obj["designation"] = designation.value;
         submit_count++;
-        console.log("10",submit_count)
       } 
     }else if (i === 11) {
       if(location_detail.value!==""){
         new_data_obj["contact_details"] = location_detail.value;
         submit_count++;
-        console.log("11",submit_count)
       }
     } else if (i === 12) {
       if(DOJ.value!==""){
         new_data_obj["DOJ"] = DOJ.value;
         submit_count++;
-        console.log("12",submit_count)
       }
     }
   }
   if (submit_count === 10) {
-    console.log(submit_count )
     const full_data = JSON.parse(localStorage.getItem("employeeData"));
     full_data["details"].push(new_data_obj);
     localStorage.setItem("employeeData", JSON.stringify(full_data));
-    console.log("submit_count", submit_count);
     main_table.appendChild(table_row);
     clearInput()
     modal_box_add.style.display = "none";
@@ -343,15 +329,12 @@ function modal_box_view_fn() {
     if (+event.target.id === +element.employee_id) {
       
       employee_id_v.value = element.employee_id 
-      console.log(employee_id_v.value)
       name_v.value = element.name;
       DOB_v.value = element["DOB"];
-      console.log(DOB_v.value,"/",element["DOB"])
       age_v.value = element.Age;
       email_v.value = element.email_id;
       experiance_v.value = element.experiance;
       DOJ_v.value=element.DOJ
-      console.log(typeof DOJ_v.value)
       designation_v.value = element.designation;
       location_detail_v.value = element.contact_details;
       
@@ -393,7 +376,6 @@ function modal_box_view_fn() {
     full_data["details"].forEach((element) => {
       
       if (+event.target.id === +element.employee_id) {
-        // console.log(element.name)
          document.getElementById("name_!").value= element.name;
          element.name=document.getElementById("name_!").value
          document.getElementById("email_!").value= element.email_id;
@@ -425,7 +407,6 @@ function modal_box_view_fn() {
         Object.values(document.querySelector("#inner_skill_div_new").children).forEach(element=>{
             employee_skill_array.push(element.textContent)
         })
-        console.log(employee_skill_array)
         if(employee_skill_array.length>=1){
           element.skills=employee_skill_array
         }
@@ -464,7 +445,6 @@ function modal_box_view_fn() {
           Object.values(document.querySelector("#inner_skill_div_new").children).forEach(element=>{
               employee_skill_array.push(element.textContent)
           })
-          console.log(employee_skill_array)
           if(employee_skill_array.length>=1){
             element.skills=employee_skill_array
             isEdited=true
@@ -479,7 +459,6 @@ function modal_box_view_fn() {
 
           // document.getElementById("location_detail_!").value !== ""? (element.contact_details = document.getElementById("location_detail_!").value) :(modal_box_edit.style.display = block);
           if(isEdited===true){
-            console.log("Inside")
             localStorage.setItem("employeeData", JSON.stringify(full_data));
             addInitialData("employeeData");
             modal_box_edit.style.display = "none";
@@ -491,45 +470,6 @@ function modal_box_view_fn() {
     edit_btn.onclick = () => edit_btn_fn(id);
   }
 
-
-//   let edit_btn = document.getElementById("edit_btn");
-  // function edit_btn_fn(id) {
-  //   let isEdited=false
-  //   const full_data = JSON.parse(localStorage.getItem("employeeData"));
-  //   full_data["details"].forEach((element) => {
-  //     if (+id === +element.employee_id) {
-  //       document.getElementById("name_!").value !== "" ? (element.name = document.getElementById("name_!").value):(modal_box_edit.style.display = block);
-
-  //       if ((document.getElementById("email_!").value !== "") &&(ValidateEmail(document.getElementById("email_!").value) === true)) {
-  //         element.email_id = document.getElementById("email_!").value;
-  //       }else if(ValidateEmail(document.getElementById("email_!").value) === false) {
-  //         modal_box_edit.style.display = block;
-  //       }
-
-  //       document.getElementById("designation_!").value !== "" ? (element.designation = document.getElementById("designation_!").value):(modal_box_edit.style.display = block);
-  //       employee_skill_array=[]
-  //       Object.values(document.querySelector("#inner_skill_div_new").children).forEach(element=>{
-  //           employee_skill_array.push(element.textContent)
-  //       })
-  //       console.log(employee_skill_array)
-  //       if(employee_skill_array.length>=1){
-  //         element.skills=employee_skill_array
-  //         isEdited=true
-  //       }
-  //       document.getElementById("location_detail_!").value !== ""? (element.contact_details = document.getElementById("location_detail_!").value) :(modal_box_edit.style.display = block);
-  //       if(isEdited===true){
-  //         console.log("Inside")
-  //         localStorage.setItem("employeeData", JSON.stringify(full_data));
-  //         addInitialData("employeeData");
-  //         modal_box_edit.style.display = "none";
-  //       }
-        
-  //     }
-  //   });
-  // }
-  // edit_btn.setAttribute("onclick", edit_btn_fn);
-  // edit_btn.onclick = () => edit_btn_fn(id);
-// }
 
 
 // for closing the modal for view
