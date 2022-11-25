@@ -24,7 +24,18 @@ let designation = document.getElementById("designation");
 let skills = document.getElementById("skills");
 let location_detail = document.getElementById("location_detail");
 let modal_box_add = document.getElementById("modal_box_add");
-let modal_box_view = document.getElementById("modal_box_view");
+let modal_box_edit = document.getElementById("modal_box_edit");
+let employee_id_v = document.getElementById("employee_id_v");
+let name_v = document.getElementById("name_v");
+let DOB_v = document.getElementById("DOB_v");
+let age_v = document.getElementById("age_v");
+let email_v = document.getElementById("email_v");
+let experiance_v = document.getElementById("experiance_v");
+let DOJ_v = document.getElementById("DOJ_v");
+let designation_v = document.getElementById("designation_v");
+let skills_v = document.getElementById("skills_v");
+let location_detail_v = document.getElementById("location_detail_v");
+
 
 
 // Creating table and adding the initial data
@@ -82,12 +93,24 @@ function addInitialData(X) {
         sub_icon_1.setAttribute("id", element.employee_id);
         sub_icon_1.setAttribute("onclick", modal_box_view_fn);
         sub_icon_1.onclick = () => modal_box_view_fn();
+
+        
+        let sub_icon_2 = document.createElement("i");
+        sub_icon_2.setAttribute("class", "fa-solid fa-pen-to-square");
+        sub_icon_2.setAttribute("id", element.employee_id);
+        sub_icon_2.setAttribute("onclick", modal_box_edit_fn);
+        sub_icon_2.onclick = () => modal_box_edit_fn()
+
+
+
         let sub_icon_3 = document.createElement("i");
         sub_icon_3.setAttribute("class", "fa-solid fa-trash");
         sub_icon_3.setAttribute("id", element.employee_id);
         sub_icon_3.setAttribute("onclick", modal_delete);
         sub_icon_3.onclick = () => modal_delete();
+        
         icons.appendChild(sub_icon_1);
+        icons.appendChild(sub_icon_2);
         icons.appendChild(sub_icon_3);
         table_data.appendChild(icons);
         table_row.appendChild(table_data);
@@ -119,6 +142,9 @@ function add_modal_close() {
 let submit_btn = document.getElementById("submit_btn");
 submit_btn.addEventListener("click", add_modal_submit_close);
 
+//closing add modal using close button
+let close_btn_add = document.getElementById("add_close");
+close_btn_add.addEventListener("click", add_modal_close);
 
 //Adding details of the employee using submit button
 submit_btn.addEventListener("click", addingData);
@@ -167,6 +193,8 @@ function addingData() {
         new_data_obj["skills"]=employee_skill_array
         table_row.appendChild( addSkillInTableData(employee_skill_array));
 
+    }else{
+      modal_box_add.style.display = "block";
     }
     } else if (i === 5) {
       let table_data = document.createElement("td");
@@ -175,14 +203,23 @@ function addingData() {
       let sub_icon_1 = document.createElement("i");
       sub_icon_1.setAttribute("class", "fa-solid fa-eye");
       sub_icon_1.setAttribute("id", employee_id.value);
-      sub_icon_1.setAttribute("onclick", modal_box_view_fn);
+      sub_icon_1.setAttribute("onclick", modal_box_edit_fn);
       sub_icon_1.onclick = () => modal_box_view_fn();
+
+      let sub_icon_2 = document.createElement("i");
+      sub_icon_2.setAttribute("class", "fa-solid fa-pen-to-square");
+      sub_icon_2.setAttribute("id", employee_id.value);
+      sub_icon_2.setAttribute("onclick", modal_box_edit_fn);
+      sub_icon_2.onclick = () => modal_box_edit_fn()
+
+
       let sub_icon_3 = document.createElement("i");
       sub_icon_3.setAttribute("class", "fa-solid fa-trash");
       sub_icon_3.setAttribute("id", employee_id.value);
       sub_icon_3.setAttribute("onclick", modal_delete);
       sub_icon_3.onclick = () => modal_delete();
       icons.appendChild(sub_icon_1);
+      icons.appendChild(sub_icon_2)
       icons.appendChild(sub_icon_3);
       table_data.appendChild(icons);
       table_row.appendChild(table_data);
@@ -191,21 +228,30 @@ function addingData() {
       console.log(DOB.value)
       submit_count++;
     } else if (i === 7) {
-      // new_data_obj["Age"] = age.value;
-      new_data_obj["Age"] = getAge(DOB.value)
-      submit_count++;
+      if(age.value===""){
+        
+      }else if(new_data_obj["Age"] = age.value){
+        submit_count++;
+      }
+      // new_data_obj["Age"] = getAge(DOB.value)
     } else if (i === 9) {
       new_data_obj["experiance"] = experiance.value;
       submit_count++;
     } else if (i === 10) {
-      new_data_obj["designation"] = designation.value;
-      submit_count++;
-    } else if (i === 11) {
-      new_data_obj["contact_details"] = location_detail.value;
-      submit_count++;
+      if(designation.value!==''){
+        new_data_obj["designation"] = designation.value;
+        submit_count++;
+      } 
+    }else if (i === 11) {
+      if(location_detail.value!==""){
+        new_data_obj["contact_details"] = location_detail.value;
+        submit_count++;
+      }
     } else if (i === 12) {
-      new_data_obj["DOJ"] = DOJ.value;
-      submit_count++;
+      if(DOJ.value!==""){
+        new_data_obj["DOJ"] = DOJ.value;
+        submit_count++;
+      }
     }
   }
   if (submit_count === 10) {
@@ -216,12 +262,14 @@ function addingData() {
     console.log("submit_count", submit_count);
     main_table.appendChild(table_row);
     clearInput()
+    modal_box_add.style.display = "none";
   }
+  
 }
 
 
 function add_modal_submit_close() {
-  if(employee_id.value === "" &&
+  if(employee_id.value === "" ||
   name.value === "" ||
   DOB.value === "" ||
   age.value === "" ||
@@ -270,53 +318,88 @@ function modal_box_view_fn() {
   modal_box_view.style.display = "block";
   const full_data = JSON.parse(localStorage.getItem("employeeData"));
   full_data["details"].forEach((element) => {
+    
     if (+event.target.id === +element.employee_id) {
-      document.getElementById("employee_id_!").value = element.employee_id;
-      document.getElementById("name_!").value = element.name;
-      document.getElementById("DOB_!").value = element["DOB"];
-      document.getElementById("age_!").value = element.Age;
-      document.getElementById("email_!").value = element.email_id;
-      document.getElementById("experiance_!").value = element.experiance;
-      document.getElementById("DOJ_!").value = element["DOJ"];
-      document.getElementById("designation_!").value = element.designation;
-      let parentInner=document.getElementById("inner_skill_div_new")
-      removeAllChildNodes(parentInner)
-      element.skills.forEach((element)=>{
-        let span_data = document.createElement("span");
-        span_data.setAttribute("class","skill_button allSkillBtnStyle countBtn span_data")
-        span_data.innerHTML = element;
-        let i_tag=document.createElement("i")
-        i_tag.setAttribute("class","fa-solid fa-xmark")
-        i_tag.setAttribute("id",element)
-        i_tag.setAttribute("onclick",closeSkill)
-        i_tag.onclick=()=>closeSkill("inner_skill_div_new")
-        span_data.appendChild(i_tag)
-        document.getElementById("inner_skill_div_new").prepend(span_data)
-      })
       
-      document.getElementById("location_detail_!").value =
-        element.contact_details;
+      employee_id_v.value = element.employee_id 
+      console.log(employee_id_v.value)
+      name_v.value = element.name;
+      DOB_v.value = element["DOB"];
+      console.log(DOB_v.value,"/",element["DOB"])
+      age_v.value = element.Age;
+      email_v.value = element.email_id;
+      experiance_v.value = element.experiance;
+      DOJ_v.value=element.DOJ
+      console.log(typeof DOJ_v.value)
+      designation_v.value = element.designation;
+      location_detail_v.value = element.contact_details;
+      
+      employee_id_v.readOnly = true;
+      name_v.readOnly = true;
+      DOB_v.readOnly = true;
+      age_v.readOnly = true;
+      email_v.readOnly = true;
+      experiance_v.readOnly = true;
+      DOJ_v.readOnly = true;
+      designation_v.readOnly = true;
+      location_detail_v.readOnly = true;
+
+      let outer_skill_div_v = document.getElementById("outer_skill_div_v")
+      removeAllChildNodes(outer_skill_div_v)
+      element.skills.forEach((element, index) => {
+        let table_data_new = document.createElement("p");
+        table_data_new.setAttribute("class", "inline_prop");
+        let skillButton = document.createElement("button");
+        skillButton.setAttribute("class","allSkillBtnStyle")
+        skillButton.innerHTML = `${element}`;
+        table_data_new.appendChild(skillButton);
+        outer_skill_div_v .appendChild(table_data_new);
+      })
+        
+      
+      
+      
     }
   });
-
+}
   addingSkillChips(skills_new,"inner_skill_div_new")
 
   // Editing details
-  let edit_btn = document.getElementById("edit_btn");
-  function edit_btn_fn(id) {
-    let isEdited=false
+  function modal_box_edit_fn() {
+    let id=event.target.id
+    modal_box_edit.style.display = "block";
     const full_data = JSON.parse(localStorage.getItem("employeeData"));
     full_data["details"].forEach((element) => {
-      if (+id === +element.employee_id) {
-        document.getElementById("name_!").value !== "" ? (element.name = document.getElementById("name_!").value):(modal_box_view.style.display = block);
-
-        if ((document.getElementById("email_!").value !== "") &&(ValidateEmail(document.getElementById("email_!").value) === true)) {
-          element.email_id = document.getElementById("email_!").value;
-        }else if(ValidateEmail(document.getElementById("email_!").value) === false) {
-          modal_box_view.style.display = block;
-        }
-
-        document.getElementById("designation_!").value !== "" ? (element.designation = document.getElementById("designation_!").value):(modal_box_view.style.display = block);
+      
+      if (+event.target.id === +element.employee_id) {
+        // console.log(element.name)
+         document.getElementById("name_!").value= element.name;
+         element.name=document.getElementById("name_!").value
+         document.getElementById("email_!").value= element.email_id;
+         element.email_id=document.getElementById("email_!").value
+         document.getElementById("experiance_!").value= element.experiance;
+         element.experiance=document.getElementById("experiance_!").value
+         document.getElementById("designation_!").value= element.designation;
+         element.designation=document.getElementById("designation_!").value
+         document.getElementById("location_detail_!").value=element.contact_details;
+         element.contact_details=document.getElementById("location_detail_!").value
+         
+        
+        let parentInner=document.getElementById("inner_skill_div_new")
+        removeAllChildNodes(parentInner)
+        element.skills.forEach((element)=>{
+          let span_data = document.createElement("span");
+          span_data.setAttribute("class","skill_button allSkillBtnStyle countBtn span_data")
+          span_data.innerHTML = element;
+          let i_tag=document.createElement("i")
+          i_tag.setAttribute("class","fa-solid fa-xmark")
+          i_tag.setAttribute("id",element)
+          i_tag.setAttribute("onclick",closeSkill)
+          i_tag.onclick=()=>closeSkill("inner_skill_div_new")
+          span_data.appendChild(i_tag)
+          document.getElementById("inner_skill_div_new").prepend(span_data)
+        })
+        
         employee_skill_array=[]
         Object.values(document.querySelector("#inner_skill_div_new").children).forEach(element=>{
             employee_skill_array.push(element.textContent)
@@ -324,22 +407,109 @@ function modal_box_view_fn() {
         console.log(employee_skill_array)
         if(employee_skill_array.length>=1){
           element.skills=employee_skill_array
-          isEdited=true
         }
-        document.getElementById("location_detail_!").value !== ""? (element.contact_details = document.getElementById("location_detail_!").value) :(modal_box_view.style.display = block);
-        if(isEdited===true){
-          console.log("Inside")
-          localStorage.setItem("employeeData", JSON.stringify(full_data));
-          addInitialData("employeeData");
-          modal_box_view.style.display = "none";
-        }
-        
       }
-    });
+    })
+    function edit_btn_fn(id) {
+      let isEdited=false
+      const full_data = JSON.parse(localStorage.getItem("employeeData"));
+      full_data["details"].forEach((element) => {
+        if (+id === +element.employee_id) {
+          // document.getElementById("name_!").value !== "" ? (element.name = document.getElementById("name_!").value):((alert("You have to fill all the fields"))&&(modal_box_edit.style.display = block));
+
+          if(document.getElementById("name_!").value !== ""){
+            element.name = document.getElementById("name_!").value
+          }else{
+            alert("You have to fill all the fields")
+            modal_box_edit.style.display = block
+          }
+          
+  
+          if ((document.getElementById("email_!").value !== "") &&(ValidateEmail(document.getElementById("email_!").value) === true)) {
+            element.email_id = document.getElementById("email_!").value;
+          }else if(ValidateEmail(document.getElementById("email_!").value) === false) {
+            alert("plaese enter a valid email")
+            modal_box_edit.style.display = block;
+          }
+  
+          if(document.getElementById("designation_!").value !== "" ){
+            element.designation = document.getElementById("designation_!").value
+          }else{
+            alert("You have to fill all the fields")
+            modal_box_edit.style.display = block
+          }
+          // document.getElementById("designation_!").value !== "" ? (element.designation = document.getElementById("designation_!").value):(modal_box_edit.style.display = block);
+          employee_skill_array=[]
+          Object.values(document.querySelector("#inner_skill_div_new").children).forEach(element=>{
+              employee_skill_array.push(element.textContent)
+          })
+          console.log(employee_skill_array)
+          if(employee_skill_array.length>=1){
+            element.skills=employee_skill_array
+            isEdited=true
+          }
+
+          if(document.getElementById("location_detail_!").value !== ""){
+            element.contact_details = document.getElementById("location_detail_!").value
+          }else{
+            alert("You have to fill all the fields")
+            modal_box_edit.style.display = block
+          }
+
+          // document.getElementById("location_detail_!").value !== ""? (element.contact_details = document.getElementById("location_detail_!").value) :(modal_box_edit.style.display = block);
+          if(isEdited===true){
+            console.log("Inside")
+            localStorage.setItem("employeeData", JSON.stringify(full_data));
+            addInitialData("employeeData");
+            modal_box_edit.style.display = "none";
+          }
+        }
+      });
+    }
+    edit_btn.setAttribute("onclick", edit_btn_fn);
+    edit_btn.onclick = () => edit_btn_fn(id);
   }
-  edit_btn.setAttribute("onclick", edit_btn_fn);
-  edit_btn.onclick = () => edit_btn_fn(id);
-}
+
+
+//   let edit_btn = document.getElementById("edit_btn");
+  // function edit_btn_fn(id) {
+  //   let isEdited=false
+  //   const full_data = JSON.parse(localStorage.getItem("employeeData"));
+  //   full_data["details"].forEach((element) => {
+  //     if (+id === +element.employee_id) {
+  //       document.getElementById("name_!").value !== "" ? (element.name = document.getElementById("name_!").value):(modal_box_edit.style.display = block);
+
+  //       if ((document.getElementById("email_!").value !== "") &&(ValidateEmail(document.getElementById("email_!").value) === true)) {
+  //         element.email_id = document.getElementById("email_!").value;
+  //       }else if(ValidateEmail(document.getElementById("email_!").value) === false) {
+  //         modal_box_edit.style.display = block;
+  //       }
+
+  //       document.getElementById("designation_!").value !== "" ? (element.designation = document.getElementById("designation_!").value):(modal_box_edit.style.display = block);
+  //       employee_skill_array=[]
+  //       Object.values(document.querySelector("#inner_skill_div_new").children).forEach(element=>{
+  //           employee_skill_array.push(element.textContent)
+  //       })
+  //       console.log(employee_skill_array)
+  //       if(employee_skill_array.length>=1){
+  //         element.skills=employee_skill_array
+  //         isEdited=true
+  //       }
+  //       document.getElementById("location_detail_!").value !== ""? (element.contact_details = document.getElementById("location_detail_!").value) :(modal_box_edit.style.display = block);
+  //       if(isEdited===true){
+  //         console.log("Inside")
+  //         localStorage.setItem("employeeData", JSON.stringify(full_data));
+  //         addInitialData("employeeData");
+  //         modal_box_edit.style.display = "none";
+  //       }
+        
+  //     }
+  //   });
+  // }
+  // edit_btn.setAttribute("onclick", edit_btn_fn);
+  // edit_btn.onclick = () => edit_btn_fn(id);
+// }
+
 
 // for closing the modal for view
 let view_cross = document.getElementById("view_cross");
@@ -347,6 +517,17 @@ view_cross.addEventListener("click", modal_view_close);
 function modal_view_close() {
   modal_box_view.style.display = "none";
 }
+
+//for closing the modal box for edit
+let edit_cross = document.getElementById("edit_cross");
+edit_cross.addEventListener("click", modal_edit_close);
+function modal_edit_close() {
+  modal_box_edit.style.display = "none";
+}
+
+//closing edit modal box by clicking close button
+let edit_close = document.getElementById("edit_close");
+edit_close.addEventListener("click", modal_edit_close);
 
 // for showing delete confirmation box
 function modal_delete() {
@@ -541,4 +722,4 @@ function closeSkill(divForSkill){
   })
 }
 
-const getAge = birthDate => Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e+10)
+// const getAge = birthDate => Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e+10)

@@ -154,8 +154,11 @@ td{
 #skills_new{
     display: block;
 }
+#outer_skill_div_v{
+    background-color: white;
+}
 /* Styles common for all the modal boxes */
-#modal_box_add,#modal_box_view,#modal_box_delete{
+#modal_box_add,#modal_box_edit,#modal_box_delete,#modal_box_view{
     display: none;
     margin: 0 auto;
     position: absolute; /* Stay in place */
@@ -167,7 +170,7 @@ td{
     overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0,0,0,0.4); 
 }
-#modal_box_view{
+#modal_box_edit{
     padding-bottom: 50px;
     overflow: scroll;
 }
@@ -178,7 +181,7 @@ td{
     background-color:#D4EAC8 ;
     position: relative;
 }
-#add_cross,#view_cross{
+#add_cross,#view_cross,#edit_cross{
     position :absolute;
     font-size: .8em;
     font-weight: 600;
@@ -216,7 +219,10 @@ input[type="text"],input[type="email"],input[type="date"]{
     font-size: 16px;
 }
 #skill_row{
-    height: 80px;
+    height: 55px;
+}
+.common_skill_row{
+    height:75px;
 }
 #outer_skill_div,#outer_skill_div_new{
     background-color: white;
@@ -232,11 +238,18 @@ input[type="text"],input[type="email"],input[type="date"]{
     margin-bottom: 75px;
     
 }
+#submit_btn_div div,#edit_btn_div div{
+    display: flex;
+    justify-content: space-around;
+    width: 230px;
+    margin: 0 auto;
+}
 #submit_btn_div button,#edit_btn_div button{
     background-color: #214E34;
     color: whitesmoke;
     border: none;
-    padding: 10px;
+    padding: 12px;
+    border-radius: 17px;
 }
 .span_data{
     border: 1px solid black;

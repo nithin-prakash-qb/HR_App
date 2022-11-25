@@ -57,7 +57,7 @@
           </tr>
           <tr>
               <td class="col_1"><label for="DOB">Date Of Birth :</label></td>
-              <td class="col_2"><input type="date" id="DOB" name="" ></td>
+              <td class="col_2"><input type="date" id="DOB" min="1930-01-01"max="2003-01-01"></td>
           </tr>
           <tr>
               <td class="col_1"><label for="age">Age :</label> </td>
@@ -73,13 +73,13 @@
           </tr>
           <tr>
               <td class="col_1"><label for="DOJ">Date of Joining :</label</td>
-              <td class="col_2"><input type="date" id="DOJ" name=""></td>
+              <td class="col_2"><input type="date" id="DOJ"  max="2022-11-25"></td>
           </tr>
           <tr>
               <td class="col_1"><label for="designation">Designation :</label></td>
               <td class="col_2"><input type="text" id="designation" name=""></td>
           </tr>
-          <tr id="skill_row">
+          <tr class="common_skill_row">
             <td class="col_1"><label for="skills">Skills :</label></td>
             <td id="outer_skill_div" class="col_2">
               <div id="inner_skill_div" >
@@ -93,32 +93,81 @@
           </tr>
       </table>
       <div id="submit_btn_div">
+        <div>
           <button id="submit_btn">Submit</button>
+          <button id="add_close">Close</button>
+        </div>
       </div>
     </div>
-<!-- Modal box for viewing data -->
 
-    <div id="modal_box_view">
+
+<!-- Modal Box for viewing  -->
+<div id="modal_box_view">
+  <table id="modal_table">
+      <tr id="caption">
+          <td colspan="2">View <i class="fa-solid fa-xmark" id="view_cross"></i></td>
+      </tr>
+      <tr>
+          <td class="col_1"><label for="employee_id_v">Employee ID :</label> </td>
+          <td class="col_2"><input type="text" id="employee_id_v" name="" required></td>
+      </tr>
+      <tr>
+          <td class="col_1"><label for="name_v">Name :</label> </td>
+          <td class="col_2"><input type="text" id="name_v" name="" required ></td>
+      </tr>
+      <tr>
+          <td class="col_1"><label for="DOB_v">Date Of Birth :</label></td>
+          <td class="col_2"><input type="text" id="DOB_v" name="" ></td>
+      </tr>
+      <tr>
+          <td class="col_1"><label for="age_v">Age :</label> </td>
+          <td class="col_2"><input type="text" id="age_v" name="" ></td>
+      </tr>
+      <tr>
+          <td class="col_1"><label for="email_v">Email ID :</label></td>
+          <td class="col_2"><input type="email" id="email_v" name="" required></td>
+      </tr>
+      <tr>
+          <td class="col_1"><label for="experiance_v">Experiance :</label></td>
+          <td class="col_2"><input type="text" id="experiance_v" name=""></td>
+      </tr>
+      <tr>
+          <td class="col_1"><label for="DOJ_v">Date of Joining :</label</td>
+          <td class="col_2"><input type="text" id="DOJ_v" name=""></td>
+      </tr>
+      <tr>
+          <td class="col_1"><label for="designation_v">Designation :</label></td>
+          <td class="col_2"><input type="text" id="designation_v" name=""></td>
+      </tr>
+      <tr id="skill_row">
+        <td class="col_1"><label for="skills_v">Skills :</label></td>
+        <td id="outer_skill_div_v" class="col_2">
+          <!-- <div id="inner_skill_div_v" >
+          </div> -->
+          <!-- <input type="text" id="skills_v" list="skill_list" required placeholder="add skill"> -->
+        </td>
+      </tr>
+      <tr>
+          <td class="col_1"><label for="location_detail_v">Location Detail :</label></td>
+          <td class="col_2"><input type="text" id="location_detail_v" name=""></td>
+      </tr>
+  </table>
+  
+</div>
+<!-- Modal box for editing data -->
+
+    <div id="modal_box_edit">
       <table id="modal_table">
           <tr id="caption">
-              <td colspan="2">VIEW DETAILS <i class="fa-solid fa-xmark" id="view_cross"></i> </td>
+              <td colspan="2">EDIT<i class="fa-solid fa-xmark" id="edit_cross"></i> </td>
           </tr>
-          <tr>
-              <td class="col_1"><label for="employee_id_!">Employee ID :</label> </td>
-              <td class="col_2"><input type="text" id="employee_id_!" name=""readonly > </td>
-          </tr>
+          
           <tr>
               <td class="col_1"><label for="name_!">Name :</label> </td>
               <td class="col_2"><input type="text" id="name_!" name="" ></td>
           </tr>
-          <tr>
-              <td class="col_1"><label for="DOB_!">Date Of Birth :</label></td>
-              <td class="col_2"><input type="text" id="DOB_!" name="" readonly></td>
-          </tr>
-          <tr>
-              <td class="col_1"><label for="age_!">Age :</label> </td>
-              <td class="col_2"><input type="text" id="age_!" name="" readonly ></td>
-          </tr>
+          
+          
           <tr>
               <td class="col_1"><label for="email_!">Email ID :</label></td>
               <td class="col_2"><input type="email" id="email_!" name="" ></td>
@@ -127,15 +176,12 @@
               <td class="col_1"><label for="experiance_!">Experiance :</label></td>
               <td class="col_2"><input type="text" id="experiance_!" name="" readonly></td>
           </tr>
-          <tr>
-              <td class="col_1"><label for="DOJ_!">Date of Joining :</label</td>
-              <td class="col_2"><input type="text" id="DOJ_!" name="" readonly></td>
-          </tr>
+          
           <tr>
               <td class="col_1"><label for="designation_!">Designation :</label></td>
               <td class="col_2"><input type="text" id="designation_!" name="" ></td>
           </tr>
-          <tr id="skill_row">
+          <tr class="common_skill_row">
             <td class="col_1"><label for="skills_new">Skills :</label></td>
             <td id="outer_skill_div_new" class="col_2">
               <div id="inner_skill_div_new" >
@@ -164,7 +210,11 @@
           </tr>
       </table>
       <div id="edit_btn_div">
-        <button id="edit_btn">Update</button>
+        <div>
+          <button id="edit_btn">Update</button>
+          <button id="edit_close">Close</button>
+        </div>
+        
     </div>
     </div>
 
